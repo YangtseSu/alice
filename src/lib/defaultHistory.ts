@@ -9393,6 +9393,321 @@ dream`,
     },
   },
   {
+    category: "仁爱版初中",
+    label: "九上 Unit 1",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 1",
+      text: `leisure
+treatment
+nowadays
+recent
+international
+narrow
+block
+apartment
+improvement
+pleasure
+conclusion
+pleasant
+amusement
+shut
+pollute
+childhood
+laughter
+excite
+happiness
+remain
+comfort
+couple
+recently
+familiar
+entertainment
+jazz
+neighborhood
+rail
+complete
+network
+era
+probably
+false`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "仁爱版初中",
+    label: "九上 Unit 2",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 2",
+      text: `raincoat
+wooden
+lock
+umbrella
+lover
+inventor
+bulb
+certainly
+Greek
+philosopher
+image
+discovery
+gunpowder
+paper-making
+compass
+position
+fishing
+net
+sailor
+magnetic
+needle
+disk
+war
+movable
+print
+drug
+broaden
+woolen
+sharp
+passport
+airplane
+stamp
+balloon
+lamp
+wheel
+jeans
+daydream
+moreover
+imaginative
+awake
+Egyptian
+nail
+testing
+wake
+prize`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "仁爱版初中",
+    label: "九上 Unit 3",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 3",
+      text: `pollution
+union
+awareness
+whale
+dolphin
+giraffe
+everywhere
+several
+eagle
+sort
+journalist
+interview
+environmental
+organization
+instruction
+pardon
+recycle
+trash
+toilet
+ant
+donate
+charity
+loudspeaker
+negative
+blood
+wastebin
+bin
+grey
+besides
+correctly
+cooperate
+ever
+found
+medal
+honour
+introduction
+suffer
+carbon
+tick
+packaging
+cloth
+greening
+process
+lung`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "仁爱版初中",
+    label: "九上 Unit 4",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 4",
+      text: `Russian
+German
+castle
+matryoshka
+doll
+official
+brain
+either
+Japanese
+bow
+wave
+goodbye
+nod
+agreement
+opposite
+finger
+deaf
+spell
+expression
+infer
+lyric
+underline
+circle
+imitate
+comprehend
+native
+speaker
+imitation
+tongue
+gentleman
+tour
+widely
+leader
+industry
+Spanish
+population
+sixth
+thankful
+tourism
+unbelievable
+accent
+forecast
+noun
+pie
+pear
+wolf
+teenage
+cent
+contest
+primary
+grammar
+challenging
+influence
+differently
+rose
+pronounce`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "仁爱版初中",
+    label: "九上 Unit 5",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 5",
+      text: `path
+diversion
+radio
+underwater
+surprise
+waiter
+self
+decision
+exactly
+completely
+test
+engineering
+closely
+achieve
+navigation
+GPS
+technological
+aim
+pacific
+level
+compete
+experimental
+launch
+virtual
+trait
+charge
+electric
+glance
+AI
+jump
+secondly
+Olympic`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "仁爱版初中",
+    label: "九上 Unit 6",
+    entry: {
+      id: "default_仁爱版初中_九上 Unit 6",
+      text: `iron
+winner
+physics
+honorable
+devoted
+missile
+forever
+admire
+institute
+observe
+signal
+award
+X-ray
+designer
+failure
+army
+talented
+general
+knowledgeable
+agriculture
+hybrid
+interestingly
+greatness
+recognise
+deer
+researcher
+developer
+refer
+behave
+whom
+refuse
+unluckily
+cleaner
+poverty
+settle
+secretary
+doubt
+patience
+platform
+lift
+sunshine
+organise
+tricycle
+protector
+countless
+athlete
+gold
+talent
+homemade
+gun
+shooter
+coach
+career
+Asian
+excellence
+nickname
+victory`,
+      timestamp: 0,
+    },
+  },
+  {
     category: "外研版初中",
     label: "七上 Module 1",
     entry: {
