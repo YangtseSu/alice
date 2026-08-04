@@ -1,8 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
-import { config } from "./config";
-
 const OCR_CONFIG_KEY = "alice_ocr_provider_config";
 
 /** Web builds never embed a shared OCR key — users must bring their own. */
@@ -150,44 +148,6 @@ export async function saveOcrProviderConfig(
   } catch {
     // ignore — config is also kept in-memory for the running session
   }
-}
-
-/**
- * Resolve the effective OCR config: a complete custom config wins; otherwise
- * fall back to the bundled Zhipu config on native only. Web never uses a
- * built-in key (it would be public in the JS bundle).
- */
-export function resolveOcrConfig(
-  custom: OcrProviderConfig | null | undefined,
-): { baseUrl: string; apiKey: string; model: string } | null {
-  if (isCustomOcrConfigSet(custom)) {
-    return {
-      baseUrl: custom!.baseUrl.trim(),
-      apiKey: custom!.apiKey.trim(),
-      model: custom!.model.trim(),
-    };
-  }
-  if (requiresCustomOcrConfig()) return null;
-  if (!config.zhipuApiKey.trim()) return null;
-  return {
-    baseUrl: config.zhipuBaseUrl,
-    apiKey: config.zhipuApiKey,
-    model: config.visionModel,
-  };
-}
-
-/** Whether OCR can run with the given custom config (or built-in on native). */
-export function hasUsableOcrConfig(
-  custom: OcrProviderConfig | null | undefined,
-): boolean {
-  return resolveOcrConfig(custom) !== null;
-}
-
-/** Whether the effective config is the user's custom one (not the built-in). */
-export function isUsingCustomConfig(
-  custom: OcrProviderConfig | null | undefined,
-): boolean {
-  return isCustomOcrConfigSet(custom);
 }
 
 /**

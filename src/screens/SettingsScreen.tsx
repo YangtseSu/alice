@@ -16,10 +16,14 @@ import Constants from "expo-constants";
 import { IconButton } from "../components/Button";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { OcrSettingsModal } from "../components/OcrSettingsModal";
+import { RechargeModal } from "../components/RechargeModal";
 import { Toast } from "../components/Toast";
+import { useOcrQuota } from "../hooks/useOcrQuota";
 import { useToast } from "../hooks/useToast";
+import { getBuiltinModel, saveSelectedModelId, type CreditPack } from "../lib/credits";
 import { loadSoundEnabled, setSoundEnabled } from "../lib/sound";
 import { fonts, radii, spacing } from "../lib/designTokens";
+import { OCR_DISCLAIMER } from "../lib/ocr";
 import {
   isCustomOcrConfigSet,
   loadOcrProviderConfig,
@@ -70,6 +74,8 @@ export function SettingsScreen() {
   const [customOcrConfig, setCustomOcrConfig] =
     useState<OcrProviderConfig | null>(null);
   const [ocrSettingsVisible, setOcrSettingsVisible] = useState(false);
+  const [rechargeVisible, setRechargeVisible] = useState(false);
+  const quota = useOcrQuota();
   const [dialog, setDialog] = useState<{
     visible: boolean;
     title: string;
@@ -94,8 +100,32 @@ export function SettingsScreen() {
       } else {
         showToast("已恢复默认 OCR 服务配置");
       }
+      quota.refresh();
     },
-    [showToast],
+    [quota, showToast],
+  );
+
+  // Selecting a built-in model clears any custom config so the built-in service
+  // (free/premium) actually takes effect.
+  const handleSelectModel = useCallback(
+    (modelId: string) => {
+      saveSelectedModelId(modelId).catch(() => {});
+      // Clear BYOK so the built-in model is used.
+      setCustomOcrConfig(null);
+      saveOcrProviderConfig(null).catch(() => {});
+      setOcrSettingsVisible(false);
+      showToast(`已切换到 ${getBuiltinModel(modelId).label}`);
+      quota.refresh();
+    },
+    [quota, showToast],
+  );
+
+  const handleRecharge = useCallback(
+    async (pack: CreditPack) => {
+      await quota.recharge(pack);
+      showToast(`充值成功 +${pack.credits + pack.bonus} credits`);
+    },
+    [quota, showToast],
   );
 
   const handleClearTtsCache = useCallback(() => {
@@ -123,21 +153,33 @@ export function SettingsScreen() {
     ? customOcrConfig!.model
     : requiresCustomOcrConfig()
       ? "未配置"
-      : "内置服务";
+      : quota.model.label;
 
   const appVersion = Constants.expoConfig?.version ?? "—";
 
   const sections: Section[] = [
     {
       key: "ocr",
-      title: "OCR 服务",
+      title: "识别服务",
       rows: [
         {
-          key: "ocr-config",
-          icon: "server-outline",
-          label: "服务配置",
+          key: "ocr-model",
+          icon: "scan-outline",
+          label: "识别模型",
           detail: ocrDetail,
           onPress: () => setOcrSettingsVisible(true),
+        },
+        {
+          key: "ocr-credits",
+          icon: "wallet-outline",
+          label: "Credits 余额",
+          detail: `${quota.credits}`,
+        },
+        {
+          key: "ocr-recharge",
+          icon: "card-outline",
+          label: "充值",
+          onPress: () => setRechargeVisible(true),
         },
       ],
     },
@@ -346,6 +388,28 @@ export function SettingsScreen() {
                 </TouchableOpacity>
               ))}
             </View>
+            {section.key === "ocr" ? (
+              <View
+                style={[
+                  styles.disclaimer,
+                  {
+                    backgroundColor: colors.surface,
+                    borderColor: colors.borderSubtle,
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="information-circle-outline"
+                  size={13}
+                  color={colors.subtle}
+                />
+                <Text
+                  style={[styles.disclaimerText, { color: colors.subtle }]}
+                >
+                  {OCR_DISCLAIMER}
+                </Text>
+              </View>
+            ) : null}
           </View>
         ))}
       </ScrollView>
@@ -355,6 +419,18 @@ export function SettingsScreen() {
         value={customOcrConfig}
         onClose={() => setOcrSettingsVisible(false)}
         onSave={handleSaveOcrConfig}
+        onSelectModel={handleSelectModel}
+        credits={quota.credits}
+        onRecharge={() => {
+          setOcrSettingsVisible(false);
+          setRechargeVisible(true);
+        }}
+      />
+      <RechargeModal
+        visible={rechargeVisible}
+        credits={quota.credits}
+        onClose={() => setRechargeVisible(false)}
+        onPurchase={handleRecharge}
       />
       <ConfirmDialog
         visible={dialog?.visible}
@@ -454,5 +530,19 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "500",
     maxWidth: 140,
+  },
+  disclaimer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radii.control,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  disclaimerText: {
+    fontSize: 11,
+    flexShrink: 1,
   },
 });

@@ -17,12 +17,14 @@ import {
   takePhoto,
   pickFromAlbum,
   ocrWordsFromImage,
+  InsufficientCreditsError,
   OCR_PROGRESS_MESSAGES,
   OCR_OUTCOME_MESSAGES,
   OCR_UI_IDLE,
   type OcrProgressPhase,
   type OcrUiState,
 } from "../lib/ocr";
+import { canRunOcrNow } from "../lib/credits";
 import { useThemeColors } from "../lib/theme";
 import { radii, spacing } from "../lib/designTokens";
 
@@ -34,6 +36,8 @@ interface OcrSectionProps {
   onOcrStateChange?: (state: OcrUiState) => void;
   /** Terminal outcome for toast (success / empty / error). */
   onOcrOutcome?: (message: string) => void;
+  /** Fired when a premium model is selected but credits are insufficient. */
+  onInsufficientCredits?: () => void;
 }
 
 export type OcrSectionHandle = {
@@ -44,7 +48,13 @@ export type OcrSectionHandle = {
 
 export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
   function OcrSection(
-    { onOcrResult, hideActions = false, onOcrStateChange, onOcrOutcome },
+    {
+      onOcrResult,
+      hideActions = false,
+      onOcrStateChange,
+      onOcrOutcome,
+      onInsufficientCredits,
+    },
     ref,
   ) {
     const colors = useThemeColors();
@@ -71,6 +81,16 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
         preparingPhase: "preparing_photo" | "preparing_album",
       ) => {
         if (ocrBusy) return;
+
+        // Pre-flight: a premium built-in model needs credits. Skip the camera
+        // flow entirely and hand off to the recharge UI when the balance is too
+        // low, so the user doesn't waste a photo.
+        const gate = await canRunOcrNow();
+        if (!gate.ok && gate.reason === "insufficient_credits") {
+          onInsufficientCredits?.();
+          return;
+        }
+
         setUiState({ busy: true, message: "" });
         try {
           const uri = await getUri();
@@ -97,6 +117,10 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
           onOcrResult(words);
           onOcrOutcome?.(OCR_OUTCOME_MESSAGES.success(words.length));
         } catch (error) {
+          if (error instanceof InsufficientCreditsError) {
+            onInsufficientCredits?.();
+            return;
+          }
           onOcrOutcome?.(
             error instanceof Error
               ? error.message
@@ -106,7 +130,14 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
           setUiState(OCR_UI_IDLE);
         }
       },
-      [ocrBusy, onOcrOutcome, onOcrResult, reportProgress, setUiState],
+      [
+        ocrBusy,
+        onInsufficientCredits,
+        onOcrOutcome,
+        onOcrResult,
+        reportProgress,
+        setUiState,
+      ],
     );
 
     const processOcr = useCallback(

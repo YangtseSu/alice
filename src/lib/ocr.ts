@@ -1,15 +1,37 @@
 import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 
+import { config } from "./config";
+import {
+  ensureCreditsLoaded,
+  getBuiltinModel,
+  loadSelectedModelId,
+  trySpendCredits,
+} from "./credits";
 import {
   buildChatCompletionsUrl,
+  isCustomOcrConfigSet,
   loadOcrProviderConfig,
   requiresCustomOcrConfig,
-  resolveOcrConfig,
 } from "./ocrConfig";
 
 const OCR_MAX_EDGE = 1600;
 const OCR_JPEG_QUALITY = 0.82;
+
+/** Disclaimer surfaced at OCR entry points so users know results may be off. */
+export const OCR_DISCLAIMER = "AI 识图可能存在误差，请核对识别结果";
+
+/**
+ * Thrown when a premium built-in model is selected but the credit balance is
+ * insufficient. The UI catches this to open the recharge flow instead of
+ * showing a generic error toast.
+ */
+export class InsufficientCreditsError extends Error {
+  constructor(public cost: number) {
+    super("Credits 不足，请充值后使用高级识别");
+    this.name = "InsufficientCreditsError";
+  }
+}
 
 /** In-flight progress phases (header). Terminal copy lives in OCR_OUTCOME_MESSAGES. */
 export type OcrProgressPhase =
@@ -112,6 +134,61 @@ export async function pickFromAlbum(): Promise<string | null> {
   return result.assets[0]!.uri;
 }
 
+interface OcrRequestConfig {
+  baseUrl: string;
+  apiKey: string;
+  model: string;
+  /** Credits to deduct after a successful call. 0 for free / BYOK. */
+  premiumCost: number;
+}
+
+/**
+ * Resolve the effective OCR provider for this run:
+ *  1. A complete BYOK custom config wins (user's own key — never charges).
+ *  2. Otherwise the selected built-in model is used against the app's embedded
+ *     key. Premium built-in models require enough credits up-front.
+ */
+async function resolveOcrRequest(): Promise<OcrRequestConfig> {
+  const custom = await loadOcrProviderConfig();
+  if (isCustomOcrConfigSet(custom)) {
+    return {
+      baseUrl: custom!.baseUrl.trim(),
+      apiKey: custom!.apiKey.trim(),
+      model: custom!.model.trim(),
+      premiumCost: 0,
+    };
+  }
+
+  if (requiresCustomOcrConfig()) {
+    throw new Error("请先在设置中配置 OCR 服务（Web 版需自备 API Key）");
+  }
+  if (!config.zhipuApiKey.trim()) {
+    throw new Error("请先在设置中配置 OCR 服务");
+  }
+
+  const selectedId = await loadSelectedModelId();
+  const selected = getBuiltinModel(selectedId);
+  if (selected.tier === "premium") {
+    const balance = await ensureCreditsLoaded();
+    if (balance < selected.creditCost) {
+      throw new InsufficientCreditsError(selected.creditCost);
+    }
+    return {
+      baseUrl: config.zhipuBaseUrl,
+      apiKey: config.zhipuApiKey,
+      model: selected.model,
+      premiumCost: selected.creditCost,
+    };
+  }
+
+  return {
+    baseUrl: config.zhipuBaseUrl,
+    apiKey: config.zhipuApiKey,
+    model: selected.model,
+    premiumCost: 0,
+  };
+}
+
 export async function ocrWordsFromImage(
   imageUri: string,
   onProgress?: (phase: OcrProgressPhase) => void,
@@ -122,16 +199,7 @@ export async function ocrWordsFromImage(
 
   onProgress?.("recognizing");
 
-  const custom = await loadOcrProviderConfig();
-  const resolved = resolveOcrConfig(custom);
-  if (!resolved) {
-    throw new Error(
-      requiresCustomOcrConfig()
-        ? "请先在设置中配置 OCR 服务（Web 版需自备 API Key）"
-        : "请先在设置中配置 OCR 服务",
-    );
-  }
-  const { baseUrl, apiKey, model } = resolved;
+  const { baseUrl, apiKey, model, premiumCost } = await resolveOcrRequest();
   const endpoint = buildChatCompletionsUrl(baseUrl);
 
   let response: Response;
@@ -180,6 +248,13 @@ export async function ocrWordsFromImage(
     } catch {
       throw new Error("视觉识别服务异常");
     }
+  }
+
+  // Charge credits only after a successful API response so failed/errored
+  // calls don't consume the user's balance. Single-flight (ocrBusy) prevents
+  // concurrent spends.
+  if (premiumCost > 0) {
+    await trySpendCredits(premiumCost);
   }
 
   const payload = (await response.json()) as {

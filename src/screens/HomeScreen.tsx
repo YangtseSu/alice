@@ -23,13 +23,16 @@ import { HistoryDrawer } from "../components/HistoryDrawer";
 import { LibraryDrawer } from "../components/LibraryDrawer";
 import { OcrSection, type OcrSectionHandle } from "../components/OcrSection";
 import { PlaybackControls } from "../components/PlaybackControls";
+import { RechargeModal } from "../components/RechargeModal";
 import { Toast } from "../components/Toast";
 import { WordInputSection } from "../components/WordInputSection";
+import { useOcrQuota } from "../hooks/useOcrQuota";
 import { useToast } from "../hooks/useToast";
 import { parseWords } from "../lib/dictation";
 import { enrichWordListText } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
-import { OCR_UI_IDLE, type OcrUiState } from "../lib/ocr";
+import { BUILTIN_MODELS, type CreditPack } from "../lib/credits";
+import { OCR_DISCLAIMER, OCR_UI_IDLE, type OcrUiState } from "../lib/ocr";
 import {
   addWordHistory,
   clearWordHistory,
@@ -94,6 +97,8 @@ export function HomeScreen() {
   const [favoritesDrawerVisible, setFavoritesDrawerVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [cameraSheetVisible, setCameraSheetVisible] = useState(false);
+  const [rechargeVisible, setRechargeVisible] = useState(false);
+  const quota = useOcrQuota();
   const libraryGroups = useMemo<LibraryGroup[]>(() => getLibraryGroups(), []);
   const ocrRef = useRef<OcrSectionHandle>(null);
   // Edge-to-edge Android ignores adjustResize; pad manually when keyboard opens.
@@ -176,7 +181,17 @@ export function HomeScreen() {
     // OCR returns bare words; enrich immediately so display mode shows meta.
     setWordInput(enrichWordListText(words.join("\n")));
     setIsDisplayMode(true);
-  }, []);
+    // A premium recognition may have just consumed credits — sync the balance.
+    quota.syncFromCache();
+  }, [quota]);
+
+  const handleRecharge = useCallback(
+    async (pack: CreditPack) => {
+      await quota.recharge(pack);
+      showToast(`充值成功 +${pack.credits + pack.bonus} credits`);
+    },
+    [quota, showToast],
+  );
 
   const handleToggleDisplayMode = useCallback(() => {
     setIsDisplayMode((prev) => {
@@ -460,6 +475,7 @@ export function HomeScreen() {
             onOcrResult={handleOcrResult}
             onOcrStateChange={setOcrUi}
             onOcrOutcome={showToast}
+            onInsufficientCredits={() => setRechargeVisible(true)}
             hideActions
           />
 
@@ -577,6 +593,145 @@ export function HomeScreen() {
           onClose={closeCameraSheet}
           title="拍照识词"
         >
+          <View style={styles.ocrSheetBanner}>
+            {quota.hasCustomConfig ? (
+              <View
+                style={[
+                  styles.modelRow,
+                  {
+                    backgroundColor: colors.surface,
+                    borderColor: colors.borderSubtle,
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="server-outline"
+                  size={16}
+                  color={colors.muted}
+                />
+                <Text
+                  style={[styles.modelRowText, { color: colors.muted }]}
+                  numberOfLines={1}
+                >
+                  使用自定义服务
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    runSheetAction(closeCameraSheet, () =>
+                      navigation.navigate("Settings"),
+                    )
+                  }
+                  hitSlop={8}
+                  activeOpacity={0.6}
+                >
+                  <Text
+                    style={[styles.modelRowLink, { color: colors.primary }]}
+                  >
+                    设置
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.modelChips}>
+                {BUILTIN_MODELS.map((m) => {
+                  const active = quota.modelId === m.id;
+                  return (
+                    <TouchableOpacity
+                      key={m.id}
+                      style={[
+                        styles.modelChip,
+                        {
+                          borderColor: active
+                            ? colors.primary
+                            : colors.borderSubtle,
+                          backgroundColor: active
+                            ? colors.primarySoft
+                            : colors.surface,
+                        },
+                      ]}
+                      onPress={() => quota.selectModel(m.id)}
+                      activeOpacity={0.7}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: active }}
+                      accessibilityLabel={m.label}
+                    >
+                      <Text
+                        style={[
+                          styles.modelChipText,
+                          {
+                            color: active
+                              ? colors.primary
+                              : colors.foreground,
+                          },
+                        ]}
+                      >
+                        {m.label}
+                      </Text>
+                      {m.tier === "premium" ? (
+                        <Text
+                          style={[
+                            styles.modelChipCost,
+                            {
+                              color: active ? colors.gold : colors.subtle,
+                            },
+                          ]}
+                        >
+                          {m.creditCost} credit
+                        </Text>
+                      ) : null}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            )}
+
+            <View style={styles.creditsRow}>
+              <Ionicons
+                name="wallet-outline"
+                size={14}
+                color={colors.subtle}
+              />
+              <Text style={[styles.creditsText, { color: colors.muted }]}>
+                Credits: {quota.credits}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  runSheetAction(closeCameraSheet, () =>
+                    setRechargeVisible(true),
+                  )
+                }
+                hitSlop={8}
+                activeOpacity={0.6}
+                accessibilityRole="button"
+                accessibilityLabel="充值"
+              >
+                <Text
+                  style={[styles.creditsLink, { color: colors.primary }]}
+                >
+                  充值
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={[
+                styles.ocrDisclaimer,
+                { backgroundColor: colors.surface, borderColor: colors.borderSubtle },
+              ]}
+            >
+              <Ionicons
+                name="information-circle-outline"
+                size={13}
+                color={colors.subtle}
+              />
+              <Text
+                style={[styles.ocrDisclaimerText, { color: colors.subtle }]}
+              >
+                {OCR_DISCLAIMER}
+              </Text>
+            </View>
+          </View>
+
           <View style={styles.sheetList}>
             {cameraItems.map(renderSheetRow)}
           </View>
@@ -594,6 +749,12 @@ export function HomeScreen() {
               visible: false,
             })
           }
+        />
+        <RechargeModal
+          visible={rechargeVisible}
+          credits={quota.credits}
+          onClose={() => setRechargeVisible(false)}
+          onPurchase={handleRecharge}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -737,5 +898,77 @@ const styles = StyleSheet.create({
   },
   cameraFabRaised: {
     bottom: spacing.md + 40,
+  },
+  ocrSheetBanner: {
+    gap: spacing.sm,
+    paddingBottom: spacing.sm,
+  },
+  modelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    borderRadius: radii.surface,
+    borderWidth: 1,
+  },
+  modelRowText: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  modelRowLink: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  modelChips: {
+    flexDirection: "row",
+    gap: spacing.xs,
+  },
+  modelChip: {
+    flex: 1,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
+    borderRadius: radii.control,
+    borderWidth: 1.5,
+    alignItems: "center",
+    gap: 2,
+  },
+  modelChipText: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  modelChipCost: {
+    fontSize: 11,
+    fontWeight: "600",
+  },
+  creditsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    paddingHorizontal: spacing.xs,
+  },
+  creditsText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "600",
+    fontVariant: ["tabular-nums"],
+  },
+  creditsLink: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  ocrDisclaimer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radii.control,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  ocrDisclaimerText: {
+    fontSize: 11,
+    flexShrink: 1,
   },
 });
