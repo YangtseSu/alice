@@ -18,6 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { BottomSheet } from "../components/BottomSheet";
 import { Button, IconButton } from "../components/Button";
 import { ConfirmDialog } from "../components/ConfirmDialog";
+import { FavoritesDrawer } from "../components/FavoritesDrawer";
 import { HistoryDrawer } from "../components/HistoryDrawer";
 import { LibraryDrawer } from "../components/LibraryDrawer";
 import { OcrSection, type OcrSectionHandle } from "../components/OcrSection";
@@ -34,10 +35,13 @@ import {
   clearWordHistory,
   deleteWordHistory,
   getLibraryGroups,
+  loadFavorites,
+  loadPersistedFavorites,
   loadPersistedWrongWords,
   loadWordHistory,
   loadWordInput,
   saveWordInput,
+  toggleFavorite,
   type LibraryGroup,
   WordHistoryEntry,
 } from "../lib/storage";
@@ -84,8 +88,10 @@ export function HomeScreen() {
   const [isDisplayMode, setIsDisplayMode] = useState(true);
   const [ocrUi, setOcrUi] = useState<OcrUiState>(OCR_UI_IDLE);
   const [history, setHistory] = useState<WordHistoryEntry[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [historyDrawerVisible, setHistoryDrawerVisible] = useState(false);
   const [libraryDrawerVisible, setLibraryDrawerVisible] = useState(false);
+  const [favoritesDrawerVisible, setFavoritesDrawerVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [cameraSheetVisible, setCameraSheetVisible] = useState(false);
   const libraryGroups = useMemo<LibraryGroup[]>(() => getLibraryGroups(), []);
@@ -127,14 +133,16 @@ export function HomeScreen() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [savedInput, , savedHistory] = await Promise.all([
+      const [savedInput, , savedHistory, savedFavorites] = await Promise.all([
         loadWordInput(),
         loadPersistedWrongWords(),
         loadWordHistory(),
+        loadPersistedFavorites(),
       ]);
       if (cancelled) return;
       if (savedInput) setWordInput(enrichWordListText(savedInput));
       setHistory(savedHistory);
+      setFavorites(savedFavorites);
       setReady(true);
     })();
     return () => {
@@ -230,6 +238,20 @@ export function HomeScreen() {
     [showToast],
   );
 
+  const handleApplyFavorite = useCallback(
+    (entry: WordHistoryEntry) => {
+      const text = entry.enrichedText ?? entry.text;
+      setWordInput(enrichWordListText(text));
+      setIsDisplayMode(true);
+      showToast("已载入收藏");
+    },
+    [showToast],
+  );
+
+  const handleToggleFavorite = useCallback((id: string) => {
+    toggleFavorite(id).then(() => setFavorites(loadFavorites()));
+  }, []);
+
   const handleDeleteHistory = useCallback((id: string) => {
     setDialog({
       visible: true,
@@ -238,7 +260,8 @@ export function HomeScreen() {
       confirmLabel: "删除",
       action: () => {
         setHistory((prev) => prev.filter((e) => e.id !== id));
-        deleteWordHistory(id);
+        // deleteWordHistory also drops the favorite if present.
+        deleteWordHistory(id).then(() => setFavorites(loadFavorites()));
       },
     });
   }, []);
@@ -251,7 +274,10 @@ export function HomeScreen() {
       message: "确定要清空历史记录吗？",
       confirmLabel: "清空",
       action: () => {
-        clearWordHistory().then(() => loadWordHistory().then(setHistory));
+        clearWordHistory().then(() => {
+          loadWordHistory().then(setHistory);
+          setFavorites(loadFavorites());
+        });
       },
     });
   }, [history]);
@@ -281,6 +307,13 @@ export function HomeScreen() {
   );
 
   const menuItems: MenuItem[] = [
+    {
+      key: "favorites",
+      icon: "star-outline",
+      label: "收藏",
+      onPress: () =>
+        runSheetAction(closeMenu, () => setFavoritesDrawerVisible(true)),
+    },
     {
       key: "history",
       icon: "time-outline",
@@ -508,19 +541,31 @@ export function HomeScreen() {
           </View>
         ) : null}
         <Toast toast={toast} onActionPress={hideToast} />
+        <FavoritesDrawer
+          visible={favoritesDrawerVisible}
+          favorites={favorites}
+          history={history}
+          onClose={() => setFavoritesDrawerVisible(false)}
+          onApply={handleApplyFavorite}
+          onToggleFavorite={handleToggleFavorite}
+        />
         <HistoryDrawer
           visible={historyDrawerVisible}
           history={history}
+          favorites={favorites}
           onClose={() => setHistoryDrawerVisible(false)}
           onApply={handleApplyHistory}
           onDelete={handleDeleteHistory}
           onClear={handleClearHistory}
+          onToggleFavorite={handleToggleFavorite}
         />
         <LibraryDrawer
           visible={libraryDrawerVisible}
           groups={libraryGroups}
+          favorites={favorites}
           onClose={() => setLibraryDrawerVisible(false)}
           onApply={handleApplyLibrary}
+          onToggleFavorite={handleToggleFavorite}
         />
 
         <BottomSheet visible={menuVisible} onClose={closeMenu} title="更多">

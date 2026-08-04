@@ -18,8 +18,10 @@ import { BottomSheet } from "./BottomSheet";
 interface LibraryDrawerProps {
   visible: boolean;
   groups: LibraryGroup[];
+  favorites: string[];
   onClose: () => void;
   onApply: (entry: WordHistoryEntry) => void;
+  onToggleFavorite: (id: string) => void;
 }
 
 /** Approximate height of the search row (input + gap) for ScrollView budgeting. */
@@ -66,8 +68,10 @@ function filterLibraryGroups(
 export function LibraryDrawer({
   visible,
   groups,
+  favorites,
   onClose,
   onApply,
+  onToggleFavorite,
 }: LibraryDrawerProps) {
   const colors = useThemeColors();
   const [query, setQuery] = useState("");
@@ -86,6 +90,7 @@ export function LibraryDrawer({
     () => filterLibraryGroups(groups, query),
     [groups, query],
   );
+  const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
   const totalCount = groups.reduce((n, g) => n + g.items.length, 0);
   const filteredCount = filteredGroups.reduce((n, g) => n + g.items.length, 0);
   const isFiltering = query.trim().length > 0;
@@ -219,7 +224,9 @@ export function LibraryDrawer({
                           },
                         ]}
                       >
-                        {group.items.map((item, idx) => (
+                        {group.items.map((item, idx) => {
+                          const favorited = favoriteSet.has(item.entry.id);
+                          return (
                           <TouchableOpacity
                             key={item.entry.id}
                             style={[
@@ -255,8 +262,25 @@ export function LibraryDrawer({
                             >
                               {wordCount(item.entry.text)}
                             </Text>
+                            <TouchableOpacity
+                              style={styles.starBtn}
+                              onPress={() => onToggleFavorite(item.entry.id)}
+                              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                              activeOpacity={0.6}
+                              accessibilityRole="button"
+                              accessibilityLabel={
+                                favorited ? "取消收藏" : "收藏"
+                              }
+                            >
+                              <Ionicons
+                                name={favorited ? "star" : "star-outline"}
+                                size={18}
+                                color={favorited ? colors.gold : colors.subtle}
+                              />
+                            </TouchableOpacity>
                           </TouchableOpacity>
-                        ))}
+                          );
+                        })}
                       </View>
                     ) : null}
                   </View>
@@ -339,6 +363,9 @@ const styles = StyleSheet.create({
   },
   itemMeta: {
     fontSize: 11,
+    marginLeft: spacing.sm,
+  },
+  starBtn: {
     marginLeft: spacing.sm,
   },
 });

@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { DEFAULT_HISTORY, type DefaultHistoryItem } from "./defaultHistory";
+import { LIBRARY_ITEMS, type LibraryItem } from "./library";
 import { parseWords, speakTextFromEntry } from "./dictation";
 
 const WRONG_WORDS_KEY = "dictation_wrong_words";
 const WORD_INPUT_KEY = "dictation_word_input";
 const WORD_HISTORY_KEY = "dictation_word_history";
-/** Cap for user-added history entries. Defaults live in code, not storage. */
+const FAVORITES_KEY = "dictation_favorites";
+/** Cap for user-added history entries. Built-in lists live in code, not storage. */
 const MAX_USER_HISTORY_ENTRIES = 50;
 
 export interface WordHistoryEntry {
@@ -18,31 +19,38 @@ export interface WordHistoryEntry {
   enrichedText?: string;
 }
 
-export function isDefaultHistoryId(id: string): boolean {
+/** True for ids belonging to built-in library entries. The `default_` prefix is
+ *  kept for backwards compatibility with older installs that persisted rows. */
+export function isLibraryId(id: string): boolean {
   return id.startsWith("default_");
 }
 
 /**
  * Built-in library grouped by category, for the 词库 drawer.
- * Source of truth is DEFAULT_HISTORY (bundled in code); never mutated.
+ * Source of truth is LIBRARY_ITEMS (bundled in code); never mutated.
  */
 export interface LibraryGroup {
   category: string;
-  items: DefaultHistoryItem[];
+  items: LibraryItem[];
 }
 
 export function getLibraryGroups(): LibraryGroup[] {
-  const map = new Map<string, DefaultHistoryItem[]>();
-  for (const item of DEFAULT_HISTORY) {
+  const map = new Map<string, LibraryItem[]>();
+  for (const item of LIBRARY_ITEMS) {
     if (!map.has(item.category)) map.set(item.category, []);
     map.get(item.category)!.push(item);
   }
   return [...map.entries()].map(([category, items]) => ({ category, items }));
 }
 
+/** Look up a built-in library item by its entry id. */
+export function getLibraryItemById(id: string): LibraryItem | undefined {
+  return LIBRARY_ITEMS.find((item) => item.entry.id === id);
+}
+
 /**
  * Normalize a word list for comparison: strip POS/meaning and keep speakable
- * headwords so enriched text still matches its plain default counterpart.
+ * headwords so enriched text still matches its plain library counterpart.
  */
 export function plainWordList(text: string): string {
   return parseWords(text)
@@ -51,10 +59,10 @@ export function plainWordList(text: string): string {
     .join("\n");
 }
 
-function matchesDefaultPlainText(text: string): boolean {
+function matchesLibraryText(text: string): boolean {
   const plain = plainWordList(text);
   if (!plain) return false;
-  return DEFAULT_HISTORY.some((h) => plainWordList(h.entry.text) === plain);
+  return LIBRARY_ITEMS.some((h) => plainWordList(h.entry.text) === plain);
 }
 
 function sanitizeEntry(item: unknown): WordHistoryEntry | null {
@@ -80,16 +88,16 @@ function sanitizeEntry(item: unknown): WordHistoryEntry | null {
 
 /**
  * Sanitize stored rows into clean user entries:
- * - drop default-ID rows (left over from older versions that persisted defaults)
+ * - drop library-id rows (left over from older versions that persisted defaults)
  * - drop rows whose text duplicates a built-in list
  * - cap to MAX_USER_HISTORY_ENTRIES
  */
 function toUserEntries(stored: WordHistoryEntry[]): WordHistoryEntry[] {
   return stored
-    .filter((e) => !isDefaultHistoryId(e.id))
-    .filter((e) => !matchesDefaultPlainText(e.text))
+    .filter((e) => !isLibraryId(e.id))
+    .filter((e) => !matchesLibraryText(e.text))
     .filter(
-      (e) => !(e.enrichedText && matchesDefaultPlainText(e.enrichedText)),
+      (e) => !(e.enrichedText && matchesLibraryText(e.enrichedText)),
     )
     .slice(0, MAX_USER_HISTORY_ENTRIES);
 }
@@ -151,7 +159,7 @@ export async function saveWordInput(value: string): Promise<void> {
 
 /**
  * Load USER history only. Built-in lists are served via getLibraryGroups().
- * Older installs that persisted default rows are healed automatically.
+ * Older installs that persisted library rows are healed automatically.
  */
 export async function loadWordHistory(): Promise<WordHistoryEntry[]> {
   try {
@@ -162,7 +170,7 @@ export async function loadWordHistory(): Promise<WordHistoryEntry[]> {
       ? parsed.map(sanitizeEntry).filter((e): e is WordHistoryEntry => e !== null)
       : [];
     const users = toUserEntries(stored);
-    // Heal storage if stale default rows were found.
+    // Heal storage if stale library rows were found.
     if (users.length !== stored.length) {
       await persistHistory(users);
     }
@@ -176,7 +184,7 @@ export async function addWordHistory(text: string): Promise<void> {
   const trimmed = text.trim();
   if (!trimmed) return;
   // Starting from a built-in list must not create a user row.
-  if (matchesDefaultPlainText(trimmed)) return;
+  if (matchesLibraryText(trimmed)) return;
   try {
     const users = await loadWordHistory();
     const existing = users.find(
@@ -203,17 +211,17 @@ export async function addWordHistory(text: string): Promise<void> {
 }
 
 /**
- * Attach enriched text to a *user* history entry. Default entries are ignored.
+ * Attach enriched text to a *user* history entry. Library entries are ignored.
  */
 export async function enrichHistoryEntry(
   originalText: string,
   enrichedText: string,
 ): Promise<void> {
   try {
-    if (matchesDefaultPlainText(originalText)) return;
+    if (matchesLibraryText(originalText)) return;
     const users = await loadWordHistory();
     const updated = users.map((e) =>
-      !isDefaultHistoryId(e.id) && e.text === originalText
+      !isLibraryId(e.id) && e.text === originalText
         ? { ...e, enrichedText }
         : e,
     );
@@ -224,10 +232,14 @@ export async function enrichHistoryEntry(
 }
 
 export async function deleteWordHistory(id: string): Promise<void> {
-  if (isDefaultHistoryId(id)) return;
+  if (isLibraryId(id)) return;
   try {
     const users = await loadWordHistory();
     await persistHistory(users.filter((e) => e.id !== id));
+    // Drop the favorite too so it doesn't dangle once its source is gone.
+    if (_cachedFavorites.includes(id)) {
+      await saveFavorites(_cachedFavorites.filter((x) => x !== id));
+    }
   } catch {
     // ignore
   }
@@ -236,7 +248,63 @@ export async function deleteWordHistory(id: string): Promise<void> {
 export async function clearWordHistory(): Promise<void> {
   try {
     await persistHistory([]);
+    // Keep library favorites; drop favorites pointing at deleted history rows.
+    const remaining = _cachedFavorites.filter((id) => isLibraryId(id));
+    if (remaining.length !== _cachedFavorites.length) {
+      await saveFavorites(remaining);
+    }
   } catch {
     // ignore
   }
+}
+
+// --- Favorites -------------------------------------------------------------
+// Favorites are stable entry ids: `default_<category>_<label>` for built-in
+// library items, or the generated timestamp id for user history entries.
+
+let _cachedFavorites: string[] = [];
+
+export function loadFavorites(): string[] {
+  return _cachedFavorites;
+}
+
+export async function loadPersistedFavorites(): Promise<string[]> {
+  try {
+    const data = await AsyncStorage.getItem(FAVORITES_KEY);
+    if (!data) {
+      _cachedFavorites = [];
+      return [];
+    }
+    const parsed = JSON.parse(data) as unknown;
+    const ids = Array.isArray(parsed)
+      ? parsed.filter((item): item is string => typeof item === "string")
+      : [];
+    _cachedFavorites = ids;
+    return ids;
+  } catch {
+    _cachedFavorites = [];
+    return [];
+  }
+}
+
+export async function saveFavorites(ids: string[]): Promise<void> {
+  _cachedFavorites = ids;
+  try {
+    await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
+  } catch {
+    // ignore
+  }
+}
+
+export function isFavorite(id: string): boolean {
+  return _cachedFavorites.includes(id);
+}
+
+/** Toggle favorite state for an entry id. Returns the new favorited state. */
+export async function toggleFavorite(id: string): Promise<boolean> {
+  const next = _cachedFavorites.includes(id)
+    ? _cachedFavorites.filter((x) => x !== id)
+    : [..._cachedFavorites, id];
+  await saveFavorites(next);
+  return next.includes(id);
 }

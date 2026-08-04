@@ -9,19 +9,24 @@ import {
 } from "react-native";
 
 import type { WordHistoryEntry } from "../lib/storage";
+import { getLibraryItemById, isLibraryId } from "../lib/storage";
 import { parseWords } from "../lib/dictation";
 import { radii, spacing } from "../lib/designTokens";
 import { useThemeColors } from "../lib/theme";
 import { BottomSheet } from "./BottomSheet";
 
-interface HistoryDrawerProps {
+interface FavoriteItem {
+  entry: WordHistoryEntry;
+  source: "library" | "history";
+  label: string;
+}
+
+interface FavoritesDrawerProps {
   visible: boolean;
-  history: WordHistoryEntry[];
   favorites: string[];
+  history: WordHistoryEntry[];
   onClose: () => void;
   onApply: (entry: WordHistoryEntry) => void;
-  onDelete: (id: string) => void;
-  onClear: () => void;
   onToggleFavorite: (id: string) => void;
 }
 
@@ -29,38 +34,57 @@ function wordCount(text: string): number {
   return parseWords(text).length;
 }
 
-export function HistoryDrawer({
+/** Resolve favorite ids into displayable items, skipping orphaned ids whose
+ *  source entry has been removed. */
+function resolveFavorites(
+  favorites: string[],
+  history: WordHistoryEntry[],
+): FavoriteItem[] {
+  const result: FavoriteItem[] = [];
+  for (const id of favorites) {
+    if (isLibraryId(id)) {
+      const libItem = getLibraryItemById(id);
+      if (libItem) {
+        result.push({
+          entry: libItem.entry,
+          source: "library",
+          label: `${libItem.category} · ${libItem.label}`,
+        });
+      }
+    } else {
+      const histEntry = history.find((e) => e.id === id);
+      if (histEntry) {
+        result.push({
+          entry: histEntry,
+          source: "history",
+          label: histEntry.text.replace(/\n/g, " "),
+        });
+      }
+    }
+  }
+  return result;
+}
+
+export function FavoritesDrawer({
   visible,
-  history,
   favorites,
+  history,
   onClose,
   onApply,
-  onDelete,
-  onClear,
   onToggleFavorite,
-}: HistoryDrawerProps) {
+}: FavoritesDrawerProps) {
   const colors = useThemeColors();
-  const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
+
+  const items = useMemo(
+    () => resolveFavorites(favorites, history),
+    [favorites, history],
+  );
 
   return (
     <BottomSheet
       visible={visible}
       onClose={onClose}
-      title={`历史记录 (${history.length})`}
-      headerRight={
-        history.length > 0 ? (
-          <TouchableOpacity
-            style={[styles.clearBtn, { backgroundColor: colors.dangerSoft }]}
-            onPress={onClear}
-            activeOpacity={0.7}
-            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-          >
-            <Text style={[styles.clearBtnText, { color: colors.dangerMuted }]}>
-              清空
-            </Text>
-          </TouchableOpacity>
-        ) : undefined
-      }
+      title={`收藏 (${items.length})`}
     >
       {(bodyMaxHeight) => (
         <ScrollView
@@ -70,21 +94,19 @@ export function HistoryDrawer({
           bounces={false}
           nestedScrollEnabled
         >
-          {history.length === 0 ? (
+          {items.length === 0 ? (
             <Text
               style={[
                 styles.empty,
                 { color: colors.subtle, backgroundColor: colors.surface },
               ]}
             >
-              尚无历史记录
+              尚无收藏
             </Text>
           ) : (
-            history.map((entry) => {
-              const favorited = favoriteSet.has(entry.id);
-              return (
+            items.map((item) => (
               <View
-                key={entry.id}
+                key={item.entry.id}
                 style={[
                   styles.item,
                   {
@@ -96,57 +118,52 @@ export function HistoryDrawer({
                 <TouchableOpacity
                   style={styles.itemContent}
                   onPress={() => {
-                    onApply(entry);
+                    onApply(item.entry);
                     onClose();
                   }}
                   activeOpacity={0.6}
                   accessibilityRole="button"
-                  accessibilityLabel={`载入历史记录 ${entry.text.slice(0, 20)}`}
+                  accessibilityLabel={`载入收藏 ${item.label}`}
                 >
                   <Text
                     style={[styles.itemText, { color: colors.foreground }]}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {entry.text.replace(/\n/g, " ")}
+                    {item.label}
                   </Text>
                 </TouchableOpacity>
                 <View style={styles.itemTrailing}>
                   <Text style={[styles.itemMeta, { color: colors.subtle }]}>
-                    {wordCount(entry.text)}
+                    {wordCount(item.entry.text)}
                   </Text>
+                  <View
+                    style={[
+                      styles.sourceBadge,
+                      {
+                        backgroundColor: colors.surfaceSunken,
+                        borderColor: colors.borderSubtle,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[styles.sourceBadgeText, { color: colors.subtle }]}
+                    >
+                      {item.source === "library" ? "词库" : "历史"}
+                    </Text>
+                  </View>
                   <TouchableOpacity
-                    onPress={() => onToggleFavorite(entry.id)}
+                    onPress={() => onToggleFavorite(item.entry.id)}
                     activeOpacity={0.6}
                     hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                     accessibilityRole="button"
-                    accessibilityLabel={
-                      favorited ? "取消收藏" : "收藏"
-                    }
+                    accessibilityLabel="取消收藏"
                   >
-                    <Ionicons
-                      name={favorited ? "star" : "star-outline"}
-                      size={18}
-                      color={favorited ? colors.gold : colors.subtle}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => onDelete(entry.id)}
-                    activeOpacity={0.6}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                    accessibilityRole="button"
-                    accessibilityLabel="删除"
-                  >
-                    <Ionicons
-                      name="close-circle"
-                      size={20}
-                      color={colors.subtle}
-                    />
+                    <Ionicons name="star" size={18} color={colors.gold} />
                   </TouchableOpacity>
                 </View>
               </View>
-              );
-            })
+            ))
           )}
         </ScrollView>
       )}
@@ -155,15 +172,6 @@ export function HistoryDrawer({
 }
 
 const styles = StyleSheet.create({
-  clearBtn: {
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: radii.xs,
-  },
-  clearBtnText: {
-    fontSize: 12,
-    fontWeight: "500",
-  },
   listContent: {
     gap: spacing.sm,
     paddingBottom: spacing.sm,
@@ -200,5 +208,15 @@ const styles = StyleSheet.create({
   },
   itemMeta: {
     fontSize: 11,
+  },
+  sourceBadge: {
+    paddingHorizontal: spacing.xs + 2,
+    paddingVertical: 2,
+    borderRadius: radii.xs,
+    borderWidth: 1,
+  },
+  sourceBadgeText: {
+    fontSize: 10,
+    fontWeight: "500",
   },
 });

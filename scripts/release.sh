@@ -21,8 +21,11 @@
 #   pnpm release:android 0.3.0        # set explicit version then release
 #   bash scripts/release.sh patch     # same, directly
 #
-# Prereqs: EAS CLI authenticated, Java 17+ / Android SDK for --local builds,
+# Prereqs: EAS CLI authenticated, Java 17 or 21 (NOT 25+ — JEP 472 breaks AGP
+#          CMake configure) / Android SDK for --local builds,
 #          SSH key auth to the deploy server (BatchMode).
+#          This script auto-selects Android Studio's JBR (JDK 21) or Homebrew
+#          openjdk@17 when JAVA_HOME is unset.
 #
 # NOTE: The QR code is intentionally NOT touched — it encodes the stable
 # URL https://alice.edao.plus/#download, so it never needs regenerating.
@@ -74,6 +77,22 @@ REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/var/www/alice}"
 PUBLIC_HOST="https://alice.edao.plus"
 WEBSITE_DIR="$ROOT/website"
 APK_PUBLIC_DIR="$WEBSITE_DIR/public/downloads"
+
+# --- JDK for Gradle / EAS --local ---
+# JDK 25+ restricts native access in java.lang.System (JEP 472) and breaks
+# AGP's CMake configure step ("A restricted method in java.lang.System has
+# been called"). Pick Android Studio's bundled JBR (JDK 21), then Homebrew
+# openjdk@17, before falling back to whatever java is on PATH.
+if [ -z "${JAVA_HOME:-}" ]; then
+  JBR="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+  HB17="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+  if [ -d "$JBR" ]; then
+    export JAVA_HOME="$JBR"
+  elif [ -d "$HB17" ]; then
+    export JAVA_HOME="$HB17"
+  fi
+fi
+echo "  JDK: ${JAVA_HOME:-(system java on PATH — needs JDK 17/21; JDK 25+ will fail)}"
 
 # --- 0. optional version bump ---
 if [ -n "$VERSION_ARG" ]; then
