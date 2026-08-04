@@ -19,7 +19,10 @@
 
 ## 功能
 
-- 粘贴英文单词列表 / 拍照 OCR 识别（Android 默认智谱 GLM-4V；支持自定义 OCR 服务商；Web 版需自备 API Key）
+- 粘贴英文单词列表 / 拍照 OCR 识别（内置智谱 GLM-4V 双档模型；支持自定义 OCR 服务商；Web 版需自备 API Key）
+- 识别模型分档：免费档（GLM-4V Flash）无限使用，高级档（GLM-4V Plus）消耗 Credits
+- Credits 充值：购买充值包，余额本地持久化，仅成功识别才扣减
+- AI 识图可能存在误差，识别入口均有提示
 - 内置教材词库：中考 1600、高考 3500、人教 / 外研 / 闽教版单元词表，支持搜索
 - 可调间隔、自动播放下一个
 - 显示 / 隐藏当前单词，词性与释义提示
@@ -64,7 +67,7 @@ pnpm --filter website dev
 | `DEPLOY_SERVER` | 发布脚本的部署目标（`user@host`） | 仅发版需要 |
 | `DEPLOY_REMOTE_DIR` | 服务器上的站点目录 | 仅发版需要 |
 
-非敏感配置在 `app.json` 的 `expo.extra` 中（`zhipuBaseUrl`、`visionModel`）。
+非敏感配置在 `app.json` 的 `expo.extra` 中（`zhipuBaseUrl`、`visionModel` 默认模型）。识别模型分档选择与 Credits 余额在应用内管理（设置 → 识别模型 / 充值），存储于设备本地。
 
 云端 CI 构建（GitHub Actions → EAS）不读取本地 `.env`，需在 [EAS 环境变量](https://docs.expo.dev/eas/environment-variables/) 中配置同名变量。
 
