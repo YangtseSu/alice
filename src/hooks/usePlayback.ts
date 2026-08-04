@@ -339,6 +339,27 @@ export function usePlayback({
     startFrom(nextIndex, "speak1");
   }, [abortCycle, clearCountdown, startFrom, updatePlayState]);
 
+  const goToPreviousWord = useCallback(() => {
+    if (
+      playStateRef.current !== "playing" &&
+      playStateRef.current !== "paused"
+    ) {
+      return;
+    }
+
+    const prevIndex = Math.max(0, currentIndexRef.current - 1);
+    playGenRef.current += 1;
+    abortCycle();
+    clearCountdown();
+    stopSpeech();
+
+    currentIndexRef.current = prevIndex;
+    if (playStateRef.current === "paused") {
+      updatePlayState("playing");
+    }
+    startFrom(prevIndex, "speak1");
+  }, [abortCycle, clearCountdown, startFrom, updatePlayState]);
+
   const isDictationPlaying = useCallback(() => {
     return playStateRef.current === "playing";
   }, []);
@@ -400,5 +421,6 @@ export function usePlayback({
     resumeDictation,
     stopDictation,
     skipToNextWord,
+    goToPreviousWord,
   };
 }

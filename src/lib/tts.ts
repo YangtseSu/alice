@@ -9,10 +9,11 @@ import { Platform } from "react-native";
 
 import { speakTextFromEntry } from "./dictation";
 import { createLogger } from "./logger";
+import { DEFAULT_SPEECH_RATE } from "./storage";
 
 const log = createLogger("TTS");
 
-const TTS_SPEED = 0.9;
+let currentSpeechRate = DEFAULT_SPEECH_RATE;
 const MIN_AUDIO_BYTES = 256;
 const CACHE_DIR_NAME = "tts";
 const DOWNLOAD_HEADERS = {
@@ -198,6 +199,10 @@ export async function clearTtsCache(): Promise<number> {
 // Playback
 // ---------------------------------------------------------------------------
 
+export function setSpeechRate(rate: number): void {
+  currentSpeechRate = rate;
+}
+
 export async function stopSpeech(): Promise<void> {
   if (currentAbort) {
     currentAbort.abort();
@@ -309,7 +314,7 @@ async function speakWithSystemTts(
 
     Speech.speak(text, {
       language: "en-US",
-      rate: TTS_SPEED,
+      rate: currentSpeechRate,
       onDone: () => finish(true),
       onStopped: () => finish(false),
       onError: () => finish(false),

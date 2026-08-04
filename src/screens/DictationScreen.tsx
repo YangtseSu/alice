@@ -91,6 +91,7 @@ export function DictationScreen({
 
   const isActive =
     playback.playState === "playing" || playback.playState === "paused";
+  const previousEnabled = isActive && playback.currentIndex > 0;
 
   const handlePlayToggle = useCallback(() => {
     if (playback.playState === "playing") {
@@ -121,6 +122,12 @@ export function DictationScreen({
     tapLight();
     playback.skipToNextWord();
   }, [playback, skipEnabled]);
+
+  const handlePrevious = useCallback(() => {
+    if (!previousEnabled) return;
+    tapLight();
+    playback.goToPreviousWord();
+  }, [playback, previousEnabled]);
 
   const dialPanResponder = useMemo(
     () =>
@@ -656,6 +663,20 @@ export function DictationScreen({
                 结束
               </Text>
             </View>
+            <View style={[styles.controlItem, styles.controlItemSide]}>
+              <IconButton
+                icon="play-skip-back"
+                size={48}
+                variant="surface"
+                onPress={handlePrevious}
+                haptic={false}
+                disabled={!previousEnabled}
+                accessibilityLabel="上一个"
+              />
+              <Text style={[styles.controlLabel, { color: colors.muted }]}>
+                上一个
+              </Text>
+            </View>
             <View style={styles.controlItem}>
               <IconButton
                 icon={playback.playState === "playing" ? "pause" : "play"}
@@ -678,10 +699,10 @@ export function DictationScreen({
                 onPress={handleSkip}
                 haptic={false}
                 disabled={!skipEnabled}
-                accessibilityLabel="跳过"
+                accessibilityLabel="下一个"
               />
               <Text style={[styles.controlLabel, { color: colors.muted }]}>
-                跳过
+                下一个
               </Text>
             </View>
           </View>
@@ -918,7 +939,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
-    gap: spacing["2xl"] + spacing.lg,
+    gap: spacing.lg,
   },
   controlItem: {
     alignItems: "center",

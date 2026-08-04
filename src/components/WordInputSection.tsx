@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useCallback, useMemo } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,7 +9,12 @@ import {
   View,
 } from "react-native";
 
-import { parseWords, parseWordLine } from "../lib/dictation";
+import {
+  parseWords,
+  parseWordLine,
+  parseWordEntries,
+  entryToLine,
+} from "../lib/dictation";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { useThemeColors } from "../lib/theme";
 import { Button } from "./Button";
@@ -36,6 +42,24 @@ export function WordInputSection({
   const parsedWords = useMemo(() => parseWords(value), [value]);
   const wordCount = parsedWords.length;
   const effectiveDisplayMode = isDisplayMode && wordCount > 0;
+
+  const handleDeleteWord = useCallback(
+    (index: number) => {
+      const entries = parseWordEntries(value);
+      if (index < 0 || index >= entries.length) return;
+      entries.splice(index, 1);
+      const nextValue = entries.map(entryToLine).join("\n");
+      onChange(nextValue);
+
+      if (index < startIndex) {
+        onStartIndexChange(startIndex - 1);
+      } else if (index === startIndex) {
+        const nextStart = Math.min(startIndex, Math.max(0, entries.length - 1));
+        onStartIndexChange(nextStart);
+      }
+    },
+    [value, startIndex, onChange, onStartIndexChange],
+  );
 
   return (
     <View style={styles.container}>
@@ -106,6 +130,20 @@ export function WordInputSection({
                       style={[styles.cursorBar, { backgroundColor: colors.primary }]}
                     />
                   )}
+                  <TouchableOpacity
+                    style={styles.deleteBtn}
+                    onPress={() => handleDeleteWord(idx)}
+                    hitSlop={8}
+                    activeOpacity={0.6}
+                    accessibilityRole="button"
+                    accessibilityLabel={`删除 ${entry.word}`}
+                  >
+                    <Ionicons
+                      name="close-circle"
+                      size={20}
+                      color={colors.subtle}
+                    />
+                  </TouchableOpacity>
                 </TouchableOpacity>
               );
             })}
@@ -224,5 +262,9 @@ const styles = StyleSheet.create({
     width: 3,
     height: 20,
     borderRadius: 2,
+  },
+  deleteBtn: {
+    padding: spacing.xs,
+    marginLeft: spacing.xs,
   },
 });

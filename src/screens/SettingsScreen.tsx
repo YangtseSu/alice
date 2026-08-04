@@ -17,6 +17,7 @@ import { IconButton } from "../components/Button";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { OcrSettingsModal } from "../components/OcrSettingsModal";
 import { RechargeModal } from "../components/RechargeModal";
+import { Slider } from "../components/Slider";
 import { Toast } from "../components/Toast";
 import { useOcrQuota } from "../hooks/useOcrQuota";
 import { useToast } from "../hooks/useToast";
@@ -24,6 +25,14 @@ import { getBuiltinModel, saveSelectedModelId, type CreditPack } from "../lib/cr
 import { loadSoundEnabled, setSoundEnabled } from "../lib/sound";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { OCR_DISCLAIMER } from "../lib/ocr";
+import {
+  DEFAULT_SPEECH_RATE,
+  MAX_SPEECH_RATE,
+  MIN_SPEECH_RATE,
+  loadSpeechRate,
+  saveSpeechRate,
+} from "../lib/storage";
+import { setSpeechRate } from "../lib/tts";
 import {
   isCustomOcrConfigSet,
   loadOcrProviderConfig,
@@ -61,14 +70,26 @@ export function SettingsScreen() {
   const { mode, setMode } = useThemeMode();
   const { toast, showToast, hideToast } = useToast();
   const [soundOn, setSoundOn] = useState(true);
+  const [speechRate, setSpeechRateState] = useState(DEFAULT_SPEECH_RATE);
 
   useEffect(() => {
     loadSoundEnabled().then(setSoundOn);
+    loadSpeechRate().then((rate) => {
+      setSpeechRateState(rate);
+      setSpeechRate(rate);
+    });
   }, []);
 
   const handleToggleSound = useCallback((value: boolean) => {
     setSoundOn(value);
     setSoundEnabled(value);
+  }, []);
+
+  const handleSpeechRateChange = useCallback((value: number) => {
+    const rounded = Math.round(value * 10) / 10;
+    setSpeechRateState(rounded);
+    setSpeechRate(rounded);
+    saveSpeechRate(rounded).catch(() => {});
   }, []);
 
   const [customOcrConfig, setCustomOcrConfig] =
@@ -322,6 +343,39 @@ export function SettingsScreen() {
               thumbColor={soundOn ? colors.primary : colors.background}
             />
           </View>
+          <View
+            style={[
+              styles.row,
+              {
+                borderTopWidth: StyleSheet.hairlineWidth,
+                borderTopColor: colors.borderSubtle,
+              },
+            ]}
+          >
+            <Ionicons
+              name="speedometer-outline"
+              size={18}
+              color={colors.secondary}
+            />
+            <Text style={[styles.rowLabel, { color: colors.foreground }]}>
+              语速
+            </Text>
+            <Text
+              style={[styles.rowDetail, { color: colors.muted }]}
+              accessibilityLabel={`当前语速 ${speechRate.toFixed(1)}`}
+            >
+              {speechRate.toFixed(1)}x
+            </Text>
+          </View>
+          <View style={styles.sliderRow}>
+            <Slider
+              min={MIN_SPEECH_RATE}
+              max={MAX_SPEECH_RATE}
+              step={0.1}
+              value={speechRate}
+              onValueChange={handleSpeechRateChange}
+            />
+          </View>
         </View>
 
         {/* Other sections */}
@@ -544,5 +598,9 @@ const styles = StyleSheet.create({
   disclaimerText: {
     fontSize: 11,
     flexShrink: 1,
+  },
+  sliderRow: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
   },
 });

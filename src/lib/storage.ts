@@ -7,8 +7,12 @@ const WRONG_WORDS_KEY = "dictation_wrong_words";
 const WORD_INPUT_KEY = "dictation_word_input";
 const WORD_HISTORY_KEY = "dictation_word_history";
 const FAVORITES_KEY = "dictation_favorites";
+const SPEECH_RATE_KEY = "dictation_speech_rate";
 /** Cap for user-added history entries. Built-in lists live in code, not storage. */
 const MAX_USER_HISTORY_ENTRIES = 50;
+export const DEFAULT_SPEECH_RATE = 0.9;
+export const MIN_SPEECH_RATE = 0.5;
+export const MAX_SPEECH_RATE = 1.5;
 
 export interface WordHistoryEntry {
   id: string;
@@ -307,4 +311,27 @@ export async function toggleFavorite(id: string): Promise<boolean> {
     : [..._cachedFavorites, id];
   await saveFavorites(next);
   return next.includes(id);
+}
+
+export function clampSpeechRate(rate: number): number {
+  return Math.max(MIN_SPEECH_RATE, Math.min(MAX_SPEECH_RATE, rate));
+}
+
+export async function loadSpeechRate(): Promise<number> {
+  try {
+    const data = await AsyncStorage.getItem(SPEECH_RATE_KEY);
+    if (!data) return DEFAULT_SPEECH_RATE;
+    const parsed = parseFloat(data);
+    return Number.isFinite(parsed) ? clampSpeechRate(parsed) : DEFAULT_SPEECH_RATE;
+  } catch {
+    return DEFAULT_SPEECH_RATE;
+  }
+}
+
+export async function saveSpeechRate(rate: number): Promise<void> {
+  try {
+    await AsyncStorage.setItem(SPEECH_RATE_KEY, String(clampSpeechRate(rate)));
+  } catch {
+    // ignore
+  }
 }
