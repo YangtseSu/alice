@@ -167,7 +167,13 @@ else
   echo "  no APK on server yet → upload"
 fi
 
-rsync -avz --delete "${RSYNC_EXCLUDES[@]}" "$WEBSITE_DIR/dist/" "$SERVER:$REMOTE_DIR/"
+# --partial: keep partially-transferred files so a retry can resume instead of
+#   re-uploading the ~110 MB APK from scratch.
+# ServerAliveInterval/CountMax + TCPKeepAlive: prevent the idle SSH connection
+#   from being dropped mid-transfer (the original failure cause).
+rsync -avz --delete --partial \
+  -e "ssh -o BatchMode=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o TCPKeepAlive=yes" \
+  "${RSYNC_EXCLUDES[@]}" "$WEBSITE_DIR/dist/" "$SERVER:$REMOTE_DIR/"
 # --- 6. verify ---
 echo "▶ [6/6] Verifying..."
 ssh -o BatchMode=yes "$SERVER" \

@@ -61,7 +61,11 @@ fi
 
 echo "▶ [2/2] Deploying to $SERVER:$APP_REMOTE..."
 ssh -o BatchMode=yes "$SERVER" "mkdir -p '$APP_REMOTE'"
-rsync -avz --delete "$DIST_DIR/" "$SERVER:$APP_REMOTE/"
+# --partial + SSH keepalive: see release.sh for rationale (prevents mid-transfer
+#   drops and lets retries resume).
+rsync -avz --delete --partial \
+  -e "ssh -o BatchMode=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o TCPKeepAlive=yes" \
+  "$DIST_DIR/" "$SERVER:$APP_REMOTE/"
 
 echo ""
 echo "✓ Web app deployed"
