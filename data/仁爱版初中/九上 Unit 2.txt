@@ -1,45 +1,45 @@
-raincoat
-wooden
-lock
-umbrella
-lover
-inventor
-bulb
-certainly
-Greek
-philosopher
-image
-discovery
-gunpowder
-paper-making
-compass
-position
-fishing
-net
-sailor
-magnetic
-needle
-disk
-war
-movable
-print
-drug
-broaden
-woolen
-sharp
-passport
-airplane
-stamp
-balloon
-lamp
-wheel
-jeans
-daydream
-moreover
-imaginative
-awake
-Egyptian
-nail
-testing
-wake
-prize
+raincoat | n | 雨衣
+wooden | adj | 木制的 木头的
+lock | n | 锁
+umbrella | n | 雨伞
+lover | n | 爱好者 热爱者
+inventor | n | 发明家
+bulb | n | 电灯泡
+certainly | adv | 无疑 肯定
+Greek | adj | 希腊的
+philosopher | n | 哲学家
+image | n | 图像 影像
+discovery | n | 发现 发觉
+gunpowder | n | 火药
+paper-making | n | 造纸术
+compass | n | 罗盘 指南针
+position | n | 地位 等级 位置
+fishing | n | 钓鱼 捕鱼业
+net | n | 网 网状物
+sailor | n | 水手 海员
+magnetic | adj | 有磁性的 磁的
+needle | n | 针
+disk | n | 圆盘 磁盘
+war | n | 战争
+movable | adj | 可移动的
+print | v | 印刷 打印
+drug | n | 药 药物
+broaden | v | 增长 变宽 变阔
+woolen | adj | 羊毛的 毛线的
+sharp | adj | 锋利的 尖锐的
+passport | n | 护照
+airplane | n | 飞机
+stamp | n | 邮票
+balloon | n | 气球 热气球
+lamp | n | 灯
+wheel | n | 轮 车轮 轮子
+jeans | n | 牛仔裤
+daydream | n | 白日梦 幻想 空想
+moreover | adv | 此外 而且
+imaginative | adj | 富于想象力的 创新的
+awake | adj | 醒着的
+Egyptian | adj | 埃及的 埃及人的 埃及人
+nail | n | 钉 钉子
+testing | n | 试验 测试 检查
+wake | v | 醒 醒来 唤醒 弄醒
+prize | n | 奖 奖赏 奖品

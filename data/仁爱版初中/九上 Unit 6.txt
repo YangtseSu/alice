@@ -1,57 +1,56 @@
-iron
-winner
-physics
-honorable
-devoted
-missile
-forever
-admire
-institute
-observe
-signal
-award
-X-ray
-designer
-failure
-army
-talented
-general
-knowledgeable
-agriculture
-hybrid
-interestingly
-greatness
-recognise
-deer
-researcher
-developer
-refer
-behave
-whom
-refuse
-unluckily
-cleaner
-poverty
-settle
-secretary
-doubt
-patience
-platform
-lift
-sunshine
-organise
-tricycle
-protector
-countless
-athlete
-gold
-talent
-homemade
-gun
-shooter
-coach
-career
-Asian
-excellence
-nickname
-victory
+iron | adj | 坚强的 强硬坚定的 铁
+winner | n | 获胜的人
+physics | n | 物理学
+honorable | n, adj | 可敬的 值得钦佩的
+devoted | adj | 全心全意的
+missile | n | 导弹
+forever | adv | 永远 长久地
+admire | v | 钦佩 赞赏 仰慕
+observe | v | 观察 注意到
+signal | n | 信号 暗号
+award | n | 奖 奖项 授予 颁发
+X-ray | n | 射线 光
+designer | n | 设计者
+failure | n | 失败
+army | n | 军队 陆军
+talented | adj | 有才能的 天才的
+general | n | 将军 普遍的 大体的
+knowledgeable | n, adj | 博学的 有见识的 知识渊博的
+agriculture | n | 农业
+hybrid | n | 杂交植物
+interestingly | adv | 有趣的是
+greatness | n | 伟大 巨大
+recognise | v | 赞赏 认可 认出
+deer | pl, n | 鹿
+researcher | n | 研究者 探索者
+developer | n | 开发者 研制者
+refer | v | 参考 提到
+behave | v | 表现
+whom | pron | 谁 什么人
+refuse | v | 拒绝 回绝
+unluckily | adv | 不幸地 倒霉地
+cleaner | n | 清洁工
+poverty | v, n | 贫穷 贫困 贫乏
+settle | v | 定居 使处于舒适的位置 安排好
+secretary | n | 秘书
+doubt | v | 怀疑 不相信
+patience | n | 耐心
+platform | n | 平台
+lift | v | 被 抬高 举起 高兴起来 使更愉快 解除 停止
+sunshine | n | 阳光
+organise | v | 组织 筹备
+tricycle | n | 三轮脚踏车
+protector | n | 保护人
+countless | adj | 无数的 数不尽的
+athlete | n | 运动员
+gold | n | 金 黄金制品 金色的
+talent | n | 天才 天赋 人才
+homemade | adj | 自制的 家里做的
+gun | n | 枪 炮
+shooter | n | 射手
+coach | n | 教练 训练 培训
+career | n | 生涯 职业
+Asian | adj | 亚洲的 亚洲人
+excellence | n | 优秀 杰出 卓越
+nickname | n | 绰号 外号
+victory | n | 胜利 成功

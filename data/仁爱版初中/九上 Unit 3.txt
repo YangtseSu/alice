@@ -1,44 +1,44 @@
-pollution
-union
-awareness
-whale
-dolphin
-giraffe
-everywhere
-several
-eagle
-sort
-journalist
-interview
-environmental
-organization
-instruction
-pardon
-recycle
-trash
-toilet
-ant
-donate
-charity
-loudspeaker
-negative
-blood
-wastebin
-bin
-grey
-besides
-correctly
-cooperate
-ever
-found
-medal
-honour
-introduction
-suffer
-carbon
-tick
-packaging
-cloth
-greening
-process
-lung
+pollution | n | 污染
+union | n | 同盟 联盟
+awareness | n | 知道 认识 意识 兴趣
+whale | n | 鲸
+dolphin | n | 海豚
+giraffe | n | 长颈鹿
+everywhere |  | 处处 到处 各个地方
+several | pron | 几个 数个
+eagle | n | 雕 鹰
+sort | v | 整理 把 分类 种类 类别
+journalist | n | 新闻 记者 新闻工作者
+interview | v, n | 面试 采访
+environmental | adj | 自然 环境的
+organization | n | 组织 团体 机构
+instruction | n | 用法说明 操作
+pardon | interj | 什么 指南 请再说一遍 宽恕
+recycle | v | 回收利用 再利用
+trash | n | 垃圾 废弃物
+toilet | n | 厕所 卫生间 盥洗室
+donate | v | 捐赠 赠送
+charity | n | 慈善机构 或组织 慈善事业
+loudspeaker | n | 扬声器 扩音器 喇叭
+negative | adj | 坏的 有害的
+blood | n | 血
+wastebin | n | 垃圾箱 垃圾桶
+bin | n | 垃圾箱
+grey | adj | 灰色的 灰白色的
+besides | adv | 此外 而且
+correctly | adv | 准确无误地 正确地 恰当地
+cooperate |  | 合作 协作
+ever | adv | 曾经 在任何时候 从来
+found | v | 创建 创办
+medal | n | 奖章
+honour | n, v | 尊敬 尊重
+introduction | n | 介绍 序言 引言 导论
+ant | n | 蚂蚁
+suffer | v | 因疾病 痛苦等 、 受苦 受折磨 遭受
+carbon | n | 碳
+tick | v | 打对号 标记号
+packaging | n | 外包装 包装材料
+cloth | n | 织物 布料
+greening | n | 绿化
+process | n | 过程 进程
+lung | n | 肺

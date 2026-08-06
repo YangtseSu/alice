@@ -1,32 +1,31 @@
-path
-diversion
-radio
-underwater
-surprise
-waiter
-self
-decision
-exactly
-completely
-test
-engineering
-closely
-achieve
-navigation
-GPS
-technological
-aim
-pacific
-level
-compete
-experimental
-launch
-virtual
-trait
-charge
-electric
-glance
-AI
-jump
-secondly
-Olympic
+path | n | 小路 小径
+diversion | n | 转移 转向
+radio | n | 无线电传送 收音机
+underwater | adj | 水下的 用于水下的 水下发生的
+surprise | v | 使惊奇 使诧异 使感到意外 惊奇 惊讶 意外
+waiter | n | 服务员
+self | n | 自己 本人 个性 自我
+decision | n | 决定 抉择
+exactly | adv | 精确地 准确地 确切地
+completely | adv | 彻底地 完全地 完整地
+test | n | 医疗上的 检查 化验 检验 测验 考察
+engineering | n | 工程 工程学
+closely | adv | 密切地 接近地 靠近地
+achieve | v | 达到 完成 成功
+navigation | n | 导航
+technological | adj | 技术的
+aim | n | 目的 目标 力求达到 目的是
+pacific | n | 太平洋
+level | n | 标准 水平 高度
+compete | v | 竞争 参加比赛 或竞赛
+experimental | adj | 以实验为 基础的 实验性的
+launch | v | 发射 启动
+virtual | v, adj | 虚拟的 模拟的
+trait | n | 特征 特性
+charge | v | 给 充电
+electric | adj | 电的 用电的 电动的
+glance | n | 匆匆一看 一瞥
+AI | n | 人工智能
+jump | v | 跳跃
+secondly | adv | 用于列举 第二 其次
+Olympic | adj | 奥林匹克运动会的

@@ -1,56 +1,52 @@
-Russian
-German
-castle
-matryoshka
-doll
-official
-brain
-either
-Japanese
-bow
-wave
-goodbye
-nod
-agreement
-opposite
-finger
-deaf
-spell
-expression
-infer
-lyric
-underline
-circle
-imitate
-comprehend
-native
-speaker
-imitation
-tongue
-gentleman
-tour
-widely
-leader
-industry
-Spanish
-population
-sixth
-thankful
-tourism
-unbelievable
-accent
-forecast
-noun
-pie
-pear
-wolf
-teenage
-cent
-contest
-primary
-grammar
-challenging
-influence
-differently
-rose
-pronounce
+Russian | n | 俄语
+German | n | 德语 德国的 德国人的
+castle | n | 城堡
+official | adj | 官方的 正式的
+brain | n | 脑
+either | adv | 也 两者中的 任何一个
+bow | v | 鞠躬 点头
+wave | v | 挥手 招手 摆手
+nod | n, v | 点头 再见 再会
+agreement | n | 协定 协议 应允 同意 一致
+opposite | n | 对立面 对立的人 或物
+finger | n | 手指
+deaf | adj | 聋的
+spell | v | 拼写
+expression | n | 表情 神色 词语 表达方式
+infer | v | 推断 推论 推理
+lyric | n | 歌词
+underline | v | 在 下面画线 ……
+circle | v | 把 圈起来 ……
+imitate | v | 模仿 仿效
+comprehend | v | 理解 领悟
+native | adj | 本土的 本地的
+speaker | n | 发言者 演讲者 讲 某某语言 的人
+imitation | n | 模仿 效仿
+tongue | n | 语言 舌头
+gentleman | pl, n | 先生 彬彬有礼的人
+tour | n | 旅行 旅游
+widely | adv | 普遍地 广泛地 范围广地
+leader | n | 领导者 领袖 首领
+industry | n | 工业 生产制造
+Spanish | n | 西班牙语 西班牙的
+population | n | 人口
+sixth | ordinal, num | 第六
+thankful | adj | 感激 感谢 欣慰
+tourism | n | 旅游业 观光业
+unbelievable | adj | 难以置信的
+accent | n | 口音
+forecast | n | 预报 预测
+noun | n | 名词
+pie | n | 派 馅饼
+pear | n | 梨
+wolf | pl, n | 狼
+teenage | adj | 青少年的 十几岁的
+cent | n | 分
+contest | n | 比赛 竞赛
+primary | adj | 小学的 基本的
+grammar | n | 语法
+challenging | adj | 挑战性的
+influence | v | 影响 支配 影响 作用
+differently | adv | 不同地 有区别地
+rose | n | 玫瑰
+pronounce | v | 发音 读 音

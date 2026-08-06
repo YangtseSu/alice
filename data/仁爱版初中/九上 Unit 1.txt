@@ -1,33 +1,33 @@
-leisure
-treatment
-nowadays
-recent
-international
-narrow
-block
-apartment
-improvement
-pleasure
-conclusion
-pleasant
-amusement
-shut
-pollute
-childhood
-laughter
-excite
-happiness
-remain
-comfort
-couple
-recently
-familiar
-entertainment
-jazz
-neighborhood
-rail
-complete
-network
-era
-probably
-false
+leisure | n | 休闲活动 空闲 闲暇
+treatment | n | 治疗 疗法 诊治
+nowadays | adv | 现今 现在 目前
+recent | adj | 近来的 最近的
+international | adj | 国际的
+narrow | adj | 狭窄的
+block | n | 大楼
+apartment | n | 公寓套房
+improvement | n | 改善 改进
+pleasure | n | 高兴 快乐 愉快
+conclusion | n | 结论 推论
+pleasant | adj | 令人愉快的 友好的
+amusement | n | 愉悦 好笑
+shut | v | 关闭 关上
+pollute | v | 污染
+childhood | n | 童年 幼年 孩童 时期
+laughter | n | 笑 笑声
+excite | v | 使激动 使兴奋
+happiness | n | 快乐 高兴
+remain | v | 仍然是 保持不变 剩余
+comfort | n | 安慰 慰藉 舒服 安逸 安慰 宽慰
+couple | n | 少数人 或事物 夫妻
+recently | adv | 最近 不久前
+familiar | adj | 熟悉的 常见到的
+entertainment | n | 娱乐活动 娱乐
+jazz | n | 爵士乐
+neighborhood | n | 街区 城区
+rail | n | 铁路 铁道
+complete | v | 完成 结束
+network | n | 网络
+era | n | 时代 年代 纪元
+probably |  | 几乎肯定 很可能
+false | adj | 错误的 不真实的
