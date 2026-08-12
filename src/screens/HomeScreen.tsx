@@ -161,11 +161,21 @@ export function HomeScreen() {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       saveWordInput(wordInput);
+      // In display mode the input is considered finalised — sync it to
+      // history immediately so the user doesn't have to start dictation.
+      if (isDisplayMode) {
+        const enriched = enrichWordListText(wordInput);
+        if (parseWords(enriched).length > 0) {
+          addWordHistory(enriched).then(() =>
+            loadWordHistory().then(setHistory),
+          );
+        }
+      }
     }, WORD_INPUT_SAVE_DEBOUNCE_MS);
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [wordInput, ready]);
+  }, [wordInput, ready, isDisplayMode]);
 
   // Clamp startIndex when word count drops below current startIndex
   useEffect(() => {
