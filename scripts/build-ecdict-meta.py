@@ -85,7 +85,7 @@ def load_data_words() -> set[str]:
     return words
 
 
-def shorten_meaning(raw: str) -> str:
+def normalize_meaning(raw: str) -> str:
     text = (
         raw.replace("\\n", " ")
         .replace("\\r", " ")
@@ -95,26 +95,12 @@ def shorten_meaning(raw: str) -> str:
     )
     if not text:
         return text
-
-    # Prefer a useful chunk among semicolon-separated alternatives
-    chunks = [c.strip() for c in re.split(r"[；;]", text) if c.strip()]
-    if chunks:
-        useful = [c for c in chunks if not LETTER_NAME_RE.match(c)]
-        text = (useful or chunks)[0]
-
-    for sep in ("：", ":"):
-        i = text.find(sep)
-        if i != -1:
-            text = text[:i].strip()
-            break
-    # ECDICT often lists synonyms with ， — keep the first short sense
-    for sep in ("，", ","):
-        i = text.find(sep)
-        if i != -1:
-            text = text[:i].strip()
-            break
-    if len(text) > 40:
-        text = text[:40].strip()
+    # Sense 内部的分号统一转为逗号，确保「；」只作为义项分隔符
+    text = text.replace("；", "，").replace(";", "，")
+    text = re.sub(r"\s+", " ", text).strip()
+    # 宽松上限，仅防异常超长条目
+    if len(text) > 80:
+        text = text[:80].strip()
     return text
 
 
@@ -152,8 +138,10 @@ def parse_sense_line(line: str) -> tuple[str | None, str | None, int] | None:
         else:
             priority = 2
 
-    meaning = shorten_meaning(line)
+    meaning = normalize_meaning(line)
     if WEAK_FORM_RE.match(meaning or ""):
+        return None
+    if meaning and LETTER_NAME_RE.match(meaning):
         return None
     if not pos and not meaning:
         return None
@@ -161,7 +149,13 @@ def parse_sense_line(line: str) -> tuple[str | None, str | None, int] | None:
 
 
 def parse_translation(raw: str) -> tuple[str | None, str | None]:
-    """Return (pos, meaning) from an ECDICT translation field."""
+    """Return (pos, meaning) from an ECDICT translation field.
+
+    All senses are kept: the highest-priority sense supplies the POS, and
+    every sense's meaning is joined with「；」. Senses whose POS differs from
+    the main POS are prefixed inline (e.g. `n. 放任`) so each sense stays
+    self-describing.
+    """
     # ECDICT mixes real newlines with literal "\n" / "\r" separators.
     text = (
         (raw or "")
@@ -183,7 +177,16 @@ def parse_translation(raw: str) -> tuple[str | None, str | None]:
         return None, None
 
     senses.sort(key=lambda s: s[2], reverse=True)
-    return senses[0][0], senses[0][1]
+    main_pos = senses[0][0]
+    parts: list[str] = []
+    for pos, meaning, _ in senses:
+        if not meaning:
+            continue
+        if pos and pos != main_pos:
+            parts.append(f"{pos} {meaning}")
+        else:
+            parts.append(meaning)
+    return main_pos, "；".join(parts) if parts else None
 
 
 def is_weak(pos: str | None, meaning: str | None) -> bool:

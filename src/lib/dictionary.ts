@@ -25,25 +25,29 @@ const POS_PREFIX_RE =
   /^(n\.|v\.|vt\.|vi\.|adj\.|adv\.|prep\.|conj\.|pron\.|num\.|art\.|int\.|aux\.|abbr\.|contr\.|a\.)\s*/i;
 
 /**
- * Shorten a gloss to the first sense / a UI-friendly length.
+ * 仅做清理，保留完整释义（含多义项）。多义项以「；」分隔，由构建脚本保证。
  */
-function shortenMeaning(raw: string): string {
-  let text = raw.trim();
-  if (!text) return text;
+function normalizeMeaning(raw: string): string {
+  return raw.trim();
+}
 
-  const semi = text.search(/[；;]/);
-  if (semi !== -1) text = text.slice(0, semi).trim();
+/**
+ * 取释义的首个义项（按「；」/`;` 切分），用于默认折叠展示。
+ * 无分号时原样返回。
+ */
+export function firstSense(meaning: string): string {
+  const idx = meaning.search(/[；;]/);
+  return idx === -1 ? meaning.trim() : meaning.slice(0, idx).trim();
+}
 
-  const colon = text.search(/[：:]/);
-  if (colon !== -1) text = text.slice(0, colon).trim();
-
-  if (text.length > 40) {
-    const comma = text.search(/[，,]/);
-    if (comma > 0 && comma <= 40) text = text.slice(0, comma).trim();
-    else text = text.slice(0, 40).trim();
-  }
-
-  return text;
+/**
+ * 将多义项释义按「；」/`;` 拆成每个义项的数组。单义项返回长度为 1 的数组。
+ */
+export function splitSenses(meaning: string): string[] {
+  return meaning
+    .split(/[；;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 /**
@@ -62,7 +66,7 @@ function splitPosMeaning(raw: string): WordMeta | null {
     text = text.slice(posMatch[0].length).trim();
   }
 
-  text = shortenMeaning(text);
+  text = normalizeMeaning(text);
   if (!pos && !text) return null;
   return { pos, meaning: text || undefined };
 }
@@ -73,7 +77,7 @@ function decodeStored(raw: string): WordMeta | null {
   if (bar === -1) return splitPosMeaning(raw);
 
   const pos = raw.slice(0, bar).trim() || undefined;
-  const meaning = shortenMeaning(raw.slice(bar + 1));
+  const meaning = normalizeMeaning(raw.slice(bar + 1));
   if (!pos && !meaning) return null;
   return { pos, meaning: meaning || undefined };
 }

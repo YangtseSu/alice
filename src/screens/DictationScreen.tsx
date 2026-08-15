@@ -23,6 +23,7 @@ import { usePlayback } from "../hooks/usePlayback";
 import { useToast } from "../hooks/useToast";
 import { useWrongWords } from "../hooks/useWrongWords";
 import { parseWordLine, speakTextFromEntry } from "../lib/dictation";
+import { firstSense, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { notifySuccess, notifyWarning, tapLight } from "../lib/haptics";
 import { playChime, playTick } from "../lib/sound";
@@ -64,6 +65,7 @@ export function DictationScreen({
   const [autoNext, setAutoNext] = useState(initialAutoNext);
   const [exitDialogVisible, setExitDialogVisible] = useState(false);
   const [elapsedSec, setElapsedSec] = useState<number | null>(null);
+  const [metaExpanded, setMetaExpanded] = useState(false);
   const startTimeRef = useRef(Date.now());
   const progressAnim = useRef(new Animated.Value(0)).current;
   const countdownAnim = useRef(new Animated.Value(0)).current;
@@ -292,6 +294,11 @@ export function DictationScreen({
     }
   }, [playback.remainingMs]);
 
+  // 切换单词时收起释义，避免上一词展开态污染下一词
+  useEffect(() => {
+    setMetaExpanded(false);
+  }, [playback.currentIndex]);
+
   // ---- Current word entry + meta for display (already enriched on Home) ----
   const currentLine =
     playback.currentIndex < playback.wordList.length
@@ -302,6 +309,8 @@ export function DictationScreen({
     currentEntry.pos || currentEntry.meaning
       ? { pos: currentEntry.pos, meaning: currentEntry.meaning }
       : null;
+  const meaningHasMulti =
+    !!currentMeta?.meaning && /[；;]/.test(currentMeta.meaning);
 
   const status = isFinished
     ? { label: "已完成", dot: STATUS_PLAYING }
@@ -547,15 +556,82 @@ export function DictationScreen({
                           {currentEntry.word}
                         </Text>
                         {currentMeta &&
-                          (currentMeta.pos || currentMeta.meaning) && (
-                            <Text
-                              style={[styles.wordMeta, { color: colors.muted }]}
-                              numberOfLines={2}
-                            >
-                              {currentMeta.pos ? `${currentMeta.pos} ` : ""}
-                              {currentMeta.meaning ?? ""}
-                            </Text>
-                          )}
+                          (currentMeta.pos || currentMeta.meaning) &&
+                          (() => {
+                            const fullMeaning = currentMeta.meaning ?? "";
+                            const senses = metaExpanded
+                              ? splitSenses(fullMeaning)
+                              : null;
+                            return (
+                              <>
+                                {metaExpanded && senses ? (
+                                  <View style={styles.wordMetaBlock}>
+                                    {senses.map((s, i) => (
+                                      <Text
+                                        key={i}
+                                        style={[
+                                          styles.wordMetaSense,
+                                          { color: colors.muted },
+                                        ]}
+                                      >
+                                        {i === 0 && currentMeta.pos
+                                          ? `${currentMeta.pos} ${s}`
+                                          : s}
+                                      </Text>
+                                    ))}
+                                  </View>
+                                ) : (
+                                  <Text
+                                    style={[
+                                      styles.wordMeta,
+                                      { color: colors.muted },
+                                    ]}
+                                    numberOfLines={2}
+                                    ellipsizeMode="tail"
+                                  >
+                                    {currentMeta.pos
+                                      ? `${currentMeta.pos} `
+                                      : ""}
+                                    {firstSense(fullMeaning)}
+                                  </Text>
+                                )}
+                                {meaningHasMulti && (
+                                  <TouchableOpacity
+                                    style={styles.wordMetaToggle}
+                                    onPress={() =>
+                                      setMetaExpanded((v) => !v)
+                                    }
+                                    hitSlop={8}
+                                    activeOpacity={0.6}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={
+                                      metaExpanded
+                                        ? "收起释义"
+                                        : "展开全部释义"
+                                    }
+                                  >
+                                    <Text
+                                      style={[
+                                        styles.wordMetaToggleText,
+                                        { color: colors.muted },
+                                      ]}
+                                    >
+                                      {metaExpanded ? "收起" : "展开全部"}
+                                    </Text>
+                                    <Ionicons
+                                      name={
+                                        metaExpanded
+                                          ? "chevron-up-outline"
+                                          : "chevron-down-outline"
+                                      }
+                                      size={11}
+                                      color={colors.muted}
+                                    />
+                                  </TouchableOpacity>
+                                )}
+                              </>
+                            );
+                          })()}
                       </View>
                     ) : (
                       <Text
@@ -565,6 +641,7 @@ export function DictationScreen({
                       </Text>
                     )}
                     {showWord &&
+                      !metaExpanded &&
                       playback.currentIndex + 1 <
                         playback.wordList.length && (
                         <View style={styles.nextWordRow}>
@@ -906,13 +983,37 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   wordRevealContent: {
-    alignItems: "center",
+    alignItems: "stretch",
     gap: spacing.xs,
+    width: "100%",
+    paddingHorizontal: spacing.sm,
   },
   wordMeta: {
     fontSize: 15,
     fontWeight: "400",
     textAlign: "center",
+  },
+  wordMetaBlock: {
+    flexDirection: "column",
+    alignItems: "stretch",
+    gap: 1,
+    width: "100%",
+  },
+  wordMetaSense: {
+    fontSize: 12,
+    lineHeight: 16,
+    textAlign: "center",
+  },
+  wordMetaToggle: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    gap: 3,
+    paddingTop: 2,
+  },
+  wordMetaToggleText: {
+    fontSize: 11,
+    fontWeight: "600",
   },
 
   bottomPanel: {

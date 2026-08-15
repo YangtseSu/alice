@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -15,6 +15,7 @@ import {
   parseWordEntries,
   entryToLine,
 } from "../lib/dictation";
+import { firstSense, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { useThemeColors } from "../lib/theme";
 import { Button } from "./Button";
@@ -42,6 +43,15 @@ export function WordInputSection({
   const parsedWords = useMemo(() => parseWords(value), [value]);
   const wordCount = parsedWords.length;
   const effectiveDisplayMode = isDisplayMode && wordCount > 0;
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const toggleExpand = useCallback((idx: number) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
+      return next;
+    });
+  }, []);
 
   const handleDeleteWord = useCallback(
     (index: number) => {
@@ -50,6 +60,15 @@ export function WordInputSection({
       entries.splice(index, 1);
       const nextValue = entries.map(entryToLine).join("\n");
       onChange(nextValue);
+      // 删除后平移展开态索引，避免串到相邻词条
+      setExpanded((prev) => {
+        const next = new Set<number>();
+        prev.forEach((i) => {
+          if (i < index) next.add(i);
+          else if (i > index) next.add(i - 1);
+        });
+        return next;
+      });
 
       if (index < startIndex) {
         onStartIndexChange(startIndex - 1);
@@ -93,7 +112,12 @@ export function WordInputSection({
                     },
                     { borderBottomColor: colors.borderMuted },
                   ]}
-                  onPress={() => onStartIndexChange(idx)}
+                  onPress={() => {
+                    onStartIndexChange(idx);
+                    if (hasMeta && /[；;]/.test(entry.meaning ?? "")) {
+                      toggleExpand(idx);
+                    }
+                  }}
                   activeOpacity={0.6}
                 >
                   <Text
@@ -110,26 +134,46 @@ export function WordInputSection({
                         styles.displayWord,
                         { color: isCursor ? colors.primary : colors.foreground },
                       ]}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {entry.word}
                     </Text>
-                    {hasMeta && (
-                      <Text
-                        style={[
-                          styles.displayMeta,
-                          { color: colors.subtle },
-                        ]}
-                      >
-                        {entry.pos ? `${entry.pos} ` : ""}
-                        {entry.meaning ?? ""}
-                      </Text>
-                    )}
+                    {hasMeta && (() => {
+                      const fullMeaning = entry.meaning ?? "";
+                      const isExpanded = expanded.has(idx);
+                      const senses = isExpanded ? splitSenses(fullMeaning) : null;
+                      return isExpanded && senses ? (
+                        <View style={styles.displayMetaBlock}>
+                          {senses.map((s, i) => (
+                            <Text
+                              key={i}
+                              style={[
+                                styles.displayMeta,
+                                { color: colors.subtle },
+                              ]}
+                              numberOfLines={1}
+                              ellipsizeMode="tail"
+                            >
+                              {i === 0 && entry.pos ? `${entry.pos} ${s}` : s}
+                            </Text>
+                          ))}
+                        </View>
+                      ) : (
+                        <Text
+                          style={[
+                            styles.displayMeta,
+                            { color: colors.subtle },
+                          ]}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {entry.pos ? `${entry.pos} ` : ""}
+                          {firstSense(fullMeaning)}
+                        </Text>
+                      );
+                    })()}
                   </View>
-                  {isCursor && (
-                    <View
-                      style={[styles.cursorBar, { backgroundColor: colors.primary }]}
-                    />
-                  )}
                   <TouchableOpacity
                     style={styles.deleteBtn}
                     onPress={() => handleDeleteWord(idx)}
@@ -248,20 +292,23 @@ const styles = StyleSheet.create({
   displayWord: {
     fontSize: 16,
     fontWeight: "500",
+    flexShrink: 1,
   },
   displayWordCol: {
     flex: 1,
     flexDirection: "column",
     gap: 2,
+    minWidth: 0,
+  },
+  displayMetaBlock: {
+    flexDirection: "column",
+    gap: 1,
+    width: "100%",
   },
   displayMeta: {
     fontSize: 12,
-    lineHeight: 16,
-  },
-  cursorBar: {
-    width: 3,
-    height: 20,
-    borderRadius: 2,
+    lineHeight: 17,
+    flexShrink: 1,
   },
   deleteBtn: {
     padding: spacing.xs,
