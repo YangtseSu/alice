@@ -430,7 +430,6 @@ export function HomeScreen() {
       <LinearGradient
         colors={[colors.goldSoft, "transparent"]}
         style={styles.heroGlow}
-        pointerEvents="none"
       />
       <KeyboardAvoidingView
         style={[
@@ -785,6 +784,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: 180,
     opacity: 0.55,
+    pointerEvents: "none",
   },
   header: {
     flexDirection: "row",

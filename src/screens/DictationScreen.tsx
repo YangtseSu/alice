@@ -23,7 +23,7 @@ import { usePlayback } from "../hooks/usePlayback";
 import { useToast } from "../hooks/useToast";
 import { useWrongWords } from "../hooks/useWrongWords";
 import { parseWordLine, speakTextFromEntry } from "../lib/dictation";
-import { firstSense, splitSenses } from "../lib/dictionary";
+import { sensesClamped, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { notifySuccess, notifyWarning, tapLight } from "../lib/haptics";
 import { playChime, playTick } from "../lib/sound";
@@ -309,8 +309,10 @@ export function DictationScreen({
     currentEntry.pos || currentEntry.meaning
       ? { pos: currentEntry.pos, meaning: currentEntry.meaning }
       : null;
-  const meaningHasMulti =
-    !!currentMeta?.meaning && /[；;]/.test(currentMeta.meaning);
+  const currentSenses = currentMeta?.meaning
+    ? splitSenses(currentMeta.meaning, currentMeta.pos)
+    : [];
+  const meaningHasMore = sensesClamped(currentSenses, 2, 14);
 
   const status = isFinished
     ? { label: "已完成", dot: STATUS_PLAYING }
@@ -556,46 +558,21 @@ export function DictationScreen({
                           {currentEntry.word}
                         </Text>
                         {currentMeta &&
-                          (currentMeta.pos || currentMeta.meaning) &&
-                          (() => {
-                            const fullMeaning = currentMeta.meaning ?? "";
-                            const senses = metaExpanded
-                              ? splitSenses(fullMeaning)
-                              : null;
-                            return (
-                              <>
-                                {metaExpanded && senses ? (
-                                  <View style={styles.wordMetaBlock}>
-                                    {senses.map((s, i) => (
-                                      <Text
-                                        key={i}
-                                        style={[
-                                          styles.wordMetaSense,
-                                          { color: colors.muted },
-                                        ]}
-                                      >
-                                        {i === 0 && currentMeta.pos
-                                          ? `${currentMeta.pos} ${s}`
-                                          : s}
-                                      </Text>
-                                    ))}
-                                  </View>
-                                ) : (
-                                  <Text
-                                    style={[
-                                      styles.wordMeta,
-                                      { color: colors.muted },
-                                    ]}
-                                    numberOfLines={2}
-                                    ellipsizeMode="tail"
-                                  >
-                                    {currentMeta.pos
-                                      ? `${currentMeta.pos} `
-                                      : ""}
-                                    {firstSense(fullMeaning)}
-                                  </Text>
-                                )}
-                                {meaningHasMulti && (
+                          (currentMeta.pos || currentMeta.meaning) && (
+                            <>
+                              <Text
+                                style={[
+                                  styles.wordMetaSense,
+                                  { color: colors.muted },
+                                ]}
+                                numberOfLines={
+                                  metaExpanded ? undefined : 2
+                                }
+                                ellipsizeMode="tail"
+                              >
+                                {currentSenses.join("\n")}
+                              </Text>
+                              {meaningHasMore && (
                                   <TouchableOpacity
                                     style={styles.wordMetaToggle}
                                     onPress={() =>
@@ -629,9 +606,8 @@ export function DictationScreen({
                                     />
                                   </TouchableOpacity>
                                 )}
-                              </>
-                            );
-                          })()}
+                            </>
+                          )}
                       </View>
                     ) : (
                       <Text
@@ -988,20 +964,9 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: spacing.sm,
   },
-  wordMeta: {
-    fontSize: 15,
-    fontWeight: "400",
-    textAlign: "center",
-  },
-  wordMetaBlock: {
-    flexDirection: "column",
-    alignItems: "stretch",
-    gap: 1,
-    width: "100%",
-  },
   wordMetaSense: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 13,
+    lineHeight: 18,
     textAlign: "center",
   },
   wordMetaToggle: {

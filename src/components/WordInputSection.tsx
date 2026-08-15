@@ -15,7 +15,7 @@ import {
   parseWordEntries,
   entryToLine,
 } from "../lib/dictation";
-import { firstSense, splitSenses } from "../lib/dictionary";
+import { sensesClamped, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { useThemeColors } from "../lib/theme";
 import { Button } from "./Button";
@@ -101,6 +101,10 @@ export function WordInputSection({
               const isCursor = idx === startIndex;
               const entry = parseWordLine(line);
               const hasMeta = Boolean(entry.pos || entry.meaning);
+              const senses = hasMeta
+                ? splitSenses(entry.meaning ?? "", entry.pos)
+                : [];
+              const clampable = sensesClamped(senses, 2, 20);
               return (
                 <TouchableOpacity
                   key={`display-${line}-${idx}`}
@@ -114,7 +118,7 @@ export function WordInputSection({
                   ]}
                   onPress={() => {
                     onStartIndexChange(idx);
-                    if (hasMeta && /[；;]/.test(entry.meaning ?? "")) {
+                    if (clampable) {
                       toggleExpand(idx);
                     }
                   }}
@@ -139,40 +143,15 @@ export function WordInputSection({
                     >
                       {entry.word}
                     </Text>
-                    {hasMeta && (() => {
-                      const fullMeaning = entry.meaning ?? "";
-                      const isExpanded = expanded.has(idx);
-                      const senses = isExpanded ? splitSenses(fullMeaning) : null;
-                      return isExpanded && senses ? (
-                        <View style={styles.displayMetaBlock}>
-                          {senses.map((s, i) => (
-                            <Text
-                              key={i}
-                              style={[
-                                styles.displayMeta,
-                                { color: colors.subtle },
-                              ]}
-                              numberOfLines={1}
-                              ellipsizeMode="tail"
-                            >
-                              {i === 0 && entry.pos ? `${entry.pos} ${s}` : s}
-                            </Text>
-                          ))}
-                        </View>
-                      ) : (
-                        <Text
-                          style={[
-                            styles.displayMeta,
-                            { color: colors.subtle },
-                          ]}
-                          numberOfLines={1}
-                          ellipsizeMode="tail"
-                        >
-                          {entry.pos ? `${entry.pos} ` : ""}
-                          {firstSense(fullMeaning)}
-                        </Text>
-                      );
-                    })()}
+                    {hasMeta && (
+                      <Text
+                        style={[styles.displayMeta, { color: colors.subtle }]}
+                        numberOfLines={expanded.has(idx) ? undefined : 2}
+                        ellipsizeMode="tail"
+                      >
+                        {senses.join("\n")}
+                      </Text>
+                    )}
                   </View>
                   <TouchableOpacity
                     style={styles.deleteBtn}
@@ -299,11 +278,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 2,
     minWidth: 0,
-  },
-  displayMetaBlock: {
-    flexDirection: "column",
-    gap: 1,
-    width: "100%",
   },
   displayMeta: {
     fontSize: 12,

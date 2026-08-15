@@ -3,11 +3,23 @@
  * depletes clockwise around a circular "dial", driven by an Animated 0..1
  * value (1 = full ring).
  */
+import { forwardRef } from "react";
 import type { ReactNode } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import Svg, { Circle, Line } from "react-native-svg";
 
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+// Animated 会给被包裹组件强制注入 collapsable（防原生 View 扁平化），
+// react-native-svg 的 web 实现会把它透传到 DOM，触发 React 的
+// "non-boolean attribute" 报错（software-mansion/react-native-svg#1484）。
+// 这里包一层把它过滤掉（对原生端无影响）。
+const CircleNoCollapsable = forwardRef<
+  React.ComponentRef<typeof Circle>,
+  React.ComponentProps<typeof Circle> & { collapsable?: boolean }
+>(function CircleNoCollapsable({ collapsable, ...rest }, ref) {
+  return <Circle ref={ref} {...rest} />;
+});
+
+const AnimatedCircle = Animated.createAnimatedComponent(CircleNoCollapsable);
 
 interface CountdownRingProps {
   size: number;

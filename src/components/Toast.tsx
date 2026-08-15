@@ -50,7 +50,6 @@ export function Toast({ toast, onActionPress }: ToastProps) {
           ],
         },
       ]}
-      pointerEvents="box-none"
       accessibilityRole="alert"
       accessibilityLiveRegion="polite"
     >
@@ -93,6 +92,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     zIndex: 50,
+    pointerEvents: "box-none",
   },
   pill: {
     flexDirection: "row",

@@ -32,22 +32,58 @@ function normalizeMeaning(raw: string): string {
 }
 
 /**
- * 取释义的首个义项（按「；」/`;` 切分），用于默认折叠展示。
- * 无分号时原样返回。
+ * 将释义按词性分组：同一词性的多个义项合并为一行（「；」连接），不同词性各占一行。
+ * 返回的每行自带词性前缀（主词性组使用 mainPos）；无词性前缀的义项归入主词性组。
  */
-export function firstSense(meaning: string): string {
-  const idx = meaning.search(/[；;]/);
-  return idx === -1 ? meaning.trim() : meaning.slice(0, idx).trim();
+export function splitSenses(meaning: string, mainPos?: string): string[] {
+  const mainKey = (mainPos ?? "").toLowerCase();
+  const groups = new Map<string, string[]>();
+  for (const raw of meaning.split(/[；;]/)) {
+    const seg = raw.trim();
+    if (!seg) continue;
+    const m = seg.match(POS_PREFIX_RE);
+    let key = mainKey;
+    let text = seg;
+    if (m) {
+      key = m[1]!.toLowerCase();
+      if (key === "a.") key = "adj.";
+      text = seg.slice(m[0].length).trim();
+    }
+    if (!text) continue;
+    const list = groups.get(key);
+    if (list) list.push(text);
+    else groups.set(key, [text]);
+  }
+  // 主词性组置顶，其余按首次出现顺序
+  const keys = [...groups.keys()];
+  const ordered =
+    mainKey && groups.has(mainKey)
+      ? [mainKey, ...keys.filter((k) => k !== mainKey)]
+      : keys;
+  return ordered.map((key) => {
+    const parts = groups.get(key)!.join("；");
+    if (key === mainKey) return mainPos ? `${mainPos} ${parts}` : parts;
+    return `${key} ${parts}`;
+  });
 }
 
 /**
- * 将多义项释义按「；」/`;` 拆成每个义项的数组。单义项返回长度为 1 的数组。
+ * 估算分组释义在折叠行数内是否显示不全（决定「展开」开关是否出现）。
+ * 按视觉宽度粗略折算：全角字符（CJK、全角标点）记 1 字宽，其余记 0.5；
+ * charsPerLine 为每行可容纳的字宽数，宁可低估容量（多显示开关）也不要漏判。
  */
-export function splitSenses(meaning: string): string[] {
-  return meaning
-    .split(/[；;]/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+export function sensesClamped(
+  senses: string[],
+  collapsedLines: number,
+  charsPerLine: number,
+): boolean {
+  const width = (s: string) =>
+    [...s].reduce((w, ch) => w + (ch.charCodeAt(0) > 0x2e7f ? 1 : 0.5), 0);
+  const lines = senses.reduce(
+    (n, s) => n + Math.max(1, Math.ceil(width(s) / charsPerLine)),
+    0,
+  );
+  return lines > collapsedLines;
 }
 
 /**
