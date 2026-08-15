@@ -13,8 +13,8 @@
 
 ## 截图
 
-| 首页 | 词库 | 听写 | 完成 |
-| :---: | :---: | :---: | :---: |
+|                          首页                          |                           词库                            |                        听写                         |                         完成                         |
+| :----------------------------------------------------: | :-------------------------------------------------------: | :-------------------------------------------------: | :--------------------------------------------------: |
 | ![首页：单词列表与拍照识词](docs/screenshots/home.png) | ![词库：内置教材词表与搜索](docs/screenshots/library.png) | ![听写：怀表倒计时](docs/screenshots/dictation.png) | ![完成：成绩单与错词本](docs/screenshots/finish.png) |
 
 ## 功能
@@ -61,11 +61,11 @@ pnpm --filter website dev
 
 所有敏感配置放在 gitignored 的 `.env` 中（模板见 [`.env.example`](.env.example)），由 [`app.config.js`](app.config.js) 在构建时注入：
 
-| 环境变量 | 说明 | 必填 |
-|------|------|------|
-| `ZHIPU_API_KEY` | 智谱 API Key（OCR 拍照识词），[申请地址](https://open.bigmodel.cn/) | Android OCR 需要；Web 构建不会注入 |
-| `DEPLOY_SERVER` | 发布脚本的部署目标（`user@host`） | 仅发版需要 |
-| `DEPLOY_REMOTE_DIR` | 服务器上的站点目录 | 仅发版需要 |
+| 环境变量            | 说明                                                                | 必填                               |
+| ------------------- | ------------------------------------------------------------------- | ---------------------------------- |
+| `ZHIPU_API_KEY`     | 智谱 API Key（OCR 拍照识词），[申请地址](https://open.bigmodel.cn/) | Android OCR 需要；Web 构建不会注入 |
+| `DEPLOY_SERVER`     | 发布脚本的部署目标（`user@host`）                                   | 仅发版需要                         |
+| `DEPLOY_REMOTE_DIR` | 服务器上的站点目录                                                  | 仅发版需要                         |
 
 非敏感配置在 `app.json` 的 `expo.extra` 中（`zhipuBaseUrl`、`visionModel` 默认模型）。识别模型分档选择与 Credits 余额在应用内管理（设置 → 识别模型 / 充值），存储于设备本地。
 
@@ -85,7 +85,7 @@ pnpm release:android 0.3.0     # 指定版本号
 
 传入 bump 类型或版本号时，会同步更新 `package.json`、`app.json`（含 `android.versionCode`）、`android/app/build.gradle`、iOS `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION`。
 
-流程：可选升版 → EAS 本地构建 APK → 暂存到 `website/public/downloads/` → 更新下载链接 → 构建官网 → rsync 部署到 `DEPLOY_SERVER`。详见 [`scripts/release.sh`](scripts/release.sh)。
+流程：可选升版 → EAS 本地构建 APK → 上传到 Cloudflare R2（免流量费，服务器不再承载 APK）→ 更新下载链接 → 构建官网 → rsync 部署到 `DEPLOY_SERVER`。R2 配置见 `.env.example`。详见 [`scripts/release.sh`](scripts/release.sh)。
 
 ### 发布官网 + Web 应用
 
@@ -95,7 +95,7 @@ pnpm release:website -- --skip-webapp  # 仅落地页
 pnpm release:webapp               # 仅更新 /app/
 ```
 
-官网与 Web 应用**无先后顺序要求**：落地页 rsync 会排除 `downloads/` 和 `app/`，不会互相覆盖。`release:website` 默认一并发布 Web 应用。入口：<https://alice.edao.plus/app/>。
+官网与 Web 应用**无先后顺序要求**：落地页 rsync 只排除 `app/`，不会互相覆盖。APK 托管在 Cloudflare R2，不经过部署服务器。`release:website` 默认一并发布 Web 应用。入口：<https://alice.edao.plus/app/>。
 
 详见 [`scripts/release-website.sh`](scripts/release-website.sh)、[`scripts/release-webapp.sh`](scripts/release-webapp.sh)。
 
