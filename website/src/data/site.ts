@@ -16,6 +16,7 @@ export const SITE_KEYWORDS = [
   "高考英语单词",
 ].join(",");
 export const GITHUB_URL = "https://github.com/vvenv/alice";
+export const APP_VERSION = "0.6.2";
 export const APK_URL =
   "https://pub-a2b1a761ddf24764aa62b64c625793f0.r2.dev/alice-0.6.2-20260815-2140.apk";
 /** Expo Web app (static export), hosted under the marketing site. */

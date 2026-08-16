@@ -160,6 +160,7 @@ echo "▶ [3/6] Updating APK_URL in site.ts / llms.txt..."
 # site.ts has the URL on its own line after `export const APK_URL =`, so slurp
 # the whole file (-0777) to match across the line break.
 APK_URL="$APK_URL" perl -0777 -pi -e 's{(export const APK_URL\s*=\s*")[^"]+(")}{$1$ENV{APK_URL}$2}' "$SITE_TS"
+VERSION="$VERSION" perl -pi -e 's{(export const APP_VERSION\s*=\s*")[^"]+(")}{$1$ENV{VERSION}$2}' "$SITE_TS"
 APK_URL="$APK_URL" perl -pi -e 's{https://[^"\s]+/alice-[^"\s]+\.apk}{$ENV{APK_URL}}g' "$LLMS_TXT"
 echo "  → $APK_URL"
 

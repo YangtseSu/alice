@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Apple, Smartphone, Globe } from "lucide-react";
-import { APK_URL, WEB_APP_URL } from "@/data/site";
+import { APP_VERSION, APK_URL, WEB_APP_URL } from "@/data/site";
 import { useReveal } from "../hooks/useReveal";
 import { PocketWatch, SuitHeart, SuitSpade } from "./Decorations";
 
@@ -136,7 +136,7 @@ export function Download() {
 
                 <div className="text-left">
                   <div className="font-display text-lg font-semibold text-paper">
-                    版本 v0.2.1
+                    版本 v{APP_VERSION}
                   </div>
                   <div className="mt-1 text-sm text-paper/50">
                     支持 Android 8+ · Web 浏览器
