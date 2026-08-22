@@ -9,11 +9,11 @@ import * as path from "path";
  * - Empty subdirectories are skipped
  *
  * To add a new built-in library, drop .txt files into data/<category>/ and
- * re-run `pnpm exec tsx scripts/generate-library.ts`.
+ * re-run `node --experimental-strip-types scripts/generate-library.ts`.
  */
 
-const DATA_DIR = path.resolve(__dirname, "../data");
-const OUTPUT_FILE = path.resolve(__dirname, "../src/lib/library.ts");
+const DATA_DIR = path.resolve(import.meta.dirname, "../data");
+const OUTPUT_FILE = path.resolve(import.meta.dirname, "../src/lib/library.ts");
 
 /** Map grade shorthand so 三→九 sort by school year, not pinyin. */
 const GRADE_RANK: Record<string, number> = {
@@ -28,11 +28,38 @@ const GRADE_RANK: Record<string, number> = {
 
 const TERM_RANK: Record<string, number> = { 上: 0, 下: 1, 全: 2 };
 
+/** 中文数字（一~九、十、X十Y）→ 数值，用于“第X册”排序。 */
+const CE_NUM: Record<string, number> = {
+  一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9,
+};
+const VOL_RE = /^第([一二三四五六七八九十]+)册/;
+
+function ceNum(ce: string): number {
+  if (CE_NUM[ce] !== undefined) return CE_NUM[ce]!;
+  const m = ce.match(/^([一二三四五六七八九]?)十([一二三四五六七八九]?)$/);
+  if (m) return (m[1] ? CE_NUM[m[1]!]! : 1) * 10 + (m[2] ? CE_NUM[m[2]!]! : 0);
+  return 99;
+}
+
 /**
  * Sort titles by grade → 上/下/全 → Unit/Module number.
+ * “第X册 …” labels sort by 册号（一、二、三），避免拼音序（二、三、一）。
  * Falls back to natural string compare for letter lists (A, B, …).
  */
 function compareLabels(a: string, b: string): number {
+  const va = a.match(VOL_RE);
+  const vb = b.match(VOL_RE);
+  if (va && vb) {
+    const ra = ceNum(va[1]!);
+    const rb = ceNum(vb[1]!);
+    if (ra !== rb) return ra - rb;
+    return a
+      .slice(va[0].length)
+      .localeCompare(b.slice(vb[0].length), "zh-Hans", {
+        numeric: true,
+        sensitivity: "base",
+      });
+  }
   const gradeRe = /^([三四五六七八九])([上下全])/;
   const ma = a.match(gradeRe);
   const mb = b.match(gradeRe);
