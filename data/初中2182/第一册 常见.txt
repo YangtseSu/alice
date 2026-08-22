@@ -431,7 +431,7 @@ plane | n. | 飞机
 knife | n. | (pl.knives) 小刀
 robot | n. | 机器人
 body | n. | 身体
-broke |  | 的过去时) 折断；打破
+broke | v. | (break 的过去时) 折断；打破
 lost | adj. | 丢失的；丢去的
 tell | v. | 告诉；讲述
 round | adj. | 球形的；圆的

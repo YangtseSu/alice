@@ -149,7 +149,7 @@ back | n. | 背部,后面
 place | n. | 地点,地方
 twenty-first | num. | 第二十一
 bank | n. | 银行；(海,河,湖的)岸,堤
-theatre | n. | 剧场,戏院（美式拼写: theater）
+theatre | n. | 剧场,戏院(美式拼写: theater)
 toilet | n. | 厕所
 museum | n. | 博物馆
 front | adj. & n. | 前面(的),前部
@@ -180,7 +180,7 @@ lift | n. & v. | 电梯；(云,雾等)消散,(雨)停止
 up and down | phr. | 上上下下,来来回回
 busy | adj. | 忙的,繁忙的
 team | n. | 队,组
-centre |  | )；n. 中心
+centre | n. 中心
 popular | adj. | 大众的,流行的
 quite | adv. | 很,十分
 month | n. | 月
@@ -342,7 +342,7 @@ plate | n. | 盘子,碟子
 candle | n. | 蜡烛
 present | n. | 礼物
 smile | n. & v. | 微笑
-telephone | n. & v. | 电话,电话机（= phone）；打电话给(某人)
+telephone | n. & v. | 电话,电话机(= phone)；打电话给(某人)
 double | n. & adj. | 两倍(的),双倍(的)
 but | prep. | 除了
 take out | phr. | 取出
@@ -434,7 +434,7 @@ physics | n. | 物理(学)
 history | n. | 历史(学)
 key | n. | 钥匙
 fix | v. | 修理,安装
-lab |  | )n实验室
+lab | n. | 实验室
 suddenly | adv. | 突然地
 DVD | n. | 光碟,影碟
 in time | phr. | 及时
@@ -628,7 +628,7 @@ unusual | adj. | 不寻常的,非凡的
 in the end | phr. | 最后
 work out | phr. | 算出,制定出
 software | n. | (电脑)软件
-program | n. | 程序,项目,节目（英式拼写: programme）
+program | n. | 程序,项目,节目(英式拼写: programme)
 university | n. | 综合性大学
 develop | v. | 发展,研制,开发
 BASIC | n. | (电脑)初学者通用符号指令码
