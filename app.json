@@ -78,9 +78,9 @@
       "zhipuBaseUrl": "https://open.bigmodel.cn/api/paas/v4",
       "visionModel": "glm-4v-flash",
       "eas": {
-        "projectId": "c3f70d10-17f5-49fe-90b2-7a73d3beb382"
+        "projectId": "3f613194-d6d7-4504-b13f-c4e64a0cc8e9"
       }
     },
-    "owner": "vvenv"
+    "owner": "yangtse"
   }
 }
