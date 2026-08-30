@@ -15,8 +15,10 @@ import * as path from "path";
 const DATA_DIR = path.resolve(__dirname, "../data");
 const OUTPUT_FILE = path.resolve(__dirname, "../src/lib/library.ts");
 
-/** Map grade shorthand so 三→九 sort by school year, not pinyin. */
+/** Map grade shorthand so 一→九 sort by school year, not pinyin. */
 const GRADE_RANK: Record<string, number> = {
+  一: 1,
+  二: 2,
   三: 3,
   四: 4,
   五: 5,
@@ -33,7 +35,7 @@ const TERM_RANK: Record<string, number> = { 上: 0, 下: 1, 全: 2 };
  * Falls back to natural string compare for letter lists (A, B, …).
  */
 function compareLabels(a: string, b: string): number {
-  const gradeRe = /^([三四五六七八九])([上下全])/;
+  const gradeRe = /^([一二三四五六七八九])([上下全])/;
   const ma = a.match(gradeRe);
   const mb = b.match(gradeRe);
   if (ma && mb) {

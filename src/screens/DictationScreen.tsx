@@ -22,7 +22,7 @@ import { Toast } from "../components/Toast";
 import { usePlayback } from "../hooks/usePlayback";
 import { useToast } from "../hooks/useToast";
 import { useWrongWords } from "../hooks/useWrongWords";
-import { parseWordLine, speakTextFromEntry } from "../lib/dictation";
+import { isCjkEntry, parseWordLine, speakTextFromEntry } from "../lib/dictation";
 import { sensesClamped, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { notifySuccess, notifyWarning, tapLight } from "../lib/haptics";
@@ -305,13 +305,17 @@ export function DictationScreen({
       ? playback.wordList[playback.currentIndex]!
       : "";
   const currentEntry = parseWordLine(currentLine);
+  const currentIsCjk = isCjkEntry(currentLine);
   const currentMeta =
     currentEntry.pos || currentEntry.meaning
       ? { pos: currentEntry.pos, meaning: currentEntry.meaning }
       : null;
-  const currentSenses = currentMeta?.meaning
-    ? splitSenses(currentMeta.meaning, currentMeta.pos)
-    : [];
+  // splitSenses groups senses by English POS; Chinese entries carry pinyin in
+  // the pos column and render as-is instead.
+  const currentSenses =
+    !currentIsCjk && currentMeta?.meaning
+      ? splitSenses(currentMeta.meaning, currentMeta.pos)
+      : [];
   const meaningHasMore = sensesClamped(currentSenses, 2, 14);
 
   const status = isFinished
@@ -557,21 +561,36 @@ export function DictationScreen({
                         >
                           {currentEntry.word}
                         </Text>
-                        {currentMeta &&
-                          (currentMeta.pos || currentMeta.meaning) && (
-                            <>
-                              <Text
-                                style={[
-                                  styles.wordMetaSense,
-                                  { color: colors.muted },
-                                ]}
-                                numberOfLines={
-                                  metaExpanded ? undefined : 2
-                                }
-                                ellipsizeMode="tail"
-                              >
-                                {currentSenses.join("\n")}
-                              </Text>
+                                                  {currentMeta &&
+                            (currentMeta.pos || currentMeta.meaning) && (
+                              <>
+                                {currentIsCjk && currentMeta.pos && (
+                                  <Text
+                                    style={[
+                                      styles.wordMetaPinyin,
+                                      { color: colors.subtle },
+                                    ]}
+                                  >
+                                    {currentMeta.pos}
+                                  </Text>
+                                )}
+                                <Text
+                                  style={[
+                                    styles.wordMetaSense,
+                                    { color: colors.muted },
+                                  ]}
+                                  numberOfLines={
+                                    metaExpanded ? undefined : 2
+                                  }
+                                  ellipsizeMode="tail"
+                                >
+                                  {currentIsCjk
+                                    ? (currentMeta.meaning ?? "")
+                                        .split(/[；;]/)
+                                        .filter(Boolean)
+                                        .join("\n")
+                                    : currentSenses.join("\n")}
+                                </Text>
                               {meaningHasMore && (
                                   <TouchableOpacity
                                     style={styles.wordMetaToggle}
@@ -963,6 +982,11 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     width: "100%",
     paddingHorizontal: spacing.sm,
+  },
+  wordMetaPinyin: {
+    fontSize: 15,
+    lineHeight: 20,
+    textAlign: "center",
   },
   wordMetaSense: {
     fontSize: 13,

@@ -76,3 +76,14 @@ export function speakTextFromEntry(entry: string): string {
   const left = text.slice(0, eq).trim();
   return left || text;
 }
+
+const CJK_RE = /[\u4e00-\u9fff]/;
+
+/**
+ * True when the speakable headword is Chinese (汉字/词语听写): playback then
+ * speaks zh-CN and the reveal shows pinyin-based hints instead of English
+ * spelling/grammar hints.
+ */
+export function isCjkEntry(entry: string): boolean {
+  return CJK_RE.test(speakTextFromEntry(entry));
+}
