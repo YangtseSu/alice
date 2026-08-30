@@ -38,7 +38,11 @@ import {
   saveIntervalSec,
   saveSpeechRate,
 } from "../lib/storage";
-import { setSpeechRate } from "../lib/tts";
+import {
+  loadReadTranslation,
+  setReadTranslationEnabled,
+  setSpeechRate,
+} from "../lib/tts";
 import {
   isCustomOcrConfigSet,
   loadOcrProviderConfig,
@@ -76,11 +80,13 @@ export function SettingsScreen() {
   const { mode, setMode } = useThemeMode();
   const { toast, showToast, hideToast } = useToast();
   const [soundOn, setSoundOn] = useState(true);
+  const [readTranslationOn, setReadTranslationOn] = useState(false);
   const [speechRate, setSpeechRateState] = useState(DEFAULT_SPEECH_RATE);
   const [intervalSec, setIntervalSec] = useState(DEFAULT_INTERVAL_SEC);
 
   useEffect(() => {
     loadSoundEnabled().then(setSoundOn);
+    loadReadTranslation().then(setReadTranslationOn);
     loadSpeechRate().then((rate) => {
       setSpeechRateState(rate);
       setSpeechRate(rate);
@@ -102,6 +108,11 @@ export function SettingsScreen() {
   const handleToggleSound = useCallback((value: boolean) => {
     setSoundOn(value);
     setSoundEnabled(value);
+  }, []);
+
+  const handleToggleReadTranslation = useCallback((value: boolean) => {
+    setReadTranslationOn(value);
+    setReadTranslationEnabled(value);
   }, []);
 
   const handleSpeechRateChange = useCallback((value: number) => {
@@ -365,6 +376,33 @@ export function SettingsScreen() {
               accessibilityState={{ checked: soundOn }}
               trackColor={{ false: colors.track, true: colors.primarySoft }}
               thumbColor={soundOn ? colors.primary : colors.background}
+            />
+          </View>
+          <View
+            style={[
+              styles.row,
+              {
+                borderTopWidth: StyleSheet.hairlineWidth,
+                borderTopColor: colors.borderSubtle,
+              },
+            ]}
+          >
+            <Ionicons
+              name="language-outline"
+              size={18}
+              color={colors.secondary}
+            />
+            <Text style={[styles.rowLabel, { color: colors.foreground }]}>
+              朗读中文释义
+            </Text>
+            <Switch
+              value={readTranslationOn}
+              onValueChange={handleToggleReadTranslation}
+              accessibilityLabel="朗读中文释义"
+              accessibilityRole="switch"
+              accessibilityState={{ checked: readTranslationOn }}
+              trackColor={{ false: colors.track, true: colors.primarySoft }}
+              thumbColor={readTranslationOn ? colors.primary : colors.background}
             />
           </View>
           <View

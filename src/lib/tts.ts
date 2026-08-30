@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createAudioPlayer,
   setAudioModeAsync,
@@ -20,6 +21,47 @@ const DOWNLOAD_HEADERS = {
   "User-Agent":
     "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15",
 };
+
+export type SpeechLang = "en-US" | "zh-CN";
+
+const CJK_RE = /[\u4e00-\u9fff]/;
+
+// Preference: also read the Chinese meaning after the English word.
+const READ_TRANSLATION_KEY = "alice_read_translation";
+let readTranslation = false;
+let readTranslationLoaded = false;
+
+function ensureReadTranslationLoaded(): void {
+  if (readTranslationLoaded) return;
+  readTranslationLoaded = true;
+  AsyncStorage.getItem(READ_TRANSLATION_KEY)
+    .then((v) => {
+      if (v === "on") readTranslation = true;
+    })
+    .catch(() => {});
+}
+ensureReadTranslationLoaded();
+
+export function isReadTranslationEnabled(): boolean {
+  return readTranslation;
+}
+
+export async function loadReadTranslation(): Promise<boolean> {
+  try {
+    const v = await AsyncStorage.getItem(READ_TRANSLATION_KEY);
+    readTranslation = v === "on";
+  } catch {
+    // keep current value
+  }
+  return readTranslation;
+}
+
+export function setReadTranslationEnabled(value: boolean): void {
+  readTranslation = value;
+  AsyncStorage.setItem(READ_TRANSLATION_KEY, value ? "on" : "off").catch(
+    () => {},
+  );
+}
 
 let currentAbort: AbortController | null = null;
 let wordPlayer: AudioPlayer | null = null;
@@ -289,37 +331,39 @@ async function playAudioUri(
 async function speakWithSystemTts(
   text: string,
   signal: AbortSignal,
+  lang: SpeechLang,
 ): Promise<boolean> {
   await Speech.stop();
   if (signal.aborted) return false;
 
-  return new Promise((resolve) => {
-    let settled = false;
-    const maxMs = Math.max(4000, text.length * 250);
-    const timer = setTimeout(() => finish(true), maxMs);
+  const { promise, resolve } = Promise.withResolvers<boolean>();
+  let settled = false;
+  const maxMs = Math.max(4000, text.length * 250);
+  const timer = setTimeout(() => finish(true), maxMs);
 
-    const finish = (ok: boolean) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timer);
-      signal.removeEventListener("abort", onAbort);
-      resolve(ok);
-    };
+  const finish = (ok: boolean) => {
+    if (settled) return;
+    settled = true;
+    clearTimeout(timer);
+    signal.removeEventListener("abort", onAbort);
+    resolve(ok);
+  };
 
-    const onAbort = () => {
-      Speech.stop();
-      finish(false);
-    };
-    signal.addEventListener("abort", onAbort);
+  const onAbort = () => {
+    Speech.stop();
+    finish(false);
+  };
+  signal.addEventListener("abort", onAbort);
 
-    Speech.speak(text, {
-      language: "en-US",
-      rate: currentSpeechRate,
-      onDone: () => finish(true),
-      onStopped: () => finish(false),
-      onError: () => finish(false),
-    });
+  Speech.speak(text, {
+    language: lang,
+    rate: currentSpeechRate,
+    onDone: () => finish(true),
+    onStopped: () => finish(false),
+    onError: () => finish(false),
   });
+
+  return promise;
 }
 
 /**
@@ -327,7 +371,10 @@ async function speakWithSystemTts(
  * Never wait for a download when playback starts; fall back to system TTS
  * immediately instead. Entries like `you're = you are` speak the left side.
  */
-export async function speakWord(word: string): Promise<boolean> {
+export async function speakWord(
+  word: string,
+  opts?: { lang?: SpeechLang },
+): Promise<boolean> {
   if (currentAbort) {
     currentAbort.abort();
     currentAbort = null;
@@ -336,6 +383,7 @@ export async function speakWord(word: string): Promise<boolean> {
   const text = speakTextFromEntry(word);
   if (!text) return false;
 
+  const lang = opts?.lang ?? (CJK_RE.test(text) ? "zh-CN" : "en-US");
   const abortController = new AbortController();
   currentAbort = abortController;
   const signal = abortController.signal;
@@ -349,12 +397,12 @@ export async function speakWord(word: string): Promise<boolean> {
       log.debug("Youdao playback failed, falling back to system TTS:", text);
     }
 
-    return await speakWithSystemTts(text, signal);
+    return await speakWithSystemTts(text, signal, lang);
   } catch (e) {
     if (signal.aborted) return false;
     log.warn("speakWord failed:", text, e);
     try {
-      return await speakWithSystemTts(text, signal);
+      return await speakWithSystemTts(text, signal, lang);
     } catch {
       return false;
     }

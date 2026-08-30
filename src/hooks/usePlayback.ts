@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { parseWordLine } from "../lib/dictation";
 import {
+  isReadTranslationEnabled,
   prefetchWordAudio,
   speakWord,
   stopSpeech,
 } from "../lib/tts";
 
 type PlayState = "idle" | "playing" | "paused";
-type WordPhase = "speak1" | "gap" | "speak2" | "interval";
+type WordPhase = "speak1" | "gap" | "speak2" | "speakMeaning" | "interval";
 
 const REPEAT_GAP_MS = 700;
 
@@ -152,6 +154,10 @@ export function usePlayback({
       void prefetchWordAudio(word);
       const nextWord = list[s.index + 1];
       if (nextWord) void prefetchWordAudio(nextWord);
+      if (isReadTranslationEnabled()) {
+        const meaning = parseWordLine(word).meaning;
+        if (meaning) void prefetchWordAudio(meaning);
+      }
 
       const ok = await speakWord(word);
       if (isCancelled(gen)) return;
@@ -177,6 +183,16 @@ export function usePlayback({
         cur.phase = "speak2";
         runScheduler();
         return;
+      }
+
+      // Optional: read the Chinese meaning once after the second English pass.
+      if (isReadTranslationEnabled()) {
+        const meaning = parseWordLine(word).meaning;
+        if (meaning) {
+          cur.phase = "speakMeaning";
+          runScheduler();
+          return;
+        }
       }
 
       if (!autoNextRef.current) {
@@ -205,6 +221,27 @@ export function usePlayback({
 
     if (s.phase === "gap") {
       s.phase = "speak2";
+      runScheduler();
+      return;
+    }
+
+    if (s.phase === "speakMeaning") {
+      const meaning = parseWordLine(word).meaning;
+      if (meaning) {
+        s.speaking = true;
+        await speakWord(meaning, { lang: "zh-CN" });
+        if (isCancelled(gen)) return;
+        const cur = schedulerRef.current;
+        if (!cur || cur.gen !== gen) return;
+        cur.speaking = false;
+      }
+
+      if (!autoNextRef.current) {
+        schedulerRef.current = null;
+        return;
+      }
+
+      s.phase = "interval";
       runScheduler();
       return;
     }
