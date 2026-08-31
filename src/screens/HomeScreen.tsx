@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -36,13 +36,16 @@ import { OCR_DISCLAIMER, OCR_UI_IDLE, type OcrUiState } from "../lib/ocr";
 import {
   addWordHistory,
   clearWordHistory,
+  DEFAULT_INTERVAL_SEC,
   deleteWordHistory,
   getLibraryGroups,
   loadFavorites,
+  loadIntervalSec,
   loadPersistedFavorites,
   loadPersistedWrongWords,
   loadWordHistory,
   loadWordInput,
+  saveIntervalSec,
   saveWordInput,
   toggleFavorite,
   type LibraryGroup,
@@ -84,7 +87,7 @@ export function HomeScreen() {
   const { mode, toggleTheme } = useThemeMode();
   const [ready, setReady] = useState(false);
   const [wordInput, setWordInput] = useState("");
-  const [intervalSec, setIntervalSec] = useState(4.5);
+  const [intervalSec, setIntervalSec] = useState(DEFAULT_INTERVAL_SEC);
   const [autoNext, setAutoNext] = useState(true);
   const [startIndex, setStartIndex] = useState(0);
   const [shuffle, setShuffle] = useState(false);
@@ -138,22 +141,38 @@ export function HomeScreen() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [savedInput, , savedHistory, savedFavorites] = await Promise.all([
-        loadWordInput(),
-        loadPersistedWrongWords(),
-        loadWordHistory(),
-        loadPersistedFavorites(),
-      ]);
+      const [savedInput, , savedHistory, savedFavorites, savedInterval] =
+        await Promise.all([
+          loadWordInput(),
+          loadPersistedWrongWords(),
+          loadWordHistory(),
+          loadPersistedFavorites(),
+          loadIntervalSec(),
+        ]);
       if (cancelled) return;
       if (savedInput) setWordInput(enrichWordListText(savedInput));
       setHistory(savedHistory);
       setFavorites(savedFavorites);
+      setIntervalSec(savedInterval);
       setReady(true);
     })();
     return () => {
       cancelled = true;
     };
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!ready) return;
+      let cancelled = false;
+      loadIntervalSec().then((sec) => {
+        if (!cancelled) setIntervalSec(sec);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [ready]),
+  );
 
   // Debounced persistence to avoid writing AsyncStorage on every keystroke
   useEffect(() => {
@@ -210,6 +229,11 @@ export function HomeScreen() {
       if (next) setWordInput((text) => enrichWordListText(text));
       return next;
     });
+  }, []);
+
+  const handleIntervalChange = useCallback((sec: number) => {
+    setIntervalSec(sec);
+    saveIntervalSec(sec).catch(() => {});
   }, []);
 
   const handleStart = useCallback(() => {
@@ -556,7 +580,7 @@ export function HomeScreen() {
             <PlaybackControls
               intervalSec={intervalSec}
               autoNext={autoNext}
-              onIntervalChange={setIntervalSec}
+              onIntervalChange={handleIntervalChange}
               onAutoNextChange={setAutoNext}
               onPlayToggle={handleStart}
               shuffle={shuffle}
