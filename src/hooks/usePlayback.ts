@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { parseWordLine, speakableMeaning } from "../lib/dictation";
+import { cjkWordSpeech, isCjkEntry, parseWordLine, speakableMeaning } from "../lib/dictation";
 import {
   isReadTranslationEnabled,
   prefetchWordAudio,
@@ -154,7 +154,9 @@ export function usePlayback({
       void prefetchWordAudio(word);
       const nextWord = list[s.index + 1];
       if (nextWord) void prefetchWordAudio(nextWord);
-      if (isReadTranslationEnabled()) {
+      // CJK word-compound speech is spoken via system TTS in the
+      // speakMeaning phase; Youdao dict voice cannot serve such sentences.
+      if (isReadTranslationEnabled() && !isCjkEntry(word)) {
         const speakable = speakableMeaning(parseWordLine(word).meaning);
         if (speakable) void prefetchWordAudio(speakable);
       }
@@ -185,8 +187,16 @@ export function usePlayback({
         return;
       }
 
-      // Optional: read the Chinese meaning once after the second English pass.
-      if (isReadTranslationEnabled()) {
+      // CJK dictation follows the traditional classroom pattern: a single
+      // char always gets its word-compound pass ("月，月亮的月") regardless of
+      // the English meaning toggle; multi-char words speak as-is.
+      if (isCjkEntry(word)) {
+        if (cjkWordSpeech(word)) {
+          cur.phase = "speakMeaning";
+          runScheduler();
+          return;
+        }
+      } else if (isReadTranslationEnabled()) {
         const meaning = parseWordLine(word).meaning;
         if (meaning) {
           cur.phase = "speakMeaning";
@@ -226,7 +236,9 @@ export function usePlayback({
     }
 
     if (s.phase === "speakMeaning") {
-      const speakable = speakableMeaning(parseWordLine(word).meaning);
+      const speakable = isCjkEntry(word)
+        ? cjkWordSpeech(word)
+        : speakableMeaning(parseWordLine(word).meaning);
       if (speakable) {
         s.speaking = true;
         await speakWord(speakable, { lang: "zh-CN" });

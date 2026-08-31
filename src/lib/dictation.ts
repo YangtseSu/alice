@@ -92,6 +92,26 @@ export function isCjkEntry(entry: string): boolean {
   return CJK_RE.test(speakTextFromEntry(entry));
 }
 
+/**
+ * 中文单字的组词朗读文本（传统听写模式）："月 | yuè | 月亮" → "月亮的月"。
+ *
+ * - 仅单字条目有效；词语/短句返回 ""（只读词语本身）；
+ * - 组词取释义列第一个义项（「；」分隔）；
+ * - 义项须包含该字且不等于该字（"水 | shuǐ | 水" 无有效组词 → 只读字）。
+ */
+export function cjkWordSpeech(entry: string): string {
+  const head = speakTextFromEntry(entry);
+  if ([...head].length !== 1 || !CJK_RE.test(head)) return "";
+
+  const meaning = parseWordLine(entry).meaning ?? "";
+  for (const raw of meaning.split(SENSE_SPLIT_RE)) {
+    const word = raw.trim();
+    if (!word || word === head || !word.includes(head)) continue;
+    return `${word}的${head}`;
+  }
+  return "";
+}
+
 const SENSE_SPLIT_RE = /[；;]/;
 const GLOSS_SPLIT_RE = /[，,、]/;
 const MEANING_PAREN_RE = /[（(][^（）()]*[）)]/g;
