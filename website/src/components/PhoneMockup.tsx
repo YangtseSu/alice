@@ -14,7 +14,7 @@ export function PhoneFrame({
   return (
     <div className={`relative ${className}`}>
       {/* 手机外框 */}
-      <div className="relative w-[280px] rounded-[2.8rem] border-[3px] border-ink/80 bg-ink p-2 shadow-[0_30px_60px_-20px_rgba(26,43,74,0.4),0_0_0_1px_rgba(26,43,74,0.1)]">
+      <div className="relative w-70 rounded-[2.8rem] border-[3px] border-ink/80 bg-ink p-2 shadow-[0_30px_60px_-20px_rgba(26,43,74,0.4),0_0_0_1px_rgba(26,43,74,0.1)]">
         {/* 屏幕 */}
         <div className="relative overflow-hidden rounded-[2.2rem] bg-paper">
           {/* 刘海 */}
@@ -39,7 +39,7 @@ export function PhoneFrame({
 function CountdownRingMock() {
   // r=88, 周长 ≈ 553；金色弧约占 1/5
   return (
-    <div className="relative mx-auto h-[196px] w-[196px]">
+    <div className="relative mx-auto h-49 w-49">
       <svg viewBox="0 0 196 196" className="h-full w-full -rotate-90">
         <circle
           cx="98"
@@ -61,7 +61,7 @@ function CountdownRingMock() {
         />
       </svg>
       {/* 表盘 */}
-      <div className="absolute inset-[14px] flex flex-col items-center justify-center rounded-full border border-ink/8 bg-white shadow-[0_8px_24px_-12px_rgba(26,43,74,0.25)]">
+      <div className="absolute inset-3.5 flex flex-col items-center justify-center rounded-full border border-ink/8 bg-white shadow-[0_8px_24px_-12px_rgba(26,43,74,0.25)]">
         <span className="text-2xl font-bold tracking-[0.2em] text-ink">
           •••••
         </span>
@@ -111,10 +111,10 @@ export function DictationScreenMock() {
         <div className="flex items-center gap-2 text-[10px] text-ink/60">
           <span>间隔</span>
           <span className="relative h-1 flex-1 rounded-full bg-ink/15">
-            <span className="absolute left-0 top-0 h-full w-[45%] rounded-full bg-ink" />
-            <span className="absolute left-[45%] top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink" />
+            <span className="absolute left-0 top-0 h-full w-[70%] rounded-full bg-ink" />
+            <span className="absolute left-[70%] top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink" />
           </span>
-          <span className="font-semibold text-ink">4.5s</span>
+          <span className="font-semibold text-ink">7.0s</span>
         </div>
         <div className="flex items-end justify-center gap-6">
           {[
@@ -234,7 +234,7 @@ export function LibraryScreenMock() {
     },
   ];
   return (
-    <div className="flex h-[380px] flex-col justify-end">
+    <div className="flex h-95 flex-col justify-end">
       {/* 首页背景（虚化） */}
       <div className="pointer-events-none absolute inset-x-4 top-10 space-y-2 opacity-30 blur-[1px]">
         <div className="h-5 w-24 rounded bg-ink/20" />

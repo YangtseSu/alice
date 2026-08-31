@@ -8,11 +8,16 @@ const WORD_INPUT_KEY = "dictation_word_input";
 const WORD_HISTORY_KEY = "dictation_word_history";
 const FAVORITES_KEY = "dictation_favorites";
 const SPEECH_RATE_KEY = "dictation_speech_rate";
+const INTERVAL_SEC_KEY = "dictation_interval_sec";
 /** Cap for user-added history entries. Built-in lists live in code, not storage. */
 const MAX_USER_HISTORY_ENTRIES = 50;
 export const DEFAULT_SPEECH_RATE = 0.9;
 export const MIN_SPEECH_RATE = 0.5;
 export const MAX_SPEECH_RATE = 1.5;
+export const DEFAULT_INTERVAL_SEC = 7;
+export const MIN_INTERVAL_SEC = 1;
+export const MAX_INTERVAL_SEC = 10;
+export const INTERVAL_STEP = 0.5;
 
 export interface WordHistoryEntry {
   id: string;
@@ -331,6 +336,35 @@ export async function loadSpeechRate(): Promise<number> {
 export async function saveSpeechRate(rate: number): Promise<void> {
   try {
     await AsyncStorage.setItem(SPEECH_RATE_KEY, String(clampSpeechRate(rate)));
+  } catch {
+    // ignore
+  }
+}
+
+export function clampIntervalSec(sec: number): number {
+  const snapped = Math.round(sec / INTERVAL_STEP) * INTERVAL_STEP;
+  return Math.max(MIN_INTERVAL_SEC, Math.min(MAX_INTERVAL_SEC, snapped));
+}
+
+export async function loadIntervalSec(): Promise<number> {
+  try {
+    const data = await AsyncStorage.getItem(INTERVAL_SEC_KEY);
+    if (!data) return DEFAULT_INTERVAL_SEC;
+    const parsed = parseFloat(data);
+    return Number.isFinite(parsed)
+      ? clampIntervalSec(parsed)
+      : DEFAULT_INTERVAL_SEC;
+  } catch {
+    return DEFAULT_INTERVAL_SEC;
+  }
+}
+
+export async function saveIntervalSec(sec: number): Promise<void> {
+  try {
+    await AsyncStorage.setItem(
+      INTERVAL_SEC_KEY,
+      String(clampIntervalSec(sec)),
+    );
   } catch {
     // ignore
   }

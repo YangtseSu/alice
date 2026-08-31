@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -26,10 +26,16 @@ import { loadSoundEnabled, setSoundEnabled } from "../lib/sound";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { OCR_DISCLAIMER } from "../lib/ocr";
 import {
+  DEFAULT_INTERVAL_SEC,
   DEFAULT_SPEECH_RATE,
+  INTERVAL_STEP,
+  MAX_INTERVAL_SEC,
   MAX_SPEECH_RATE,
+  MIN_INTERVAL_SEC,
   MIN_SPEECH_RATE,
+  loadIntervalSec,
   loadSpeechRate,
+  saveIntervalSec,
   saveSpeechRate,
 } from "../lib/storage";
 import {
@@ -76,6 +82,7 @@ export function SettingsScreen() {
   const [soundOn, setSoundOn] = useState(true);
   const [readTranslationOn, setReadTranslationOn] = useState(false);
   const [speechRate, setSpeechRateState] = useState(DEFAULT_SPEECH_RATE);
+  const [intervalSec, setIntervalSec] = useState(DEFAULT_INTERVAL_SEC);
 
   useEffect(() => {
     loadSoundEnabled().then(setSoundOn);
@@ -85,6 +92,18 @@ export function SettingsScreen() {
       setSpeechRate(rate);
     });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      loadIntervalSec().then((sec) => {
+        if (!cancelled) setIntervalSec(sec);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 
   const handleToggleSound = useCallback((value: boolean) => {
     setSoundOn(value);
@@ -101,6 +120,11 @@ export function SettingsScreen() {
     setSpeechRateState(rounded);
     setSpeechRate(rounded);
     saveSpeechRate(rounded).catch(() => {});
+  }, []);
+
+  const handleIntervalChange = useCallback((value: number) => {
+    setIntervalSec(value);
+    saveIntervalSec(value).catch(() => {});
   }, []);
 
   const [customOcrConfig, setCustomOcrConfig] =
@@ -412,6 +436,46 @@ export function SettingsScreen() {
               step={0.1}
               value={speechRate}
               onValueChange={handleSpeechRateChange}
+            />
+          </View>
+        </View>
+
+        {/* 听写 — default playback interval */}
+        <Text style={[styles.sectionLabel, { color: colors.subtle }]}>
+          听写
+        </Text>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: colors.surfaceRaised,
+              borderColor: colors.borderSubtle,
+            },
+          ]}
+        >
+          <View style={styles.row}>
+            <Ionicons
+              name="timer-outline"
+              size={18}
+              color={colors.secondary}
+            />
+            <Text style={[styles.rowLabel, { color: colors.foreground }]}>
+              默认间隔
+            </Text>
+            <Text
+              style={[styles.rowDetail, { color: colors.muted }]}
+              accessibilityLabel={`当前默认间隔 ${intervalSec.toFixed(1)} 秒`}
+            >
+              {intervalSec.toFixed(1)}s
+            </Text>
+          </View>
+          <View style={styles.sliderRow}>
+            <Slider
+              min={MIN_INTERVAL_SEC}
+              max={MAX_INTERVAL_SEC}
+              step={INTERVAL_STEP}
+              value={intervalSec}
+              onValueChange={handleIntervalChange}
             />
           </View>
         </View>

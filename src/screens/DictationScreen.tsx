@@ -27,6 +27,7 @@ import { sensesClamped, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { notifySuccess, notifyWarning, tapLight } from "../lib/haptics";
 import { playChime, playTick } from "../lib/sound";
+import { saveIntervalSec } from "../lib/storage";
 import { useThemeColors } from "../lib/theme";
 
 const STATUS_PLAYING = "#27ae60";
@@ -84,6 +85,11 @@ export function DictationScreen({
   } = useWrongWords();
 
   const playback = usePlayback({ intervalSec, autoNext });
+
+  const handleIntervalChange = useCallback((sec: number) => {
+    setIntervalSec(sec);
+    saveIntervalSec(sec).catch(() => {});
+  }, []);
 
   // Start playback once on mount.
   useEffect(() => {
@@ -716,7 +722,7 @@ export function DictationScreen({
           <PlaybackControls
             intervalSec={intervalSec}
             autoNext={autoNext}
-            onIntervalChange={setIntervalSec}
+            onIntervalChange={handleIntervalChange}
             onAutoNextChange={setAutoNext}
             showPlayButton={false}
           />

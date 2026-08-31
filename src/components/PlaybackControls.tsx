@@ -2,6 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Switch, Text, View } from "react-native";
 
 import { radii, spacing } from "../lib/designTokens";
+import {
+  INTERVAL_STEP,
+  MAX_INTERVAL_SEC,
+  MIN_INTERVAL_SEC,
+} from "../lib/storage";
 import { useThemeColors } from "../lib/theme";
 import { Button } from "./Button";
 import { Slider } from "./Slider";
@@ -43,9 +48,9 @@ export function PlaybackControls({
         <Text style={[styles.label, { color: colors.muted }]}>间隔</Text>
         <View style={styles.sliderArea}>
           <Slider
-            min={1}
-            max={10}
-            step={0.5}
+            min={MIN_INTERVAL_SEC}
+            max={MAX_INTERVAL_SEC}
+            step={INTERVAL_STEP}
             value={intervalSec}
             onValueChange={onIntervalChange}
           />

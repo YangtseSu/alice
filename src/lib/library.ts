@@ -11,6 +11,2152 @@ export interface LibraryItem {
 
 export const LIBRARY_ITEMS: LibraryItem[] = [
   {
+    category: "初中2182",
+    label: "第一册 常见",
+    entry: {
+      id: "default_初中2182_第一册 常见",
+      text: `what | pron. | 什么
+is | v. | 是
+what's |  | what is 的缩写形式
+your | pron. | 你的,你们的
+name | n. | 名字
+my | pron. | 我的
+I | pron. | 我
+am | v. | 是
+I'm |  | I am 的缩写形式
+in | prep. | 在...里(内,上)；用...(表达)
+row | n. | (一)排,(一)行
+one | num. & pron. | 一；用来代替单数的人或物
+number | n. | 数字,号码
+two | num. | 二
+too | adv. | 也；太
+three | num. | 三
+are | v. | 是
+you | pron. | 你,你们
+yes | adv. | 是；(用于疑问,征询等)什么,是吗
+four | num. | 四
+five | num. | 五
+no | adv. & adj. | 不,不是
+not | adv. | 不
+hi | int. | 喂(问候或唤起注意)
+class | n. | (学校里的)班级,年级；同一个班的学生
+grade | n. | 年级
+six | num. | 六
+seven | num. | 七
+eight | num. | 八
+nine | num. | 九
+ten | num. | 十
+zero | num. & n. | 零
+plus | prep. | 加,加上
+it | pron. | 它
+It's |  | it is 的缩写形式
+how | adv. | (指程度)多少,怎样
+old | adj. | ...岁的,老的
+eleven | num. | 十一
+twelve | num. | 十二
+thirteen | num. | 十三
+fourteen | num. | 十四
+fifteen | num. | 十五
+hello | int. | 喂(问候或唤起注意)
+please | int. | 请
+can | v.aux. | 能,可以,会
+spell | v. | 拼写
+that | pron. | 那,那个
+secret | n. | 秘密
+this | pron. | 这,这个
+English | n. & adj. | 英语,英国人
+in English | phr. | 用英语(表达)
+a | art. | 一(个,件...)
+clock | n. | 钟
+and | conj. | 和,又,而
+pencil-box | n. | 铅笔盒
+an | art. | 一(个；件.)
+pencil | n. | 铅笔
+ruler | n. | 尺子
+pen | n. | 钢笔
+eraser | n. | 橡皮擦
+room | n. | 房间
+book | n. | 书
+map | n. | 地图
+desk | n. | 书桌
+cup | n. | 杯子
+bag | n. | 书包
+computer | n. | 电脑,电子计算机
+mouse | n. | 鼠,耗子,鼠标
+bed | n. | 床
+keyboard | n. | 键盘
+isn't |  | is not 的缩写形式
+pear | n. | 梨
+cake | n. | 蛋糕,饼,糕
+banana | n. | 香蕉
+apple | n. | 苹果
+orange | n. & adj. | 橙子,橘子；橙色(的)
+egg | n. | 蛋
+bike | n. | 自行车
+bus | n. | 公共汽车
+car | n. | 汽车,小汽车
+Chinese | adj. | 中国的,中国人的；n. 中国人,汉语
+Japanese | adj. | 日本的,日本人；n. 日本人，日语
+look | v. & n. | 瞧,看；看上去,显得
+who | pron. | 谁
+she | pron. | 她
+he | pron. | 他
+bird | n. | 鸟
+Its | pron. | 它的
+do | v.aux. & v. | (构成否定句,疑问句的助动词)；做,干,行动
+don't |  | do not 的缩写形式
+know | v. | 知道,懂得
+think | v. | 想,认为
+Mr=mister | n. | 先生(用于姓名前)
+very | adv. | 很,非常
+picture | n. | 图画,照片
+Mrs | n. | 夫人
+boy | n. | 男孩
+girl | n. | 女孩
+woman | n. | 妇女,女人
+man | n. | 男人,人
+cat | n. | 猫
+his | pron. | 他的
+teacher | n. | 教师
+her | pron. | 她的
+everyone | pron. | 每人,人人
+here | adv. | 这里,这儿
+today | adv. & n. | 今天
+at | prep. | 在
+school | n. | 学校
+at school | phr. | 在学校
+sorry | adj. | 对不起,抱歉的
+where | adv. | 在哪里
+home | n. | 家
+at home | phr. | 在家
+How are you |  | 你(身体)好吗?
+fine | adj. | (身体)好的
+thanks | n. | 谢谢(只用复数)
+OK | adv. | (口语)好,对,不错,可以
+thank | v. | 谢谢
+goodbye | int. | 再见,再会
+bye | int. | 再见
+sister | n. | 姐,妹
+father | n. | 父亲
+mother | n. | 母亲
+box | n. | 盒子,箱子
+excuse | v. | 原谅
+me | pron. | 我
+Here you are |  | 给你
+but | conj. | 但是
+these | pron. | 这些
+they | pron. | 他(她,它)们
+good | adj. | 好的
+those | pron. | 那些
+boat | n. & v. | 船；划船
+hill | n. | 小山
+tree | n. | 树
+their | pron. | 他们(她们,它们)的
+much | adv. | 多,很,非常
+very much | phr. | 很,非常
+all | adv. & adj. | 都,完全；整个；所有的；全体；全部
+right | adv. & adj. | 对的,正确的；正好；恰好；正确
+all right | phr. | 好,行,不错
+mum | n. | (口语)妈妈
+friend | n. | 朋友
+brother | n. | 兄,弟
+nice | adj. | 令人愉快的；好的,漂亮的
+to | prep. | (表示方向)到,向动词不定式符号
+meet | v. | 见面,会面,遇见
+child | n. | 小孩
+children | n. | child的复数形式
+welcome | v. | 欢迎
+our | pron. | 我们的
+come | v. | 来
+come in | phr. | 进来,进入
+morning | n. | 早晨,上午
+on | prep. | 在,在...上
+duty | n. | 职责,责任
+on duty | phr. | 值日
+we | pron. | 我们
+aren't |  | are not 的缩写形式
+have | v. | 有
+new | adj. | 新的
+student | n. | 学生
+twin | n. | 双胞胎之一
+the | art. | 这(那)个,这(那)些
+same | adj. | 同样的,同一的
+look the same | phr. | 看起来很像
+America | n. & adj. | 美国人(的)；美国
+sit | v. | 坐
+down | adv. | 向下
+sit down | phr. | 坐下
+over | adv. | 在那边,在另一边；结束,完了
+there | adv. & int. | 那里,那儿；表示存在,有..,作引导词；好啦(表示安慰)
+over there | phr. | 在那边
+after | prep. | 在...以后,在...后面
+look after | phr. | 照顾,照看
+Miss | n. | 女士,小姐(对未婚妇女的称呼)
+way | n. | 路,道路
+This way,please. |  | 请走这边
+put | v. | 放
+coat | n. | 外套,上衣
+them | pron. | 他(她,它)们
+let | v. | 让
+us | pron. | 我们
+let's |  | let us 的缩写形式
+go | v. & n. | 去；尝试(做某事)
+Let's go |  | 我们一起去
+classmate | n. | 同班同学
+love | v. | 爱,喜爱
+No | n. | number 的缩写形式
+middle | adj. | 中间的,中级的
+middle school | n. | 中学
+well | int. & adv. & adj. | 喔,那么,好吧；好；好,(身体)健康
+phone | n. | 电话,电话机
+ID | n. | 身份征
+policeman | n. | 警察
+ask | v. | 问
+sir | n. | (用于尊称)先生,阁下
+licence | n. | 执照,许可证
+look at | phr. | 看,观看
+dear | int. & adj. | (表示惊讶等)哎呀；亲爱的；可爱的
+see | v. | 看见,看到
+I'll |  | I will 的缩写形式
+will | v.aux. | 将,会,要
+take | v. | 拿到,带到；花费(时间)
+address | n. | 地址
+age | n. | 年龄
+glad | adj. | 高兴的,乐意的
+why | int. & adv. | (表示惊讶,不耐烦,恼怒等) 嗨；为什么
+forgot | v. | (forget 的过去时)忘记
+now | adv. | 现在
+China | n. | 中国
+or | conj. | 或者,还是
+work | v. & n. | 工作
+goes |  | go的单数第三人称现在时
+family | n. | 家,家庭
+family tree | n. | 家谱
+grandmother | n. | (外)祖母
+grandma | n. | (口语)奶奶,外婆
+grandfather | n. | (外)祖父
+grandpa | n. | (口语)爷爷,外公
+dad | n. | (口语)爸爸,爹爹
+wife | n. | 妻子
+husband | n. | 丈夫
+daughter | n. | 女儿
+son | n. | 儿子
+parent | n. | 父(母)亲
+parents | n. | 父母亲,双亲
+big | adj. | 大的
+England | n. | 英格兰
+aunt | n. | 姨母,舅母,姑母,伯母,婶母
+uncle | n. | 叔,伯,舅,姨父,姑父
+afternoon | n. | 下午,午后
+How do you do ? |  | 你好!
+seat | n. | 座位
+have a seat |  | 坐下,就坐
+like | prep. & v. | 像,跟...一样；喜欢
+look like | phr. | 看起来像
+hat | n. | 帽子(一般指有边的帽子)
+doctor | n. | 医生
+worker | n. | 工人
+guess | v. | 猜
+behind | prep. | 在...后面
+chair | n. | 椅子
+ball | n. | 球
+under | prep. | 在...下面
+floor | n. | (室内)地,地板
+can't |  | can not 的缩写形式
+photo | n. | 照片
+wall | n. | 墙
+shoe | n. | 鞋
+near | prep. | 在...附近
+door | n. | 门
+of | prep. | ...的
+classroom | n. | 教室
+answer | v. | 回答
+blackboard | n. | 黑板
+some | pron. | 一些,若干
+schoolbag | n. | 书包
+flower | n. | 花
+find | v. | 找到,发现
+window | n. | 窗
+cap | n. | 便帽,军帽
+football | n. | 足球
+table | n. | 桌子
+Hong Kong | n. | 香港
+Macao | n. | 澳门
+there's |  | there is 的缩写形式
+lock | v. & n. | 锁
+many | adj. | 许多的,多的
+thing | n. | 东西,事情
+must | v.aux. | 必须,应当
+open | v. & n. & adj. | 打开；开着的
+get | v. | 得到,获得
+help | v. | 帮助
+money | n. | 钱,货币
+worry | v. | (使)担忧
+Let me see |  | 让我想想
+fifty | num. | 五十
+colour | n. | 颜色；v. 给...着色
+black | adj. | 黑色的
+house | n. | 房子
+small | adj. | 小的
+play | v. | 玩,打(球)
+up | adv. | 在上面,在高处,向上,起来
+with | prep. | 和；对…；关于
+great | adv. & adj. | (口语)好极了,很好；伟大的,很大的,重要的
+have a look | phr. | 看一看
+ping-pong | n. | 乒乓球
+how many | phr. | 多少
+kite | n. | 风筝
+young | adj. | 年轻的,幼小的
+pioneer | n. | 先锋
+Young Pioneer | n. | 少先队员
+men | n. | man的复数形式
+women | n. | woman的复数形式
+only | adv. | 仅仅,只
+at work | phr. | 在工作
+sky | n. | 天空
+count | v. | 数,点数
+river | n. | 江,河
+dog | n. | 狗
+light | n. & adj. | 灯；淡(浅)色的,轻的
+any | adj. | (用于否定句,疑问句等)什么,任何
+animal | n. | 动物
+people | n. | 人,人们
+little | adj. & adv. | 小的,一点儿,稍许
+sheep | n. | 绵羊
+come on | phr. | 来吧,跟着来,赶快；来；过来
+red | adj. & n. | 红色(的)
+yellow | adj. & n. | 黄色(的)
+blue | adj. & n. | 蓝色(的)
+white | adj. & n. | 白色(的)
+green | adj. & n. | 绿色(的)
+purple | adj. & n. | 紫色(的)
+brown | adj. & n. | 棕色(的),褐色(的)
+grey | adj. & n. | 灰色(的),灰白(的)
+sweater | n. | 毛衣,厚运动衫
+want | v. | 要,想要
+which | pron. & adj. | 哪一个,哪些
+clothes | n. | 衣服
+line | n. | 线,绳索
+whose | pron. | 谁的
+blouse | n. | 女衬衫
+dress | n. | 女服,(统称)衣服
+shirt | n. | (男式)衬衫
+trousers | n. | 裤子
+skirt | n. | 女裙
+dark | adj. | 深(浓)色的,黑暗的
+yours | pron. | 你的,你们的
+mine | pron. | 我的
+hers | pron. | 她的
+put on | phr. | 穿上(衣服等),戴上(帽子等)
+theirs | pron. | 他们(她们,它们)的
+ours | pron. | 我们的
+glove | n. | 手套
+about | prep. & adv. | 关于,对于；大约
+What about…? | phr. | (询问消息,征求意见)…怎么样?
+beside | prep. | 在...旁边
+watch | n. & v. | 手表、观看,注视
+give | v. | 给
+time | n. | 时间
+thirty | num. | 三十
+get up | phr. | 起床
+late | adj. & adv. | 迟的(地),晚的(地)
+o'clock |  | …点钟
+noon | n. | 中午,正午
+past | prep. | (超)过,经过
+half | n. | 半,一半
+quarter | n. | 一刻钟,四分之一
+for | prep. | 为,给
+break | n. | (课间)休息,中断
+lunch | n. | 午餐
+breakfast | n. | 早餐
+clean | v. & adj. | 把...弄干净,擦干净；干净的,清洁的
+TV | n. | 电视,电视机
+watch TV | phr. | 看电视
+game | n. | 游戏,运动
+go home | phr. | 回家
+p.m. |  | 下午,午后
+London | n. | 伦敦
+Tokyo | n. | 东京
+Sydney | n. | 悉尼
+hour | n. | 小时
+a.m. |  | 午前,上午
+hundred | num. | 百
+yourself | pron. | 你自己
+bedroom | n. | 卧室
+doll | n. | 玩具娃娃
+else | adv. & adj. | 别(的),其他(的)
+sure | adv. & adj. | 的确,一定确信的,肯定的
+between | prep. | 在(两者)之间
+tall | adj. | 高的
+funny | adj. | 滑稽的,有趣的
+favourite | adj. | 特别喜爱的
+e-mail | n. | 电子邮件
+speak | v. | 讲,说
+next | adj. | 下一个
+term | n. | 学期
+could | v.aux. | (口语,表示许可或请求)可以,行
+minute | n. | 分钟,一会儿
+Tuesday | n. | 星期二
+February | n. | 二月
+listen | v. | 听
+careful | adj. | 小心的；仔细的
+carefully | adv. | 小心地；仔细地
+draw | v. | 画；绘制
+has | v. | (动词have的单数第三人称)有
+face | n. | 脸；面孔
+eye | n. | 眼睛
+ear | n. | 耳朵
+leg | n. | 腿
+hand | n. | 手
+long | adj. | 长的
+short | adj. | 短的；矮的
+mouth | n. | 嘴
+say | v. | 说；讲
+heavy | adj. | 重的
+empty | adj. | 空的
+certainly | adv. | 当然
+full | adj. | 满的
+be full of | phr. | 充满…的
+carry | v. | 携带；搬运；运送
+so | adv. & pron. | 这么；那么；这样；如此
+listen to | phr. | 听
+tape | n. | 磁带
+basket | n. | 篮子
+bottle | n. | 瓶
+a bottle of | phr. | 一瓶...
+juice | n. | (水果；蔬菜；肉等的)汁；水汁
+head | n. | 头；头部
+nose | n. | 鼻子
+hair | n. | 头发
+arm | n. | 手臂；胳膊
+foot | n. | 脚(pl.feet)
+day | n. | 日；天；日,一天
+from | prep. | 从…起；从
+zoo | n. | 动物园
+away | adv. | 离开
+put away | phr. | 把…什么收起来(放好)
+out | adv. | 在外
+come out | phr. | 出来
+sock | n. | 短袜
+other | adj. | 别的；其他的
+wrong | adj. | 不正确的；错误的
+broken | adj. | 弄坏了的
+catch | v. | 捉；抓住
+get down | phr. | 下来；落下
+him | pron. | 他(宾格)
+plane | n. | 飞机
+knife | n. | (pl.knives) 小刀
+robot | n. | 机器人
+body | n. | 身体
+broke | v. | (break 的过去时) 折断；打破
+lost | adj. | 丢失的；丢去的
+tell | v. | 告诉；讲述
+round | adj. | 球形的；圆的
+mummy | n. | (口语)妈妈
+pleasure | n. | 愉快；高兴
+food | n. | 食物
+drink | n. & v. | 饮料喝
+hungry | adj. | 饥饿的
+thirsty | adj. | 口渴的
+water | n. & v. | 水；浇水
+eat | v. | 吃
+rice | n. | 米饭；大米
+bread | n. | 面包
+meat | n. | 肉
+tea | n. | 茶
+milk | n. | 牛奶
+glass | n. | 玻璃杯
+a glass of | phr. | 一(玻璃)杯
+would like | phr. | 想要(语气婉转地表示请求等)
+something | pron. | 某事(物)某东西
+porridge | n. | 粥；稀饭
+fish | n. | 鱼
+dumpling | n. | 饺子
+fruit | n. | 水果
+piece | n. | 一张(片；张)
+a piece of | phr. | 一片(一张、块)
+hamburger | n. | 汉堡包
+noodle | n. | 面条
+potato | n. | pl.potatoes 马铃薯；土豆；马铃薯,土豆
+chips | n. | (口语)炸士豆儿条
+coffee | n. | 咖啡
+madam | n. | 夫人；女士
+ice | n. | 冰
+cream | n. | 奶油；乳脂
+ice cream | n. | 冰淇淋
+USA | n. | 美国
+different | adj. | 不同的
+vegetable | n. | 蔬菜
+sometimes | adv. | 有时
+sport | n. | 运动
+be good at | phr. | 在...方面(学得,做得)好；善于
+basketball | n. | 蓝球
+easy | adj. | 容易的
+pass | v. | 传递
+try | v. | 试(做)；设法；努力
+throw | v. | 投,掷
+hard | adj. & adv. | 困难的；努力
+ride | v. | 骑(自行车,马等)
+swim | v. | 游泳
+skate | v. | 滑冰,溜冰
+fly | v. | 放(风筝,飞机模型等)
+card | n. | 纸牌,卡片
+volleyball | n. | 排球
+jump | v. | 跳
+sing | v. | 唱,唱歌
+run | v. | 跑
+high | adj. & adv. | 高的(地)
+then | adv. | 那么,然后
+question | n. | 问题
+code | n. | 密码,符号
+ski | v. | 滑雪
+tennis | n. | 网球(运动)
+table tennis | n. | 乒乓球
+chess | n. | 国际象棋
+fan | n. | (口语，电影,运动等的)迷
+player | n. | 比赛者,选手
+team | n. | 队,组
+every | adj. | 每一,每个的；每一的,每个的
+Friday | n. | 星期五
+make | v. | 做,制作
+make the bed | phr. | 整理床铺
+homework | n. | 家庭作业
+do homework | phr. | 做作业
+read | n. | 读,阅读
+write | v. | 写
+sleep | v. | 睡,睡觉
+look for | phr. | 寻找
+cook | v. & n. | 烹调,煮,烧炊事员,厨师
+talk | v. | 说话,谈话
+talk with | phr. | 和…交谈
+close | v. | 关；闭
+take photos | phr. | 照象
+wear | v. | 穿
+Sunday | n. | 星期日
+park | n. | 公园
+toy | n. | 玩具；玩物
+lake | n. | 湖
+clear | adj. | 清晰的；清楚的；明亮的
+shop | n. | 商店
+closed | adj. | 关着的
+early | adj. & adv. | 早的(地)初期
+supermarket | n. | 超级市场
+Wednesday | n. | 星期三
+may | v.aux. | 可以；可能；也许
+borrow | v. | 借
+Thursday | n. | 星期四
+week | n. | 周；星期
+Monday | n. | 星期一
+Saturday | n. | 星期六
+hey | int. | 嘿；喂(唤起注意.表示惊讶或询问)
+dictionary | n. | 字典；词典
+back | adv. | 回(原处)；向后
+tomorrow | n. & adv. | 明天；在明天
+CD | n. | 激光唱片(缩写词)
+lot | n. | 许多
+a lot | phr. | 非常
+give…a hand | phr. | 给予…帮助
+evening | n. | 傍晚；晚上
+from…to… | phr. | 从…到…
+after class | phr. | 课后
+help…with | phr. | 帮助(某人)做(某事)
+model | n. | 模型；模范；样式
+rest | n. | 休息
+have a good rest | phr. | 休息
+maths | n. | (英式拼法)数学
+math | n. | (美式拼法)数学
+fun | adj. | 有趣的；愉快的
+yeah | adv. | (口语)是的；嗯
+straight | adj. | 直的
+use | v. | 用；使用；应用
+wheel | n. | 轮；机轮
+into | prep. | 到…里；向内；到...里,向内
+music | n. | 音乐；乐曲
+worried | adj. | 担心的,烦恼的
+save | v. | 救,挽救,节省
+ticket | n. | 票,券
+New York | n. | 纽约
+learn | v. | 学,学习
+learn…from | phr. | 向...学习
+meeting | n. | 会,会议
+bring | v. | 带来,拿来
+foreign | adj. | 外国的
+difference | n. | 不同,差异
+each | adv. & pron. | 各自,各个
+each other | pron. | 互相
+talk about | phr. | 谈论,交谈
+Australia | n. | 澳大利亚
+Canada | n. | 加拿大
+UK | n. | 联合王国
+Japan | n. | 日本
+a little | phr. | 一点,少量
+French | n. | 法语
+the Great Wall | n. | 长城
+hotel | n. | 旅馆,饭馆
+building | n. | 建筑物
+follow | v. | 跟随
+call | v. & n. | 称呼,叫喊,打电话给电话, 通话
+family name | n. | 姓
+first | num. & adv. | 第一,首先,最初
+postcard | n. | 明信片
+teach | v. | 教,教书
+dinner | n. | 正餐,晚餐
+soon | adv. | 不久,一会儿
+stay | v. | 停留(在某处)
+high school | n. | 中学
+Toronto | n. | 多伦多(加拿大港市)
+country | n. | 国家
+make friends | phr. | 交朋友
+France | n. | 法国
+Canadian | n. | 加拿大人
+city | n. | 城市
+visit | v. | 访问,参观,拜访
+word | n. | 词,单词
+English-speaking | adj. | 说英语的
+letter | n. | 信
+hot | adj. | 热的,辣的
+hot dog | n. | 热狗(红肠面包)
+not…at all | phr. | 一点也不
+kind | n. | 种,类
+a kind of | phr. | 一种,一类
+meal | n. | 一餐,一顿饭
+restaurant | n. | 饭馆
+often | adv. | 常常
+because | conj. | 因为
+housework | n. | 家务劳动
+machine | n. | 机器
+again | adv. | 又,再
+make phone calls | phr. | 打电话
+wash | v. | 洗,漱洗
+dish | n. | 一道菜,盘,碟
+electronic | adj. | 电子的
+mail | n. | 邮政,邮递
+smoke | v. & n. | 吸烟,烟
+fog | n. | 雾
+dance | v. | 跳舞
+living room | n. | 起居室
+dining room | n. | 餐厅
+driver | n. | 司机,驾驶员
+farmer | n. | 农民
+soldier | n. | 士兵,战士
+businessman | n. | 商人
+assistant | n. | 助手,助理
+a shop assistant | phr. | 售货员,店员
+nurse | n. | 护士
+postman | n. | 邮递员
+factory | n. | 工厂
+station | n. | 车站,所,站
+bus station | n. | 公共汽车站
+hospital | n. | 医院
+farm | n. | 农场
+post | n. | 邮政,邮寄,邮件
+office | n. | 办公室
+post office | n. | 邮局
+study | v. | 学习,研究
+party | n. | 聚会
+friendly | adj. | 友好的
+also | adv. | 也
+medicine | n. | 内服药,医学
+in the day | phr. | 在白天
+at night | phr. | 在晚上,在夜里
+make money | phr. | 赚钱
+weekend | n. | 周末
+job | n. | 工作
+writer | n. | 作家,作者
+cleaner | n. | 清洁工
+turn | n. | (依次轮流的)顺序,轮流
+grow | v. | 种植,生长
+artist | n. | 画家,艺术家
+hobby | n. | 业余爱好
+be | v. | (am,is,are)是,成为
+place | n. | 地点,地方
+weekday | n. | 工作日,平日(除星期六,日以外)
+when | adv. | 什么时候,何时
+leave | v. | 离去,出发
+begin | v. | 开始,着手
+have sports | phr. | 进行体育活动
+go to bed | phr. | 睡觉
+usually | adv. | 通常
+right now | phr. | 立刻,马上
+take off | phr. | 脱衣服
+after school | phr. | 放学后,下课后
+get to | phr. | 到达
+exercise | n. | 锻炼,做操,练习
+do morning exercises | phr. | 做早操
+shopping | n. | 买东西
+go shopping | phr. | (去)买东西
+garden | n. | 花(果,菜)园
+do some reading | phr. | 朗读,阅读
+living-room | n. | 起居室
+playground | n. | (学校的)操场
+walk | v. | 走,步行,散步
+news | n. | 新闻,消息
+match | n. | 比赛,竞赛
+quickly | adv. | 迅速
+sun | n. | 太阳
+moon | n. | 月亮
+bridge | n. | 桥
+train | n. | 火车
+ship | n. | 船,轮船
+on foot | phr. | 走路,步行
+holiday | n. | 假日,假期
+year | n. | 年
+by | prep. | 乘车(船等)
+by plane | phr. | 乘飞机
+by ship | phr. | 乘船
+air | n. | 天空,空气
+by air | phr. | 乘飞机
+sea | n. | 海,海洋
+by sea | phr. | 乘船
+take time | phr. | 花费(时间)
+how long | phr. | 多久
+story | n. | 故事
+far | adj. & adv. | 远
+problem | n. | 问题,难题
+earlier | adj. & adv. | ( early的比较级)更早的(地)
+ill | adj. | 病的,不健康的
+tear | n. | (常用复数)眼泪,泪珠
+chicken | n. | 鸡,鸡肉
+tofu | n. | 豆腐
+fridge | n. | 电冰箱
+list | n. | 清单,一览表,名单,目录
+shopping list | phr. | 购物清单
+buy | v. | 买
+kilo | n. | 千克,公斤
+sell | v. | 卖,售
+how much | phr. | 多少,多少钱
+cheap | adj. | 便宜的
+expensive | adj. | 昂贵的
+tomato | n. | (pl.tomatoes)西红柿,蕃茄
+onion | n. | 洋葱
+carrot | n. | 胡萝卜
+pork | n. | 猪肉
+all day | phr. | 一整天,一天到晚
+a lot of | phr. | 许多,很多
+market | n. | 市场,集市
+dollar | n. | 元(美,加拿大等国的货币单位)
+cent | n. | (货币)分
+pound | n. | 镑(重量单位)
+health | n. | 健康,卫生
+fast | adj. & adv. | 快的(地),迅速的(地)
+of course | phr. | 当然,自然的事
+travel | v. & n. | 旅行
+safe | adj. | 安全的,平安的
+and so on | phr. | 等等
+price | n. | 价格,价钱
+example | n. | 例子,榜样
+for example | phr. | 例如
+stand | v. | 站,立
+field | n. | 地,田地
+one day | phr. | (过去或将来)有一天,某一天
+bright | adj. | 明亮的,灿烂的
+sunglasses | n. | 太阳镜
+language | n. | 语言
+helpful | adj. | 有帮助的,有益的
+get on a bus | phr. | 上车
+business | n. | 商业,生意,事物
+company | n. | 公司
+manager | n. | 经理,负责人
+century | n. | 世纪,百年`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "初中2182",
+    label: "第一册 生僻",
+    entry: {
+      id: "default_初中2182_第一册 生僻",
+      text: `minus | prep. | 减,减去
+sharpener | n. | 卷笔刀
+jeep | n. | 吉普车
+parrot | n. | 鹦鹉
+washroom | n. | 盥洗室,厕所
+fax | n. | 传真
+broom | n. | 扫帚
+raincoat | n. | 雨衣
+SAR | n. | 特别行政区
+purse | n. | 钱包
+playhouse | n. | 儿童游戏房
+midnight | n. | 午夜
+supper | n. | 晚餐
+have supper | phr. | 吃晚餐
+eighteenth | num. | 第十八
+tick | n. | (钟表等滴嗒的)声音
+wardrobe | n. | 衣柜
+goodness | n. | 善良；美德
+mend | v. | 修补；修理
+coke | n. | (口语)可口可乐
+ouch | int. | (突然感到病痛时发出的声音)啊呀
+yo-yo | n. | 溜溜球(一种玩具)
+postal | adj. | 邮政的
+roller-skating | n. | 滑旱冰
+schoolboy | n. | (中小学的)男学生
+textbook | n. | 课本
+Englishman | n. | (pl.Englishmen)英国(男)人
+Australian | adj. | 澳大利亚人
+foreigner | n. | 外国人
+smog | n. | 烟雾
+baker | n. | 面包师
+minibus | n. | 小型公共汽车`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "初中2182",
+    label: "第二册 常见",
+    entry: {
+      id: "default_初中2182_第二册 常见",
+      text: `lesson | n. | 课,功课
+fun | n. | 有趣
+when | conj. | 当…时
+traffic | n. | 交通
+bad | adj. | 坏的
+matter | v. | (否定句,疑问句)要紧,有关系
+on time | phr. | 准时
+September | n. | 九月
+happy | adj. | 快乐的,幸福的
+best | adj. & adv. | 最好的(地)
+wish | n. & v. | 祝愿,希望,想要
+second | num. & adj. | 第二(的)
+idea | n. | 主意,想法,意见
+last | adj. & v. | 最后的,刚过去的；持续,耐久
+given name | phr. | 名字
+mean | v. | 表示...的意思,意味着
+meaning | n. | 意思,意义,含义
+important | adj. | 重要的,重大的
+use | v. | 用,使用,运用
+Ms | n. | 女士(用于婚姻状况不明的女名)
+before | prep. & adv. | 在..之前,以前
+never | adv. | 从来,决不
+just | adv. | 刚刚,方才；仅仅,只有
+third | num. & adj. | 第三的
+afraid | adj. | 害怕的
+live | v. | 居住
+sound | n. & v. | 声音,听起来；声音
+have to | phr. | 不得不,必须
+time | n. | 次数
+more | adv. | 更,更加
+not…any more | phr. | 不再
+laugh | v. & n. | 笑,大笑,笑声；(大)笑,发笑
+waste | n. & v. | 浪费,废弃物
+a waste of time | phr. | 浪费(白费)时间
+fifth | num. & adj. | 第五(的)
+trip | n. & v. | 旅游,旅行
+field trip | phr. | 野外旅游
+hometown | n. | 故乡,家乡
+discuss | v. | 讨论,议论
+fish | v. | 钓鱼
+fishing | n. | 钓鱼
+go fishing | phr. | 去钓鱼
+east | n. & adj. | 东方(的),东部(的)
+agree | v. | 同意,赞成
+boating | n. | 划船
+go boating | phr. | 去划船
+maybe | adv. | 也许,大概
+mountain | n. | 山,高山
+hike | n. & v. | 远足,徒步旅行
+hiking | n. | 徒步旅行
+go hiking | phr. | 去徒步旅行
+picnic | n. | 野餐
+the day after tomorrow | phr. | 后天
+top | n. | 顶部
+problem | n. | 问题,难题
+quick | adj. | 快的,迅速的
+quickly | adv. | 快地,迅速地
+start | v. | 开始,着手
+trip over | phr. | (被...)绊倒
+tired | adj. | 累,疲乏
+hurry | v. | 赶快,慌忙
+hurry up | phr. | 赶快
+tie | v. | 捆,(系,栓)紧
+die | v. | 死亡
+city | n. | 城市
+take | v. | 花费(时间),消耗
+far | adj. & adv. | 远的(地)
+beautiful | adj. | 美丽的,漂亮的
+together | adv. | 一起
+autumn | n. | 秋天,秋季
+festival | n. & adj. | 节日(的),喜庆(的)
+free | adj. | 自由的,空闲的
+mooncake | n. | 月饼
+sweet | adj. | 甜的,可爱的
+inside | prep. | 在...里面
+store | n. | (美)商店,大百货公司
+come over | phr. | 过来,顺便来访
+thanksgiving | n. | 感谢,感恩
+Thanksgiving=Thanksgiving Day | phr. | 感恩节
+get together | phr. | 相聚
+October | n. | 十月
+taste | v. | 品尝,有...味道
+pie | n. | (用肉或水果做成的)馅饼
+outside | prep. & adv. | 在...外
+in the open air | phr. | 在户外,在野外
+than | conj. | 比…,比较…
+another | adj. & conj. | 另一个(的),又一个(的)
+delicious | adj. | 美味的,可口的
+better | adj. | (goo或well的比较级)更好的
+twelfth | num. & adj. | 第十二(的)
+celebrate | v. | 庆祝
+wait | v. | 等,等待
+feed | v. | 喂,饲养
+cow | n. | 母牛,乳牛
+interesting | adj. | 有趣的,有意思的
+taxi | n. | 出租汽车
+slow | adj. | 慢的,缓慢的
+slowly | adv. | 缓慢地
+grow | v. | 种植,生长
+country | n. | 乡村,郊外
+hear | v. | 听见,听说
+agree with | phr. | 同意...意见(想法)符合,一致
+corn | n. | (美)玉米,谷类庄稼
+most | adj. & adv. & pron. | (many 或 much 的最高级)最多的；大部分,大多数
+summer | n. | 夏天,夏季
+winter | n. | 冬天,冬季
+stop | v. | 停止,中止
+pick | v. | 采摘(花,果实)
+exciting | adj. | 令人兴奋的
+town | n. | 城镇
+star | n. | 星星,恒星
+until | prep. & pron. | 到...为止
+till | prep. & pron. | (直)到...为止
+college | n. | 学院,高等专科学校
+farming | n. | 农业,务农
+somebody | pron. | 某人,有人
+nobody | pron. | 没有人
+shall | v. | (我,我们)将,会
+zoo | n. | 动物园
+nothing | pron. | 没有什么,没有东西
+show | n. & v. | 演出,展览给...看,出示
+gate | n. | 大门
+land | n. & v. | 陆地,土地；登陆,上岸,降落
+grass | n. | 草,草地
+dangerous | adj. | 危险的
+panda | n. | 熊猫
+lion | n. | 狮子
+elephant | n. | 象
+monkey | n. | 猴子
+tiger | n. | 老虎
+deer |  | (pl.deer)；n. 鹿
+snake | n. | 蛇
+rabbit | n. | 兔子
+duck | n. | 鸭
+fox | n. | 狐狸
+horse | n. | 马
+bear | n. | 熊
+should | v.aux. | (shall的过去式)将,会,应该
+forest | n. | 森林
+feel | v. | 觉得,感到
+if | conj. | 假如,如果
+fall | v. | 落下,跌倒
+climb | v. | 爬,攀登
+finish | v. | 完成,结束
+cinema | n. | 电影院,电影
+twentieth | num. | 第二十
+baby | n. | 婴儿,幼畜
+back | n. | 背部,后面
+place | n. | 地点,地方
+twenty-first | num. | 第二十一
+bank | n. | 银行；(海,河,湖的)岸,堤
+theatre | n. | 剧场,戏院(美式拼写: theater)
+toilet | n. | 厕所
+museum | n. | 博物馆
+front | adj. & n. | 前面(的),前部
+in front of | phr. | 在...前面
+left | n. & adj. | 左(的),左边(的)
+right | n. & adj. | 右(的),右边(的)
+side | n. | 边,面
+on the left/right side | phr. | 在左(右)边
+all the same | phr. | 仍然,还是
+need | v. | 需要,必需
+ask for | phr. | 请求,询问
+along | prep. | 沿着,顺着一起,一道
+road | n. | 道路,公路
+turn | v. & n. | (使)转动,(使)翻动；(依次轮流的)顺序
+turning | n. | 拐弯处
+metre | n. | 公尺,米
+kilometre | n. | 公里,千米
+had better do | phr. | 最好(做...)
+coin | n. | 硬币
+keep | v. | 保持,留住
+as | conj. | 按照,如同；因为,由于
+moment | n. | 片刻,瞬间
+tell | v. | 告述,讲述,吩咐；说,告述,吩咐
+street | n. | 街道
+next to | phr. | 相邻,靠近
+around | prep. | 在...周围环绕着
+lift | n. & v. | 电梯；(云,雾等)消散,(雨)停止
+up and down | phr. | 上上下下,来来回回
+busy | adj. | 忙的,繁忙的
+team | n. | 队,组
+centre | n. 中心
+popular | adj. | 大众的,流行的
+quite | adv. | 很,十分
+month | n. | 月
+village | n. | 村庄,乡村
+strong | adj. | 强壮的,坚强的
+was | v. | be(am,is,are)的过去式
+yesterday | n. & adv. | 昨天
+November | n. | 十一月
+ill | adj. | 病的
+hope | v. | 希望
+composition | n. | 作文作品
+remember | v. | 记起,想起
+were | v. | 动词be(are)的过去式
+bit | n. | 一点儿,小片
+a bit | phr. | 一点儿
+healthy | adj. | 健康的,健壮的
+grow up | phr. | 成长,长大
+visit | v. | 参观,访问,拜访
+ago | adv. | 以前
+the day before yesterday | phr. | 前天
+enjoy | v. | 喜欢,享受...乐趣
+world | n. | 世界
+at the same time | phr. | 同时
+a moment ago | phr. | 刚才
+just now | phr. | 不久以前,刚才
+reply | n. & v. | 答复,回答
+by the way | phr. | 顺便说,顺便问一下
+match | n. | 比赛,竞赛
+cold | adj. | 冷的,寒冷的
+drive | v. | 驾驶
+plan | n. | 计划
+diary | n. | 日记
+make telephone calls | phr. | 打电话
+go out | phr. | 外出,到外面
+India | n. | 印度
+went | v. | 动词go的过去式
+rain | v. | 下雨
+rained | v. | 动词rain的过去式
+memory | n. | 记忆力,存储器
+pack | v. | 打包,打行李
+everything | pron. | 每件事,每样东西, 一切
+umbrella | n. | 伞,雨伞
+dry | adj. | 干的,干燥的
+newspaper | n. | 报纸
+paper | n. | 纸,报纸
+morning paper | n. | 晨报
+at breakfast | phr. | 早餐时
+say goodbye to | phr. | 告别,告辞
+useful | adj. | 有用的,有益的
+scientist | n. | 科学家
+invent | v. | 发明,创造
+all the time | phr. | 一直,始终,老是
+always | adv. | 总是,一直,经常
+everywhere | adv. | 到处,无论哪里
+born | v. | (动词bear的过去分词)出生
+be born | phr. | 出生于
+May | n. | 五月
+move | v. | 移动,搬动,搬家
+understand | v. | 懂得,理解
+so-so | adj. | (口语)不好不坏的,马马虎虎
+at first | phr. | 起先,首先
+luck | n. | 运气,好运
+April | n. | 四月
+hate | v. | 讨厌,不喜欢,憎恨
+fly | v. | 飞,飞行,乘飞机旅行
+painting | n. | 油画,水彩画
+airport | n. | 航空站,飞机场
+rock | n. | 摇动,摇滚乐
+band | n. | 乐队
+concert | n. | 音乐会,演奏会
+give a concert | phr. | 开音乐会
+tonight | adv. & n. | 今晚
+singer | n. | 歌唱者,歌手
+journalist | n. | 记者,新闻工作者
+famous | adj. | 有名的,著名的
+Sweden | n. | 瑞典
+song | n. | 歌,歌曲,歌谣
+more than | phr. | 多过,...以上,比…更
+thousand | num. | 千
+accident | n. | 事故,灾难
+careless | adj. | 粗心的,大意的
+fall down | phr. | 倒下,跌倒,从...落下
+break | v. | 折断,断裂,破碎
+go on | phr. | 继续
+someone | pron. | 某人,有人
+heart | n. | 心(脏)
+past | n. & adj. | 过去(的)
+end | n. & v. | 末端,终点,结束
+at the end of | phr. | 在...结尾,到...尽头
+happen | v. | (偶然)发生,碰巧
+part | n. | 部分
+tourist | n. | 旅游者,观光者
+go back | phr. | 回去
+in a hurry | phr. | 匆忙地
+grape | n. | 葡萄
+science | n. | (自然)科学
+marry | v. | 结婚
+get married | phr. | 结婚
+subject | n. | 题目,题材
+friendship | n. | 友谊,友情
+anyone | pron. | 任何人
+date | n. | 日期
+season | n. | 季节
+write down | phr. | 写下,记下
+January | n. | 一月
+March | n. | 三月
+June | n. | 六月
+July | n. | 七月
+August | n. | 八月
+December | n. | 十二月
+spring | n. | 春天
+weather | n. | 天气
+warm | adj. | 暖和的,热情的
+come out | phr. | (花)开,发(芽),出来
+heavily | adv. | 大量地,猛烈地,厉害地
+crop | n. | 庄稼,收成
+really | adv. | 确实,真正地
+snow | n. & v. | 雪,下雪
+snowman | n. | 雪人
+all the year round | phr. | 一年到头
+true | adj. | 真的,真实的
+nearly | adv. | 将近,几乎
+unlike | prep. | 不像,和...不同
+opposite | adj. | 对面的,相反的
+sunny | adj. | 晴朗的,阳光充足的
+cloud | n. | 云
+cloudy | adj. | 多云的,阴天的
+wet | adj. | 湿的
+rainy | adj. | 多雨的,下雨的
+wind | n. | 风
+windy | adj. | 有风的,风大的
+snowy | adj. | 多雪的,降雪的
+later | adv. | 以后,后来
+later on | phr. | 后来,稍后
+ring | v. | (钟,铃等)响,摇铃
+ring up | phr. | 打电话
+west | n. & adj. | 西方、西部(的)
+strange | adj. | 奇怪的,陌生的
+radio | n. | 收音机
+report | n. & v. | 报导,报告
+north | n. & v. | 北方(的),北部(的)
+south | n. & v. | 南方(的),南部(的)
+at times | phr. | 有时,偶尔
+temperature | n. | 温度
+above | prep. | 在...上面
+below | prep. | 在...下,低于
+worse | adj. & adv. | ( bad,ill的比较级) 更坏,更差
+low | adj. | 低的,浅,矮的
+birthday | n. | 生日
+invite | v. | 邀请,招待
+film | n. | 影片,电影
+hold | v. | 拿,握
+hold on | phr. | (打电话时)等一等, 不挂断
+message | n. | 消息,信息
+take/leave a message | phr. | 捎/留口信
+ready | adj. | 准备好的,乐意的
+sandwich | n. | 三明治,夹心面包片
+plate | n. | 盘子,碟子
+candle | n. | 蜡烛
+present | n. | 礼物
+smile | n. & v. | 微笑
+telephone | n. & v. | 电话,电话机(= phone)；打电话给(某人)
+double | n. & adj. | 两倍(的),双倍(的)
+but | prep. | 除了
+take out | phr. | 取出
+the same as | phr. | 和...相同
+word | n. | 词,单词
+shout | v. | 呼喊,喊叫
+turn over | phr. | 把...翻过来
+study | n. | 书房
+less | adj. & adv. | ( little的比较级)较少的, 较小的
+less than | phr. | 不到,少于
+be late for | phr. | 迟到
+beef | n. | 牛肉
+help yourself to | phr. | 自取,随便吃
+Christmas | n. | 圣诞节
+during | prep. | 在...的期间
+Spring Festival | n. | 春节
+exam | n. | (口语)考试
+get-together | n. | 聚会
+put on | phr. | (戏剧等)上演,放(唱片等)
+play | n. | 剧,戏剧
+shower | n. | 降雨,骤雨
+Rome | n. | 罗马(意大利首都)
+Berlin | n. | 柏林
+Moscow | n. | 莫斯科
+kitchen | n. | 厨房
+few | adj. | 少数的,不多的
+a few | phr. | 一些,几个
+salt | n. | 盐
+sugar | n. | 糖
+pepper | n. | 胡椒
+oil | n. | 油
+wine | n. | 酒
+beer | n. | 啤酒
+fork | n. | 叉,餐叉
+spoon | n. | 匙,调羹
+chopsticks | n. | (常用复数)筷子
+cabbage | n. | 卷心菜,洋白菜
+butter | n. | 黄油
+cheese | n. | 乳酪
+soup | n. | 汤
+Italian | n. & adj. | 意大利人(的),意大利语(的)
+pizza | n. | (意大利)烤馅饼
+Indian | n. & adj. | 印度人(的),印第安人(的)
+kinds of | phr. | 各种各样的
+seem | v. | 好像,似乎
+even | adv. | 甚至,更
+Italy | n. | 意大利
+chocolate | n. | 巧克力,巧克力糖
+ice | n. | 冰
+make | v. | 使...(发生)
+both | adj. & pron. | 两个(人…)都
+either | adv. | (用于否定句中)也(不)
+either…or… | conj. | 或者...或者...
+anything | pron. | 任何事(物)
+neither | adj. & pron. | (两者)都不
+nor | conj. | 也不
+neither…nor | conj. | 既不...也不...
+a bit of | phr. | 少量(的),一点
+without | prep. | 无,没有,不
+take a seat | phr. | 坐下,就坐
+take-away | adj. & n. | 可拿走的(熟食)
+madam | n. | 女士,夫人,小姐
+menu | n. | (餐厅等的)菜单
+order | n. & v. | 订购,点菜订购单,定购,一份菜
+bill | n. | 帐单,清单,纸币
+be famous for | phr. | 因...而有名的
+kind | adj. | 和蔼的,友好的
+lady | n. | 女士,夫人
+ladies' room | n. | (妇女)公共厕所
+library | n. | 图书馆
+cross | n. | 十字形(物),十字记号；v. 穿过,越过
+crossing | n. | 十字路口,交叉点
+across | prep. | 穿过,横过
+miss | v. | 错过
+church | n. | 教堂,教会
+video | n. | 录像
+reach | v. | 到达,抵达,达到
+corner | n. | 角落,(街道)拐角
+on one's way to | phr. | 在..的途中
+sick | adj. | 患病的
+pocket | n. | 衣袋
+still | adv. | 仍旧,更
+weak | adj. | 弱的,差的
+wait for | phr. | 等候
+cut | v. | 割,砍,切
+finger | n. | 手指
+geography | n. | 地理(学)
+physics | n. | 物理(学)
+history | n. | 历史(学)
+key | n. | 钥匙
+fix | v. | 修理,安装
+lab | n. | 实验室
+suddenly | adv. | 突然地
+DVD | n. | 光碟,影碟
+in time | phr. | 及时
+make one's way to | phr. | 往..走去
+sign | n. | 标记,符号,痕迹
+lost | adj. | 迷途的,丢失的
+be/get lost | phr. | 迷失(道路)
+just then | phr. | 正在那时
+first of all | phr. | 首先,第一
+main | adj. | 主要的
+go wrong | phr. | 走错路
+hit | v. | 打,击中,撞
+noise | n. | 嘈杂声,响声
+make a noise | phr. | 吵闹
+passenger | n. | 乘客,旅客
+get on | phr. | 上(车)
+get off | phr. | 下来,从...下来
+push | v. | 推,挤
+stand in line | phr. | 站(在)队(里)
+necessary | adj. | 必需的,必要的
+waiting room | n. | 等候室,候诊(车,机)室
+patient | n. | 病人
+at the head of | phr. | 在...的最前
+visitor | n. | 参观者,访问者
+knee | n. | 膝盖
+hurt | v. | 使受伤,痛
+laugh at | phr. | 嘲笑
+mistake | n. | 错误
+quiet | adj. | 安静的,平静的
+quietly | adv. | 安静地,平静地
+reading room | n. | 阅览室
+alone | adv. | 独自的,单独的
+plastic | n. & adj. | 塑料(的)
+throw about | phr. | 乱丢,抛散
+change | v. | 变化,变更,改变
+have a good time | phr. | 过得愉快
+fact | n. | 事实,实际
+in fact | phr. | 实际上
+arrive | v. | 到达,抵达某地
+complain | v. | 抱怨,发牢骚
+surprise | n. | 惊奇,惊讶
+police | n. | 警察(局)
+voice | n. | 说话声,嗓音
+themselves | pron. | 他们自己
+care | v. & n. | 介意,在乎,关心；小心,照料,保护
+half-way | adv. | 在途中,半路上
+trouble | n. | 麻烦,烦恼
+headache | n. | 头痛
+have a headache | phr. | (患)头痛
+cough | v. & n. | 咳嗽
+have a cough | phr. | (患)咳嗽
+terrible | adj. | 可怕的,感到极不舒服的
+serious | adj. | 严重的,严肃
+pain | n. | 疼痛,疼
+dream | n. & v. | 梦,梦想做梦,向往
+worst | adj. | 最坏的,最恶劣的
+wake | v. | (使)醒来
+wake up | phr. | 醒来,唤醒
+as soon as | conj. | 一...就
+asleep | adj. | 睡着的,熟睡的
+fall asleep | phr. | 睡觉,入睡
+plant | n. & v. | 植物种植
+storm | n. | 暴风雨
+stop…from | phr. | 阻止...做
+difficult | adj. | 困难的,难的
+pill | n. | 药丸,药片
+awake | adj. | 清醒的
+be awake | phr. | 醒着的
+relax | v. | 放松,轻松
+again and again | phr. | 再三地,一再地,反复地
+angry | adj. | 发怒的,生气的
+hard | adj. | 硬的
+smell | v. | 闻,嗅,散发(气味)
+rich | adj. | 有钱的,富裕的,丰富的
+become | v. | 变得,变成,成为
+instead | adv. | 代替,顶替
+instead of | phr. | 代替
+look over | phr. | (仔细)检查
+enough | adj. | 足够的,充分的
+take exercise | phr. | 做运动
+fat | adj. | 肥胖的
+thin | adj. | 瘦的,薄的
+island | n. | 岛,岛状物
+farther | adj. & adv. | (far的比较级)较远, 更远
+somewhere | adv. | 某处,在某处
+pull | v. | 拉,拖,拔
+out of | prep. | 从..向外,从..往外
+cool | adj. | 凉快的
+anybody | pron. | 任何人
+ourselves | pron. | 我们自己
+perhaps | adv. | 也许,可能
+lots of | phr. | 许许多多的
+no longer | phr. | 不再
+missing | adj. | 丢失的,失踪的
+cry | v. | 哭,叫喊
+get back | phr. | 回来,取回
+too…to | phr. | 太...而不能
+anywhere | adv. | 任何地方
+solve | v. | 解决,解答
+believe | v. | 相信,认为
+everybody | pron. | 每人,人人
+drop | n. & v. | 滴,水滴掉下,落下
+run away | phr. | 逃跑
+eat up | phr. | 吃完,吃光
+circle | n. | 圈子,圆
+yet | adv. | (用于否定句)还(没)
+myself | pron. | 我自己
+cousin | n. | 堂(表)兄弟,堂(表)姐妹
+engineer | n. | 工程师
+cancer | n. | 癌症
+take care of | phr. | 照顾,照料,注意
+sad | adj. | 难过的,悲哀的
+death | n. | 死,死亡
+page | n. | (书的)页
+palace | n. | 宫,宫殿
+the Summer Palace | n. | 颐和园
+herself | pron. | 她自己
+turn on | phr. | 打开(电灯,收音机,煤气,自来水)
+while | n. & conj. | 一会儿；当..时候,和..同时
+after a while | phr. | 过了一会儿
+turn off | phr. | 关(电灯,收音机,煤气, 自来水等)
+any more | phr. | 再,更
+make faces | phr. | 做鬼脸,做苦脸
+whole | adj. | 全部的
+wonderful | adj. | 极好的,精彩的
+have a cold | phr. | (患)感冒
+once | adv. | 曾经,以前
+himself | pron. | 他自己
+tooth | n. | 牙齿
+kill | v. | 杀死,弄死
+fall off | phr. | (从...)掉下
+clever | adj. | 聪明的,机灵的
+yourselves | pron. | 你们自己
+find out | phr. | 找出,查出
+piano | n. | 钢琴
+poor | adj. | 贫穷的,可怜的
+afford | v. | 有足够的(钱/时间)做(某事)
+knock | v. | 敲,击
+knock at | phr. | 敲(门,窗等)
+pardon | v. | 原谅(某人),宽恕
+to one's surprise | phr. | 令(某人)惊讶
+blind | adj. | 瞎的,盲的
+shine | v. | 照亮,发亮
+bright | adj. | 明亮的,晴朗的
+through | prep. | 通过,穿过,经过
+look up | phr. | 向上看,抬头看
+come along come along | phr. | 来,随同
+return | v. | 回来,归还
+cookie | n. | 小甜饼
+leave…behind | phr. | 把...遗留在(留下)
+hold a sports meeting | phr. | 举行运动会
+race | n. | 赛跑
+100-metre race | phr. | 100米赛跑
+win | v. | 获胜,赢
+high jump | n. | 跳高
+long jump | n. | 跳远
+neck | n. | 颈,脖子
+active | adj. | 积极的
+take an active part in | phr. | 积极参加
+starting/finishing line | phr. | 起点/终点线
+loud | adj. | 大声的,响亮的
+pass on | phr. | 传递,转移到...
+stick | n. | 棒,棍
+catch up with | phr. | 赶上
+neck and neck | phr. | (竞赛等)并驾齐驱
+as…as | conj. | 与...一样
+a moment later | phr. | 片刻之后
+go on doing sth | phr. | 继续做(某事)
+fall behind | phr. | 落在...后面,输给别人
+winner | n. | 获胜者
+well done | phr. | 做得好
+congratulation | n. | (常用复数)祝贺,庆贺
+not as/so…as | conj. | 与...不一样
+rather | adv. | 相当
+result | n. | 结果
+dance | v. | 跳舞
+take turns | phr. | 轮流
+do one's best | phr. | 尽最大努力,尽力
+person | n. | 人
+speed | n. | 迅速,速度
+thought | n. | 思考,思想,想法
+technology | n. | 技术,工艺学
+interested | adj. | 感兴趣的
+be interested in | phr. | 对..感兴趣
+Washington | n. | 华盛顿
+future | n. | 将来,未来
+in the future | phr. | 将来
+large | adj. | 大的,(数量)多的
+spend | v. | 花(时间,钱),度过
+unusual | adj. | 不寻常的,非凡的
+in the end | phr. | 最后
+work out | phr. | 算出,制定出
+software | n. | (电脑)软件
+program | n. | 程序,项目,节目(英式拼写: programme)
+university | n. | 综合性大学
+develop | v. | 发展,研制,开发
+BASIC | n. | (电脑)初学者通用符号指令码
+tool | n. | 工具
+personal | adj. | 私人的,个人的
+improve | v. | 提高,改善
+golf | n. | 高尔夫球
+bridge | n. | 桥牌
+pleased | adj. | 高兴的,愉快的
+T-shirt | n. | 短袖无领汗杉,T恤(杉)
+disease | n. | 疾病
+million | n. | 百万,百万元
+decide | v. | 决定,决心
+billion | n. | 十亿
+lucky | adj. | 幸运的,侥幸的
+size | n. | 尺寸,大小
+almost | adv. | 几乎,差不多
+speaker | n. | 演讲者,说话者
+joke | n. | 笑话,玩笑
+play a joke on | phr. | 戏弄人,对某人恶作剧
+lose | v. | 丢失,失去,迷失(方向)
+hide | v. | 躲藏
+check | v. | 检查,核对
+lie | v. | 躺,平躺
+deaf | adj. | 聋的
+get on well with | phr. | 与...相处融洽
+neighbour | n. | 邻居
+ever | adv. | 曾经
+take off | phr. | 脱下(衣,帽,鞋等)
+boot | n. | 长统鞋
+be angry with | phr. | 对(某人)发脾气
+usual | adj. | 通常的,平常的
+as usual | phr. | 像平常一样
+PE | n. | 体育
+chemistry | n. | 化学
+sweep | v. | 扫,扫地
+choose | v. | 选择,挑选
+truck | n. | 卡车
+biology | n. | 生物(学)
+be fed up with | phr. | 厌倦
+knock on | phr. | 敲(门,窗等)
+refuse | v. | 拒绝
+pair | n. | 一对,一双
+a pair of | phr. | 一对,一双
+scissors | n. | (复数)剪刀
+review | v. | 复习(功课等)
+Russian | n. & adj. | 俄国的,俄国人(的), 俄语(的)
+novel | n. | (长篇)小说
+wallet | n. | 钱夹,皮夹
+ground | n. | 地面,土地
+cause | v. | 引起
+mention | v. | 提到,说起
+imagine | v. | 设想,想像
+repair | v. | 修理,修补
+at once | phr. | 立刻,马上
+mouth-to-mouth | adj. | (人工呼吸)口对口的
+breathe | v. | 呼吸
+hard-working | adj. | 辛勤工作的,用功的
+art | n. | 艺术,艺术品
+at the moment | phr. | 此刻
+set | v. | 使开始,安置
+set off | phr. | 出发,动身,起初
+pleasant | adj. | 愉快的,快乐的
+here and there | phr. | 到处,处处
+on watch | phr. | 值班,守望
+look out | phr. | 留神,注意
+in front | phr. | 前方,正对面
+hole | n. | 洞,孔,坑
+sink | v. | 下沉,沉没
+life | n. | 生命,生活
+make room for | phr. | 给..腾出地方
+take one's place | phr. | 坐某人的座位,代替某人的职位
+Boston | n. | 波士顿(美国马萨诸塞州的首府)
+war | n. | 战争
+information | n. | 信息,情报
+penguin | n. | 企鹅
+pink | adj. | 粉红色的,桃红色的
+lay | v. | 下蛋,产蛋
+pretty | adj. | 漂亮的,美丽的
+rub | v. | 磨,擦
+human | n. & adj. | 人(的),人类(的)`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "初中2182",
+    label: "第二册 生僻",
+    entry: {
+      id: "default_初中2182_第二册 生僻",
+      text: `eighth | num. | 第八
+salesgirl | n. | 女售货员
+ninth | num. & adj. | 第九(的)
+mid-autumn | n. | 中秋
+nut | n. | 坚果,坚果核
+harvest | n. | 收获
+pumpkin | n. | 南瓜
+turkey | n. | 火鸡
+tractor | n. | 拖拉机
+wheat | n. | 小麦
+bleat | v. & n. | 羊叫(声)
+dolphin | n. | 海豚
+cage | n. | 笼(子),鸟笼
+seafood | n. | 海鲜,海产食品
+bookshop | n. | 书店
+soccer | n. | 英式足球
+Swedish | adj. | 瑞典的,瑞典人的
+sunshine | n. | 日光,阳光
+melon | n. | 瓜
+northeast | n. | 东北,东北部
+daytime | n. | 白天
+northwest | n. | 西北,西北部
+foggy | adj. | 有雾,多雾的
+doorbell | n. | 门铃
+showery | adj. | 降雨的,多阵雨的
+magical | adj. | 魔法(似)的
+cupboard | n. | 碗橱,小橱(柜)
+pea | n. | 豌豆
+workplace | n. | 工作场所
+waiter | n. | 服务员
+cafe | n. | 小餐馆,咖啡厅
+disturb | v. | 妨碍,打扰
+queue | n. | (按次序等待的人,车等的)队, 行列
+jumper | n. | 跳跃者
+queue jumper | n. | 不按次序排队的人
+at midnight | phr. | 在半夜
+quarrel | v. | 争吵
+quarrel with | phr. | (和某人)吵架
+enjoy oneself | phr. | 过得快乐,玩得痛快
+farthest | adj. & adv. | (far的最高级)最远
+all by oneself | phr. | 独立,单独
+happily | adv. | 高兴地,快乐地
+sooner or later | phr. | 迟早
+teach oneself | phr. | 自学
+moonlight | n. & adj. | 月光(的)
+dim | adj. | 微暗的,昏暗的
+brightly | adv. | 明亮地,闪亮地
+silently | adv. | 寂静地,沉默地
+relay | n. | 接力,赛跑
+runner | n. | 赛跑的人
+loudly | adv. | 大声地,高声地
+lap | n. | (竞赛场的)一圈
+loudspeaker | n. | 扬声器,扩音器
+headmaster | n. | 校长
+best-seller | n. | 畅销货(书)
+microcomputer | n. | 微型计算机
+Microsoft | n. | 微软公司
+unlucky | adj. | 不走运的,不幸的
+conductor | n. | (汽车,电车上的)售票员,列车员
+painter | n. | 画家
+upstairs | adj. & adv. | (在)楼上,(往) 楼上
+downstairs | adj. & adv. | (在)楼下,(往)楼下
+bang | v. | 猛敲,猛撞,砰砰作响
+seller | n. | 卖者,售货员
+politely | adv. | 有礼貌地
+racket | n. | (网球,羽毛球等的)球拍
+motorbike | n. | 摩托车或有发动机的自行车
+luckily | adv. | 好运地,幸运地
+gatekeeper | n. | 看门人,门卫
+crow | v. | 拥挤
+steer | n. & v. | 驾驶,掌舵
+steering wheel | n. | 驾驶盘
+dive | v. | 潜入(水中),跳水
+diver | n. | 潜入水中的人,潜水员
+come to oneself | phr. | 苏醒,恢复知觉
+rob | v. | 抢劫
+Titanic | n. | 泰坦尼克(船名)
+iceberg | n. | 冰山
+lifeboat | n. | 救生船(艇)
+thankful | adj. | 感激的,感谢的
+noisy | adj. | 喧闹的,嘈杂的
+shellfish | n. | 贝类,甲壳虫
+toe | n. | 脚趾`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "初中2182",
+    label: "第三册 常见",
+    entry: {
+      id: "default_初中2182_第三册 常见",
+      text: `CD player | phr. | 激光唱机
+several | adj. & pron. | 几个；若干
+shelf | n. 架子；搁板
+already | adv. | 已经
+used to | phr. | 过去常常
+on | prep. | 关于
+knowledge | n. | 知识；学问
+yard | n. | 院子
+put sth down | phr. | 把某物放下来
+step | n. & v. | 脚步；走；踏入；踩
+probably | adv. | 很可能；大概
+pay | v. | 付钱；支付(过去式 paid)
+pay for | phr. | 付钱；支付
+come up with | phr. | 找到；提出(答案，办法)
+mark | n. | 记号；标记；痕迹
+think of | phr. | 想起
+encourage | v. | 鼓励
+get…back | phr. | 退还；送回去；取回
+pick…up | phr. | 拾起；捡起
+once | adv. | 一次
+abroad | adv. | 到国外；在国外
+copy | v. | 抄写
+as | prep. | 作为
+screen | n. | 屏幕
+wave | n. | 浪；波浪
+beach | n. | 海(河、湖)滩
+have a try | phr. | 尝试；努力；射击
+twice | adv. | 两次；两倍
+none | pron. | 一个人也没有；没有任何东西
+water-ski | v. | 做滑水运动
+describe | v. | 描写；叙述
+all over | phr. | 遍及
+especially | adv. | 特别；尤其
+attract | v. | 吸引
+no matter | phr. | 不论
+so-called | adj. | 所谓的
+possible | adj. | 可能的
+both…and… | phr. | 和...都
+give up | phr. | 放弃
+since | adv. & conj. | 此后；自..以来；由于，既然
+ever since | phr. | 从那时起；此后一直
+part-time | adj. & n. | 非全日工作的；业余时间
+although | conj. | 虽然；尽管
+fit | adj. & v. | 健康的；适合的；(使)适合
+prize | n. | 奖品；奖赏
+competition | n. | 比赛；竞争
+event | n. | 大事；事件
+Olympic | adj. | 奥林匹克的
+the Olympic Games | phr. | 奥林匹克运动会
+such | adj. | 这样的
+fail | v. | 失败；不及格
+practice | n. & v. | 练习, 实践
+business | n. | 商业；生意；事务
+so far | phr. | 到目前为止
+cross | v. | 越过；穿过
+channel | n. | 海峡；航道；频道；波段
+come true | phr. | 实现
+slow | v. | 放慢；减速
+slow down | phr. | 减缓；减速
+journey | n. | 旅程；旅行；路程
+among | prep. | 在……当中
+proud | adj. | 自豪的；骄傲的
+be proud of | phr. | 以……自豪(兴奋)
+speak highly of | phr. | 称赞
+not only…but also | phr. | 不但……而且
+pride | n. | 自豪；骄傲
+unless | conj. | 除非；如果不
+shot | n. | 尝试；努力；射击；(球赛中)击，射门，投篮，发射
+truth | n. | 真理，真相，事实
+pour | v. | 倒；灌；倾泻
+waste | adj. & n. | 废弃的；无用的；垃圾；废物
+dirty | adj. | 脏的
+be afraid of | phr. | 害怕
+member | n. | 成员
+join | v. | 加入；参加
+environment | n. | 环境
+harm | v. | 损害；伤害
+rubbish | n. | 垃圾；废物
+collect | v. | 收集；搜集
+whenever | conj. & adv. | 无论什么时候；随时
+produce | v. | 产生；生产；制造
+litter | n. & v. | 垃圾，废物；乱丢杂物
+onto | prep. | 在…上面；到…上面
+public | adj. | 公共的；公众的
+cut down | phr. | 砍倒
+protect | v. | 保护
+tidy | adj. | 整洁的；整齐的
+recycle | v. | 再循环；回收再用
+contribution | n. | 贡献
+make a contribution to | phr. | 贡献给；捐赠
+suppose | v. | 猜想
+do well in | phr. | 在……某方面干得好
+nearby | adv. | 附近
+mount | n. | …山；…峰
+as soon as possible | phr. | 尽可能早地；尽快
+except | prep. | 除…之外
+province | n. | 省
+rush | v. | 冲；奔跑
+rail | n. | 轨道；铁路
+railway | n. | (英)铁路
+lively | adj. | 热闹的；有生气的
+all kinds of | phr. | 各种各样的
+comfortable | adj. | 舒适的；舒服的
+keep doing something | phr. | 一直做某事
+offer | v. & n. | 拿出；提供
+magazine | n. | 杂志
+practise | v. | 实践；练习
+moving | adj. | 活动的；移动的；动的人
+click | n. & v. | 咔哒声；发出咔哒声
+pity | n. | 遗憾的事，可惜的事
+score | n. & v. | (比赛)得分
+own | adj. & v. | 自己的；拥有，所有
+least | adj. & n. | 最小的；最少的；最少，最小
+kid | n. | (口语)小伙子
+Internet | n. | 因特网，互联网络
+search | v. | 搜查，搜索
+double | adj. & v. | 双重的，双倍的
+type | v. | (用打字机或电脑)打字
+press | v. | 按，压
+enter | v. | 进入
+button | n. | 按钮，纽扣
+capital | n. | 首都
+population | n. | 人口，人数
+whether | conj. | 是否
+edge | n. | 边，边缘
+cool | adj. | (俚语)了不起
+cost | v. | 价钱为，花费(金钱、时间等)
+one-way | adj. | 单程的，单行的
+flight | n. | 航班，飞行
+book | v. | 预定(戏票、车票等)
+round-trip | adj. | (车票等)来回的, 往返的
+instruction | n. | 说明，须知
+straight | adv. | 一直地
+go straight along | phr. | 沿着…一直往前走
+whom | pron. | 谁，哪个人(who的宾格)
+think about | phr. | 考虑
+chance | n. | 机会
+sound | v. | 听起来
+pool | n. | 水池，水坑
+badly | adv. | 严重地，恶劣地
+allow | v. | 允许，准许
+deep | adj. | 深的
+explore | v. | 探测，探险
+however | conj. | 然而，可是
+dead | adj. | 死的
+society | n. | 社会
+cover | v. | 覆盖
+earth | n. | 陆地，大地，地球
+clean up | phr. | 清除，收拾干净
+ocean | n. | 海洋，大洋
+pollute | v. | 污染，弄脏
+group | n. | 组，群，团队
+as long as | phr. | 长达…
+deal | n. | (口语)协议，交易
+shark | n. | 鲨鱼
+on earth | phr. | 在地球上
+attack | n. & v. | 攻击，袭击
+Africa | n. | 非洲
+South Africa | n. | 南非
+warn | v. | 警告，提醒
+appear | v. | 出现，露面
+able | adj. | 有能力的，能干的
+be able to | phr. | 能，会
+spirit | n. | 精神
+inventor | n. | 发明者，创造者
+try out | phr. | 实验，尝试
+pupil | n. | 小学生，学生
+build | v. | 建立，建造，建设
+at the age of | phr. | 在…岁时
+print | v. | 印刷，印制；打印
+track | n. | (火车等的)轨道，跑道
+rush out | phr. | 冲出去
+safety | n. | 安全
+open up | phr. | 开设，开业，开放
+lifetime | n. | 一生，终生
+graduate | v. | 毕业
+turn down | phr. | 关小，调低
+clearly | adv. | 清楚地
+wonder | v. | 惊奇，惊讶,(对...)感到怀疑；惊奇，惊讶(对. . . . )感到怀
+worth | adj. | 有…的价值，值得；值得..的，有..的价值
+confidence | n. | 信心，自信
+merry | adj. | 愉快的；欢乐的
+put up | phr. | 挂起，举起
+circle | v. & n. | 环绕，绕行圆，圈子
+stocking | n. | 长统袜
+pet | n. | 宠爱的动物
+as well | adv. | 又，同样地
+single | adj. | 单个的，只有一个的
+base | v. | 以…作根据，基于
+base on | phr. | 以…(为)根据
+real | adj. | 真正的，真实的
+shy | adj. | 害羞的，腼腆的
+hang | v. | 吊着，悬挂
+dry | v. | 把…弄干，晒干
+though | conj. | 虽然…，尽管…
+even though | conj. | 即使…
+live on | phr. | 继续存在，继续活着
+relative | n. | 亲属，亲人
+greet | v. | 问候，向(人)打招呼
+hug | n. | 拥抱，紧抱
+western | adj. | 西方的，西部的
+traditional | adj. | 传统的，惯例的
+once upon a time | phr. | 从前，很早以前
+special | adj. | 特别的，特殊的
+at last | phr. | 终于，最后
+owner | n. | 拥有者，所有者
+give birth to | phr. | 生(孩子)
+be made in | phr. | 在…生产或制造
+be made of | phr. | 由…组成，由…构成
+brush | n. | 刷子，毛笔，画笔
+writing brush | n. | 毛笔
+bamboo | n. | 竹子
+be used for | phr. | 用于
+pan | n. | 平底锅
+jacket | n. | 夹克衫
+metal | n. | 金属
+stamp | n. | 邮票
+wood | n. | 木头，木材
+lock | n. & v. | 锁；上锁
+store | v. | 储藏，存储
+widely | adv. | 广泛地，广阔地
+Britain | n. | 英国，不列颠
+set | n. | 装置，设备
+a TV set | phr. | 一台电视
+Germany | n. | 德国
+cotton | n. | 棉花
+silk | n. | (蚕)丝
+camera | n. | 照相机
+digital | adj. | 数字似的
+ordinary | adj. | 普通的，通常的
+satellite | n. | 卫星
+rocket | n. | 火箭
+on show | phr. | 展出
+dinosaur | n. | 恐龙
+display | n. | 陈列
+on display | phr. | 陈列，展览
+natural | adj. | 自然界的，天然的
+guide | n. & v. | 向导，导游者；指导，引导
+underground | adj. | 地下的
+desert | n. | 沙漠
+human being | n. | 人
+disappear | v. | 消失
+discover | v. | 发现，发觉
+found | v. | 成立，建立
+entrance | n. | 入口，进口，入场
+park | v. | (将车)停放
+parking | n. | 停车(处)
+danger | n. | 危险
+pause | v. & n. | 中止，暂停
+bowl | n. | 碗
+serve | v. | 上(酒、菜等)，开(饭)；服务
+fill | v. | 装满，填充
+be filled with | phr. | 用…充满
+object | n. | 物体
+dig | v. | 挖，掘
+make sure | phr. | 确保,确认,查明
+so that | conj. | 以便，以致
+hear of | phr. | 听说
+run away | phr. | 流失,逃跑，逃走
+drop | n. | 滴，水滴
+soil | n. | 土壤，土地
+directly | adv. | 直接地
+leaf | n. | 叶子，树木、草的叶子
+in this way | phr. | 用这种方法
+flood | n. & v. | 洪水，水灾；淹没，泛滥
+prevent | v. | 防止，阻止
+northern | adj. | 北部的，北方的
+wide | adj. | 宽的
+blow | v. | 吹(过去式 blew)
+sand | n. | 沙，沙子
+towards | prep. | 向，朝
+point | v. | 指，指向…
+point to | phr. | 指向…
+far away | phr. | 很远，遥远
+thanks to | phr. | 由于，幸亏
+the more the better | phr. | 越多越好
+correct | adj. | 改正
+hand in | phr. | 交上来
+more or less | phr. | 多少有点，或多或少
+grand | adj. | 豪华的，庄重的，雄伟的
+hall | n. | 大厅，会堂，会馆
+notice | n. & v. | 通告，布告；注意，通知
+audience | n. | 听众
+height | n. | 高度
+document | n. | 公文，文件
+connect | v. | 连接，相连，联系
+provide | v. | 提供
+monitor | n. | 显示器
+point at | phr. | 指示，指向
+universe | n. | 宇宙
+man-made | adj. | 人造的，人工的
+space | n. | 空间，太空
+send | v. | 送，寄，派(遣)
+send up | phr. | 发射，把…往上送
+receive | v. | 接受，收到，得到
+shut | v. | 关(门等)
+shut down | phr. | 把…关上
+impossible | adj. | 不可能的
+mind | n. & v. | 思想，想法；关心，介意
+set one's mind to do | phr. | 一心想做…
+put off | phr. | 推迟，拖延
+activity | n. | 活动
+increase | v. | 增加，增长
+if | conj. | 是否
+hour after hour | phr. | 一小时又一小时, 连续地
+challenge | n. | 挑战
+beginning | n. | 开始，开端
+at the beginning of | phr. | 起初，开始
+square | n. | 平方，(方形的)广场
+hardly | adv. | 几乎不
+more and more | phr. | 越来越…
+prefer | v. | 宁愿(选择)，更喜欢
+prefer to | phr. | 宁愿(选择)，更喜欢
+rather than | phr. | 宁可,是..而不是
+used | adj. | 用过的，半旧的
+discussion | n. | 讨论
+be busy doing | phr. | 忙于做…
+chart | n. | 图表
+download | v. | 下载
+path | n. | 路线，去路
+Brazil | n. | 巴西
+excited | adj. | 兴奋的，激动的
+be excited about | phr. | 对…感到兴奋
+leather | n. | 皮革
+wear out | phr. | 把…穿旧，磨坏
+try on | phr. | 试穿(衣服,鞋),试戴(帽子)
+online | adj. & adv. | 在线，上网
+ad | n. | 广告
+shape | n. | 形状，外形
+decision | n. | 决定
+make a decision | phr. | 作出决定
+form | n. | 表格
+credit | n. | 信用
+credit card | n. | 信用卡
+successfully | adv. | 圆满地,顺利地,成功地
+interest | n. | 兴趣
+a place of interest | phr. | 名胜
+forever | adv. | 永远，总是
+lend | v. | 把…借给，借给(过去式 lent)
+go over | phr. | 过一遍，仔细检查
+make a mistake | phr. | 犯错误
+suit | n. | 一套衣服
+drop off | phr. | 放下(某物)，下车
+opera | n. | 歌剧
+the Great Hall of the people | n. | 人民大会堂
+huge | adj. | 巨大的
+the Palace Museum | n. | 故宫博物院
+rewarding | adj. | 值得作的
+grateful | adj. | 感激的，感谢的
+tail | n. | 尾巴，尾部
+lonely | adj. | 孤独的，寂寞的
+success | n. | 成就，成功
+Scotland | n. | 苏格兰
+make up one's mind | phr. | 下决心
+mostly | adv. | 主要地，大部分
+pig | n. | 猪
+education | n. | 教育，培养
+countryside | n. | 乡下，农村
+treat | v. | 治疗，对待
+before long | phr. | 不久以后
+regard | v. | 看待，当作
+regard… as | phr. | 把…当作，当作
+exactly | adv. | 准确地，严格地
+keep | v. | 饲养，照顾
+experience | n. | 经验，体验
+earthquake | n. | 地震
+rock | v. | 震动，摇动
+as if | conj. | 好像,似乎
+at sea | phr. | 在大海上
+story | n. | (房屋的)层
+two-story | n. | 两层
+grab | v. | 抓取…，夺取
+crash | v. | 坠落，冲撞
+mobile | adj. | 可移动的
+mobile phone | n. | 可移动电话
+at all | phr. | (用否定句)一点也不
+at least | phr. | 至少，起码
+beat | v. | 打败，敲打
+goal | n. | (足球)球门，得分
+by the time | phr. | 到…的时候
+check-out | n. | (购货时的)结帐台, 收银台
+realize | v. | 察觉，领悟，了解
+train | v. | 训练，培养
+training | n. | 训练，培养
+captain | n. | (足球队等)队长
+deserve | v. | 应得，值得…
+confident | adj. | 有自信的，确信的
+excellent | adj. | 极好的，优秀的
+nervous | adj. | 紧张不安的
+lazy | adj. | 懒惰的
+carry on | phr. | 坚持下去，继续下去
+final | adj. | 最后的
+amazing | adj. | 令人惊奇的
+be pleased with | phr. | 对…感到满意
+performance | n. | 演出，成果，成绩
+teamwork | n. | 合作，协同工作
+baseball | n. | 棒球
+never mind | phr. | 没关系
+boring | adj. | 令人厌烦的
+from now on | phr. | 从现在起，今后
+rule | n. | 规则，规定
+against | prep. | 与…对抗，对着
+expect | v. | 期望，预期
+rough | adj. | 粗鲁的，激烈的
+steal | v. | 偷，窃取(过去式 stole)
+hands up | phr. | 举手
+shoot | v. | 射击，射死(过去式 shot)
+detective | n. | 侦探
+inspector | n. | 警官，监督员
+come down | phr. | 下来，落
+escape | n. & v. | 逃亡，逃走，逃避
+victim | n. | 受害者，受骗者
+conversation | n. | 会话，谈话
+description | n. | 描述，描写
+excuse | n. | 借口，托词
+British | adj. | 英国人的
+club | n. | 俱乐部，社团
+expert | n. | 专家，内行
+tent | n. | 帐篷
+freeze | v. 结冰，凝结
+alive | adj. | 活着的
+progress | v. | 进步，提高，前进
+self-respect | n. | 自尊，自重
+essential | adj. | 本质的，主要的，必需的`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "初中2182",
+    label: "第三册 生僻",
+    entry: {
+      id: "default_初中2182_第三册 生僻",
+      text: `schoolyard | n. | 校园
+librarian | n. | 图书管理员
+sadly | adv. | 难过地；悲哀地
+bookmark | n. | 书签
+spoil | v. | 糟蹋,损坏(过去式与过去分词: spoilt)
+surf | v. | 冲浪
+surfing | n. | 冲浪运动
+surfer | n. | 冲浪者
+canoe | v. | 乘独木舟
+large numbers of | phr. | 许多
+mainland | n. | 大陆；本土
+wherever | conj. & adv. | 无论在(到)哪里；在任何地方
+neighbourhood | n. | 四邻；街坊；邻近
+spit | v. | 吐痰；吐唾沫(过去式 spat)
+dustbin | n. | 垃圾箱
+riddle | n. | 谜语
+headmaster | n. (英)中小学校长
+enjoyable | adj. | 愉快的；有趣的
+scenery | n. | 风景；景色
+scuba | n. | 水肺(潜水者用的水下呼吸器)
+icon | n. | 图象符号，图标
+ridge | n. | 山脉
+tomb | n. | 坟墓
+rim | n. | 边，缘
+coral | n. | 珊瑚
+reef | n. | 岩礁
+coral reef | n. | 珊瑚礁
+brochure | n. | 小册子
+outdoor | adj. | 户外的，野外的
+explorer | n. | 探测者，探险者
+undersea | adj. | 海底的
+amaze | v. | 使…大为惊讶，使惊
+be amazed at | phr. | 对…感到惊讶
+colourful | adj. | 颜色艳丽的
+terrific | adj. | (口语)很棒的，极好的
+sometime | adv. | (未来的)某时
+alike | adj. | 相似的，相像的
+watchtower | n. | 监视塔，瞭望塔
+neatly | adv. | 整洁地
+frighten | v. | 惊恐，吓唬
+frightened | adj. | 受惊的，害怕的
+telegraph | n. | 电报
+invention | n. | 发明，创造
+healthily | adv. | 健康地
+frustrate | v. | 使沮丧，使失败
+frustrated | adj. | 感到灰心丧气的
+decorate | v. | 装饰，修饰
+angel | n. | 天使，守护神
+eve | n. | (节日或重大事件发生的)前夕
+kind-hearted | adj. | 好心的
+chimney | n. | 烟囱，烟筒
+Turkey | n. | 土耳其
+fireplace | n. | 壁炉
+generosity | n. | 慷慨，豁达
+barn | n. | 谷仓，堆物房；马房，牛舍
+shepherd | n. | 牧羊人
+wool | n. | 羊毛，绒线
+Frenchman | n. | 法国人
+traveller | n. | 旅行者
+aeroplane | n. | 飞机
+fossil | n. | 化石
+Gobi Desert | n. | 戈壁沙漠
+disappearance | n. | 消失
+feather | n. | 羽毛
+exit | n. | 出口
+fragile | adj. | 易碎的
+teapot | n. | 茶壶
+drought | n. | 旱灾，干旱
+farmland | n. | 农田
+slipper | n. | (常用复数)拖鞋,便鞋
+beeper | n. | 袖珍无线电传呼机,电话呼叫机
+someday | adv. | (今后)有一天
+printer | n. | 打印机
+modem | n. | 调制解调器
+spaceship | n. | 宇宙飞船
+woolen | adj. | 羊毛的，毛织的
+worm | n. | 虫，蠕虫
+multiply | v. | (将…)乘…
+multiply…by… | phr. | 乘以…
+beg | v. | 恳求，乞求
+beg one's pardon | phr. | 请原谅，对不起
+secondhand | adj. | 二手的，用过的
+diagram | n. | 图表
+yen | n. | 元，日元
+Canon | n. | 佳能(照相机牌名)
+Peking opera | n. | 京剧
+wag | v. | 摆动，摇动(尾巴等)
+vet | n. | (口语)兽医
+heal | v. | 使(伤、病)痊愈
+injection | n. | 注射，打针
+painful | adj. | 疼痛的，痛苦的
+striker | n. | (足球)前锋
+midfield | n. | 中场
+midfield player | n. | 中场球员
+spill | v. | 溢出，溅出，洒出(过去式 spilt)
+necklace | n. | 项链
+thief | n. | 贼
+robber | n. | 强盗，盗贼
+robbery | n. | 抢劫案，抢劫
+steep | adj. | 陡峭的，险峻的
+misty | adj. | 有雾的，雾大的
+mist | n. | 雾
+trap | v. | 使…陷入困境，设陷阱捕捉
+anytime | adv. | 在任何时候`,
+      timestamp: 0,
+    },
+  },
+  {
     category: "高考3500",
     label: "A",
     entry: {
