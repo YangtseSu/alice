@@ -43,3 +43,6 @@ CODE.md
 .env.development
 .env.production
 .env.test
+
+# EAS local credentials (contains keystore passwords; sync via eas credentials, then delete)
+credentials.json
