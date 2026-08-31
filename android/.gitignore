@@ -17,3 +17,7 @@ app/src/main/java/inline/
 
 # Bundle artifacts
 *.jsbundle
+
+# Personal release signing (self-use, never commit)
+keystore.properties
+app/release.keystore
