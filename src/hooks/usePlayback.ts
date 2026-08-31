@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { parseWordLine } from "../lib/dictation";
+import { parseWordLine, speakableMeaning } from "../lib/dictation";
 import {
   isReadTranslationEnabled,
   prefetchWordAudio,
@@ -155,8 +155,8 @@ export function usePlayback({
       const nextWord = list[s.index + 1];
       if (nextWord) void prefetchWordAudio(nextWord);
       if (isReadTranslationEnabled()) {
-        const meaning = parseWordLine(word).meaning;
-        if (meaning) void prefetchWordAudio(meaning);
+        const speakable = speakableMeaning(parseWordLine(word).meaning);
+        if (speakable) void prefetchWordAudio(speakable);
       }
 
       const ok = await speakWord(word);
@@ -226,10 +226,10 @@ export function usePlayback({
     }
 
     if (s.phase === "speakMeaning") {
-      const meaning = parseWordLine(word).meaning;
-      if (meaning) {
+      const speakable = speakableMeaning(parseWordLine(word).meaning);
+      if (speakable) {
         s.speaking = true;
-        await speakWord(meaning, { lang: "zh-CN" });
+        await speakWord(speakable, { lang: "zh-CN" });
         if (isCancelled(gen)) return;
         const cur = schedulerRef.current;
         if (!cur || cur.gen !== gen) return;

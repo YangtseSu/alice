@@ -17,6 +17,10 @@ export interface WordEntry {
   meaning?: string;
 }
 
+/** 词性前缀（ECDICT 与用户词表通用），如 "n." "vt." "adj."。 */
+export const POS_PREFIX_RE =
+  /^(n\.|v\.|vt\.|vi\.|adj\.|adv\.|prep\.|conj\.|pron\.|num\.|art\.|int\.|aux\.|abbr\.|contr\.|a\.)\s*/i;
+
 const PIPE = "|";
 const FULLWIDTH_PIPE = "｜";
 
@@ -87,3 +91,48 @@ const CJK_RE = /[\u4e00-\u9fff]/;
 export function isCjkEntry(entry: string): boolean {
   return CJK_RE.test(speakTextFromEntry(entry));
 }
+
+const SENSE_SPLIT_RE = /[；;]/;
+const GLOSS_SPLIT_RE = /[，,、]/;
+const MEANING_PAREN_RE = /[（(][^（）()]*[）)]/g;
+const MEANING_EDGE_PUNCT_RE = /^[\s，,、。.：:；;]+|[\s，,、。.：:；;]+$/g;
+/** 朗读释义的长度上限（视觉宽度，全角 1、半角 0.5），超过则截取首个词条。 */
+const SPEAK_MEANING_MAX_WIDTH = 12;
+
+/** 全角记 1 字宽、半角记 0.5（与 dictionary.ts 的 sensesClamped 同一口径）。 */
+function meaningWidth(text: string): number {
+  let width = 0;
+  for (const ch of text) width += ch.charCodeAt(0) > 0x2e7f ? 1 : 0.5;
+  return width;
+}
+
+/**
+ * 朗读用的中文释义。与释义展示不同，TTS 只需要最核心的一个意思：
+ *
+ * - 去掉词性前缀（"n." "vt." 等会被 TTS 逐字念出）；
+ * - 多义项（「；」分隔，构建脚本与 enrichWordListText 保证）只取第一个非空义项；
+ * - 括号补注（缩写的英文全称等）不朗读；
+ * - 首义项仍超长时（同义词枚举）截取首个词条。
+ *
+ * 返回空串表示没有可朗读的内容（如整个释义只有词性标记）。
+ */
+export function speakableMeaning(meaning: string | undefined): string {
+  if (!meaning) return "";
+  for (const raw of meaning.split(SENSE_SPLIT_RE)) {
+    let text = raw.trim();
+    const pos = text.match(POS_PREFIX_RE);
+    if (pos) text = text.slice(pos[0].length).trim();
+    text = text.replace(MEANING_PAREN_RE, "").trim();
+    text = text.replace(MEANING_EDGE_PUNCT_RE, "");
+    if (!text) continue;
+
+    if (meaningWidth(text) > SPEAK_MEANING_MAX_WIDTH) {
+      text = text.split(GLOSS_SPLIT_RE)[0] ?? text;
+      text = text.replace(MEANING_EDGE_PUNCT_RE, "");
+      if (!text) continue;
+    }
+    return text;
+  }
+  return "";
+}
+
