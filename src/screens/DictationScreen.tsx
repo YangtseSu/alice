@@ -575,7 +575,17 @@ export function DictationScreen({
                           adjustsFontSizeToFit
                         >
                           {currentEntry.word}
-                        </Text>
+                                               </Text>
+                                {currentIsCjk && currentCompound && (
+                                  <Text
+                                    style={[
+                                      styles.wordMetaCompound,
+                                      { color: colors.muted },
+                                    ]}
+                                  >
+                                    组词：{currentCompound}
+                                  </Text>
+                                )}
                                                   {currentMeta &&
                             (currentMeta.pos || currentMeta.meaning) && (
                               <>
@@ -587,16 +597,6 @@ export function DictationScreen({
                                     ]}
                                   >
                                     {currentMeta.pos}
-                                  </Text>
-                                )}
-                                {currentIsCjk && currentCompound && (
-                                  <Text
-                                    style={[
-                                      styles.wordMetaCompound,
-                                      { color: colors.muted },
-                                    ]}
-                                  >
-                                    组词：{currentCompound}
                                   </Text>
                                 )}
                                 <Text
