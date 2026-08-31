@@ -115,10 +115,13 @@ function ensureCacheDir(): Directory {
 }
 
 function cacheFileFor(text: string): File {
-  const safe =
-    encodeURIComponent(text.trim().toLowerCase()).replace(/%/g, "_") ||
-    "unknown";
-  return new File(ensureCacheDir(), `${safe}.mp3`);
+  const trimmed = text.trim().toLowerCase();
+  const safe = encodeURIComponent(trimmed).replace(/%/g, "_") || "unknown";
+  // `.zh` suffix: builds before the le=zh fix cached CJK clips from the
+  // type=1 endpoint that pass the size check but are 0.1s of silence. The
+  // suffix orphans exactly those files while keeping the English cache warm.
+  const ext = CJK_RE.test(trimmed) ? ".zh.mp3" : ".mp3";
+  return new File(ensureCacheDir(), `${safe}${ext}`);
 }
 
 function cacheKeyFor(text: string): string {
@@ -127,6 +130,12 @@ function cacheKeyFor(text: string): string {
 
 function youdaoUrls(text: string): string[] {
   const q = encodeURIComponent(text);
+  // The US/UK voices (type=2/1) cannot speak Chinese: type=2 returns HTTP 500
+  // and type=1 returns a valid-size but silent ~0.1s fragment. le=zh serves
+  // proper Chinese TTS for CJK headwords.
+  if (CJK_RE.test(text)) {
+    return [`https://dict.youdao.com/dictvoice?audio=${q}&le=zh`];
+  }
   // Prefer US (type=2), then UK (type=1)
   return [
     `https://dict.youdao.com/dictvoice?audio=${q}&type=2`,
