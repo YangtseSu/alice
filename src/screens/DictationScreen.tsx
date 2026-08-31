@@ -22,7 +22,12 @@ import { Toast } from "../components/Toast";
 import { usePlayback } from "../hooks/usePlayback";
 import { useToast } from "../hooks/useToast";
 import { useWrongWords } from "../hooks/useWrongWords";
-import { isCjkEntry, parseWordLine, speakTextFromEntry } from "../lib/dictation";
+import {
+  cjkWordSpeech,
+  isCjkEntry,
+  parseWordLine,
+  speakTextFromEntry,
+} from "../lib/dictation";
 import { sensesClamped, splitSenses } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { notifySuccess, notifyWarning, tapLight } from "../lib/haptics";
@@ -312,6 +317,10 @@ export function DictationScreen({
       : "";
   const currentEntry = parseWordLine(currentLine);
   const currentIsCjk = isCjkEntry(currentLine);
+  // 单字条目的组词（"生" → "生活"），与朗读选词一致：已学词 > 常用词。
+  const currentCompound = currentIsCjk
+    ? cjkWordSpeech(currentLine, playback.wordList)
+    : "";
   const currentMeta =
     currentEntry.pos || currentEntry.meaning
       ? { pos: currentEntry.pos, meaning: currentEntry.meaning }
@@ -578,6 +587,16 @@ export function DictationScreen({
                                     ]}
                                   >
                                     {currentMeta.pos}
+                                  </Text>
+                                )}
+                                {currentIsCjk && currentCompound && (
+                                  <Text
+                                    style={[
+                                      styles.wordMetaCompound,
+                                      { color: colors.muted },
+                                    ]}
+                                  >
+                                    组词：{currentCompound}
                                   </Text>
                                 )}
                                 <Text
@@ -993,6 +1012,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     textAlign: "center",
+  },
+  wordMetaCompound: {
+    fontSize: 15,
+    lineHeight: 20,
+    textAlign: "center",
+    fontWeight: "500",
   },
   wordMetaSense: {
     fontSize: 13,

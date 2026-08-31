@@ -191,7 +191,7 @@ export function usePlayback({
       // char always gets its word-compound pass ("月，月亮的月") regardless of
       // the English meaning toggle; multi-char words speak as-is.
       if (isCjkEntry(word)) {
-        if (cjkWordSpeech(word)) {
+        if (cjkWordSpeech(word, list)) {
           cur.phase = "speakMeaning";
           runScheduler();
           return;
@@ -237,7 +237,7 @@ export function usePlayback({
 
     if (s.phase === "speakMeaning") {
       const speakable = isCjkEntry(word)
-        ? cjkWordSpeech(word)
+        ? cjkWordSpeech(word, list)
         : speakableMeaning(parseWordLine(word).meaning);
       if (speakable) {
         s.speaking = true;
