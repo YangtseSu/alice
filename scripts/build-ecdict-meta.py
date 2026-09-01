@@ -25,9 +25,12 @@ ECDICT_URL = (
 EXAM_TAG_RE = re.compile(r"\b(zk|gk|cet4|cet6|ky|toefl|ielts|gre)\b", re.I)
 POS_PREFIX_RE = re.compile(
     r"^(n\.|v\.|vt\.|vi\.|adj\.|adv\.|prep\.|conj\.|pron\.|num\.|art\.|"
-    r"int\.|aux\.|abbr\.|contr\.|pl\.|a\.)\s*",
+    r"int\.|interj\.|aux\.|abbr\.|contr\.|pl\.|a\.|na\.|un\.|vbl\.|pp\.|"
+    r"pn\.|exclam\.|pref\.|suf\.|suff\.|comb\.|quant\.|phr\.|ph\.|st\.|"
+    r"pr\.|ind\.|pers\.|col\.|ing\.|pla\.|stuff\.)\s*",
     re.I,
 )
+
 WEAK_FORM_RE = re.compile(
     r"^[A-Za-z][A-Za-z\s'\-]*的"
     r"(过去式|过去分词|现在分词|第三人称单数|复数|比较级|最高级)"
@@ -129,6 +132,15 @@ def parse_sense_line(line: str) -> tuple[str | None, str | None, int] | None:
             pos = "adj."
         if pos == "pl.":
             pos = "n."
+        # ECDICT 用到的非标准缩写，归一为项目统一词性
+        if pos in ("interj.", "exclam."):
+            pos = "int."
+        if pos in ("na.", "un.", "pla.", "pn."):
+            pos = "n."
+        if pos in ("vbl.", "pp."):
+            pos = "v."
+        if pos in ("pref.", "suf.", "suff.", "comb.", "stuff."):
+            pos = "abbr."
         line = line[m.end() :].strip()
         # POS + another domain tag, e.g. "art. [计] 累加器"
         domain2 = DOMAIN_TAG_RE.match(line)
