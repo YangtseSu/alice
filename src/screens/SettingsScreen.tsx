@@ -19,6 +19,7 @@ import { OcrSettingsModal } from "../components/OcrSettingsModal";
 import { RechargeModal } from "../components/RechargeModal";
 import { Slider } from "../components/Slider";
 import { Toast } from "../components/Toast";
+import { TtsSettingsModal } from "../components/TtsSettingsModal";
 import { useOcrQuota } from "../hooks/useOcrQuota";
 import { useToast } from "../hooks/useToast";
 import { getBuiltinModel, saveSelectedModelId, type CreditPack } from "../lib/credits";
@@ -46,6 +47,14 @@ import {
   saveOcrProviderConfig,
   type OcrProviderConfig,
 } from "../lib/ocrConfig";
+import {
+  isTtsProviderConfigSet,
+  loadTtsSettings,
+  saveTtsProviderConfig,
+  saveTtsSource,
+  type TtsProviderConfig,
+  type TtsSource,
+} from "../lib/ttsConfig";
 import { useThemeColors, useThemeMode } from "../lib/theme";
 import { clearTtsCache } from "../lib/tts";
 import type { RootStackParamList } from "../navigation/types";
@@ -78,12 +87,19 @@ export function SettingsScreen() {
   const [soundOn, setSoundOn] = useState(true);
   const [speechRate, setSpeechRateState] = useState(DEFAULT_SPEECH_RATE);
   const [intervalSec, setIntervalSec] = useState(DEFAULT_INTERVAL_SEC);
+  const [ttsSource, setTtsSource] = useState<TtsSource>("youdao");
+  const [ttsConfig, setTtsConfig] = useState<TtsProviderConfig | null>(null);
+  const [ttsSettingsVisible, setTtsSettingsVisible] = useState(false);
 
   useEffect(() => {
     loadSoundEnabled().then(setSoundOn);
     loadSpeechRate().then((rate) => {
       setSpeechRateState(rate);
       setSpeechRate(rate);
+    });
+    loadTtsSettings().then(({ source, config }) => {
+      setTtsSource(source);
+      setTtsConfig(config);
     });
   }, []);
 
@@ -115,6 +131,33 @@ export function SettingsScreen() {
     setIntervalSec(value);
     saveIntervalSec(value).catch(() => {});
   }, []);
+
+  const handleSelectTtsSource = useCallback((source: TtsSource) => {
+    setTtsSource(source);
+    saveTtsSource(source).catch(() => {});
+    setTtsSettingsVisible(false);
+    showToast(
+      source === "custom" ? "已切换到自定义发音服务" : "已恢复有道词典发音",
+    );
+  }, [showToast]);
+
+  const handleSaveTtsConfig = useCallback(
+    (cfg: TtsProviderConfig | null) => {
+      setTtsConfig(cfg);
+      saveTtsProviderConfig(cfg).catch(() => {});
+      if (cfg) {
+        setTtsSource("custom");
+        saveTtsSource("custom").catch(() => {});
+        showToast("已启用自定义发音服务");
+      } else {
+        setTtsSource("youdao");
+        saveTtsSource("youdao").catch(() => {});
+        showToast("已清除自定义发音配置");
+      }
+      setTtsSettingsVisible(false);
+    },
+    [showToast],
+  );
 
   const [customOcrConfig, setCustomOcrConfig] =
     useState<OcrProviderConfig | null>(null);
@@ -177,7 +220,7 @@ export function SettingsScreen() {
     setDialog({
       visible: true,
       title: "清空发音缓存",
-      message: "确定要删除本地缓存的有道发音文件吗？\n下次听写会重新下载。",
+      message: "确定要删除本地缓存的发音文件吗？\n下次听写会重新生成或下载。",
       confirmLabel: "清空",
       action: () => {
         clearTtsCache()
@@ -200,9 +243,29 @@ export function SettingsScreen() {
       ? "未配置"
       : quota.model.label;
 
+  const ttsDetail =
+    ttsSource === "custom"
+      ? isTtsProviderConfigSet(ttsConfig)
+        ? ttsConfig.model
+        : "未配置"
+      : "有道词典";
+
   const appVersion = Constants.expoConfig?.version ?? "—";
 
   const sections: Section[] = [
+    {
+      key: "tts",
+      title: "发音",
+      rows: [
+        {
+          key: "tts-source",
+          icon: "volume-medium-outline",
+          label: "发音源",
+          detail: ttsDetail,
+          onPress: () => setTtsSettingsVisible(true),
+        },
+      ],
+    },
     {
       key: "ocr",
       title: "识别服务",
@@ -549,6 +612,14 @@ export function SettingsScreen() {
         credits={quota.credits}
         onClose={() => setRechargeVisible(false)}
         onPurchase={handleRecharge}
+      />
+      <TtsSettingsModal
+        visible={ttsSettingsVisible}
+        source={ttsSource}
+        config={ttsConfig}
+        onClose={() => setTtsSettingsVisible(false)}
+        onSelectSource={handleSelectTtsSource}
+        onSaveConfig={handleSaveTtsConfig}
       />
       <ConfirmDialog
         visible={dialog?.visible}
