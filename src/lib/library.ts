@@ -11619,6 +11619,1735 @@ dream`,
     },
   },
   {
+    category: "人教版小学语文",
+    label: "二上 词语表 识字 1",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 识字 1",
+      text: `花园
+飞鸟
+红领巾
+欢笑`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 识字 2",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 识字 2",
+      text: `杨树
+树叶
+松柏
+化石
+开花`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 识字 3",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 识字 3",
+      text: `拍手
+世界
+云彩
+丛林
+竹林
+朋友
+保护`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 识字 4",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 识字 4",
+      text: `四季
+春风
+农事
+月光
+身体
+辛苦
+心里
+大家`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 1",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 1",
+      text: `妈妈
+身子
+他们
+看见
+我们
+哪里
+那边
+雪白
+过去
+孩子
+什么`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 2",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 2",
+      text: `太阳
+天空
+一起
+冬天
+花朵
+池子
+江河
+海洋
+许多
+田地
+工作
+办法
+你们`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 3",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 3",
+      text: `如果
+已经
+长大
+告别
+四海为家
+自己
+出发
+动物
+胆子
+肚子
+那里
+知识`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 4",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 4",
+      text: `天上
+美丽
+爸爸
+下来
+不用
+高兴
+哥哥
+秋千
+彩云`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 5",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 5",
+      text: `宝贝
+干活
+回来
+一些
+天气
+欢快
+它们
+告诉
+名字
+出门`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 6",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 6",
+      text: `星星
+晚上
+无数
+奶奶
+中间
+总是
+爷爷
+北边
+勺子
+转动
+这个
+后来`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 8",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 8",
+      text: `那些
+山顶
+山头
+云海
+仙人
+前方
+仙女`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 9",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 9",
+      text: `山区
+群山
+树木
+灯光
+中午
+眼前
+细雨
+风光
+中外`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 10",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 10",
+      text: `地方
+水果
+月份
+枝叶
+五光十色
+好客
+老乡
+有的
+城市
+空气
+水分
+这里
+味道
+有名`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 11",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 11",
+      text: `坐井观天
+哪儿
+回答
+大话
+不过
+那么
+抬头`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 12",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 12",
+      text: `当作
+前面
+面对面
+出去
+过冬
+知道
+赶快
+正好
+明天
+清早
+好像
+一样
+天亮
+出来`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 13",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 13",
+      text: `从前
+以后
+多么
+那个
+叶子
+虫子
+自言自语
+邻居
+奇怪`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 14",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 14",
+      text: `年代
+更加
+明亮
+星星之火
+中国
+胜利
+道路`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 15",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 15",
+      text: `同志
+红军
+敌人
+生产
+常常
+来回
+非常
+战士
+一块儿
+白天`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 16",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 16",
+      text: `难忘
+火红
+人民
+因为
+总理
+人们
+四面八方
+为了
+人群
+欢乐
+开心`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 17",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 17",
+      text: `由于
+年轻
+共产党员
+共产党
+现在
+一点儿
+消息`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 19",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 19",
+      text: `于是
+无论
+船只
+同时
+行人
+一切
+上空
+看来
+不久
+路上
+出现
+散步
+消失`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 20",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 20",
+      text: `空地
+伙伴
+唱歌
+回家
+一会儿
+着火
+火星
+一边
+连忙
+树林
+水汽
+白云`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 21",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 21",
+      text: `果子
+木工
+身边
+仔细
+能干
+椅子
+怎么
+自信
+从来
+这么`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 22",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 22",
+      text: `上面
+快乐
+可是
+难过
+但是
+和好`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 词语表 阅读 23",
+    entry: {
+      id: "default_人教版小学语文_二上 词语表 阅读 23",
+      text: `眼泪
+水花
+青草
+游戏
+只有
+可爱
+可以
+多少
+咱们
+田野
+大地
+远方`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 识字 1",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 识字 1",
+      text: `帆 | fān | 帆船
+港 | gǎng | 海港
+湾 | wān | 港湾
+塘 | táng | 池塘
+稻 | dào | 稻谷
+行 | háng | 银行
+垂 | chuí | 垂下
+园 | yuán | 花园
+溪 | xī | 小溪
+丛 | cóng | 草丛
+翠 | cuì | 翠绿
+群 | qún | 人群
+队 | duì | 队伍
+铜 | tóng | 铜号
+号 | hào | 号码`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 识字 2",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 识字 2",
+      text: `榕 | róng | 榕树
+壮 | zhuàng | 壮观
+梧 | wú | 梧桐
+桐 | tóng | 梧桐
+掌 | zhǎng | 手掌
+枫 | fēng | 枫叶
+松 | sōng | 松树
+柏 | bǎi | 松柏
+桦 | huà | 白桦
+守 | shǒu | 守卫
+银 | yín | 银白
+杏 | xìng | 杏子
+杉 | shān | 水杉
+化 | huà | 化石
+桂 | guì | 桂花`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 识字 3",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 识字 3",
+      text: `世 | shì | 世界
+界 | jiè | 边界
+孔 | kǒng | 孔雀
+雀 | què | 孔雀
+锦 | jǐn | 锦鸡
+雄 | xióng | 雄鹰
+鹰 | yīng | 雄鹰
+翔 | xiáng | 飞翔
+雁 | yàn | 大雁
+深 | shēn | 深处
+猛 | měng | 凶猛
+灵 | líng | 灵巧
+休 | xiū | 休息
+猫 | māo | 小猫`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 识字 4",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 识字 4",
+      text: `季 | jì | 四季
+蝴 | hú | 蝴蝶
+蝶 | dié | 蝴蝶
+麦 | mài | 麦子
+嫩 | nèn | 嫩绿
+肥 | féi | 肥料
+农 | nóng | 农民
+勤 | qín | 勤劳
+归 | guī | 回归
+戴 | dài | 戴上
+场 | cháng | 场院
+谷 | gǔ | 谷子
+虽 | suī | 虽然
+辛 | xīn | 辛苦
+苦 | kǔ | 苦水
+制 | zhì | 制作`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 1",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 1",
+      text: `朗 | lǎng | 晴朗
+雾 | wù | 大雾
+暴 | bào | 暴雨
+雷 | léi | 打雷
+阵 | zhèn | 阵雨
+冻 | dòng | 冰冻
+夹 | jiā | 夹住`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 2",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 2",
+      text: `丑 | chǒu | 小丑
+恨 | hèn | 可恨
+诚 | chéng | 诚实
+虚 | xū | 虚心
+假 | jiǎ | 假话
+漠 | mò | 冷漠
+助 | zhù | 帮助
+贫 | pín | 贫穷
+富 | fù | 富有
+饥 | jī | 饥饿`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 3",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 3",
+      text: `弹 | tán | 弹琴
+钢 | gāng | 钢琴
+琴 | qín | 钢琴
+捏 | niē | 捏住
+泥 | ní | 泥人
+围 | wéi | 围巾
+滚 | gǔn | 滚动
+铁 | tiě | 铁环
+环 | huán | 环绕
+滑 | huá | 滑冰
+梯 | tī | 梯子`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 4",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 4",
+      text: `订 | dìng | 订正
+效 | xiào | 有效
+丰 | fēng | 丰收
+昌 | chāng | 昌盛
+付 | fù | 付出
+卧 | wò | 卧倒
+铺 | pù | 卧铺
+改 | gǎi | 改正
+签 | qiān | 签名
+退 | tuì | 后退
+更 | gēng | 三更
+维 | wéi | 二维码
+码 | mǎ | 二维码`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 5",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 5",
+      text: `轿 | jiào | 轿车
+救 | jiù | 救人
+摩 | mó | 摩托车
+托 | tuō | 摩托车
+防 | fáng | 防火
+渔 | yú | 渔民
+货 | huò | 货车
+科 | kē | 科学
+考 | kǎo | 考试
+察 | chá | 观察`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 6",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 6",
+      text: `锋 | fēng | 刀锋
+蜜 | mì | 蜜蜂
+峰 | fēng | 山峰
+蜂 | fēng | 蜜蜂
+爆 | bào | 爆炸
+争 | zhēng | 争吵
+抄 | chāo | 抄写
+炒 | chǎo | 炒菜
+幕 | mù | 开幕
+墓 | mù | 墓地
+慕 | mù | 羡慕`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 7",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 7",
+      text: `漱 | shù | 漱口
+饿 | è | 挨饿
+沼 | zhǎo | 沼泽
+泽 | zé | 沼泽
+宁 | níng | 安宁
+杠 | gàng | 杠杆
+杆 | gǎn | 栏杆
+栋 | dòng | 一栋
+库 | kù | 车库
+闸 | zhá | 闸门
+羔 | gāo | 羔羊
+蝗 | huáng | 蝗虫`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 语文园地 8",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 语文园地 8",
+      text: `狼 | láng | 灰狼
+猩 | xīng | 猩猩
+鹤 | hè | 白鹤
+蛇 | shé | 毒蛇
+鸽 | gē | 鸽子
+蚕 | cán | 养蚕
+蚯 | qiū | 蚯蚓
+蚓 | yǐn | 蚯蚓
+骆 | luò | 骆驼
+驼 | tuó | 骆驼
+狮 | shī | 狮子`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 1",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 1",
+      text: `蝌 | kē | 蝌蚪
+蚪 | dǒu | 蝌蚪
+脑 | nǎo | 脑袋
+袋 | dài | 口袋
+灰 | huī | 灰色
+甩 | shuǎi | 甩开
+活 | huó | 生活
+腿 | tuǐ | 大腿
+教 | jiào | 教师
+迎 | yíng | 欢迎
+嘴 | zuǐ | 张嘴
+龟 | guī | 乌龟
+披 | pī | 披上
+蹲 | dūn | 蹲下
+肚 | dù | 肚子
+鼓 | gǔ | 打鼓`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 2",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 2",
+      text: `汽 | qì | 汽车
+越 | yuè | 越过
+温 | wēn | 温和
+滴 | dī | 水滴
+奔 | bēn | 奔跑
+海 | hǎi | 大海
+洋 | yáng | 海洋
+发 | fā | 出发
+坏 | huài | 坏人
+没 | mò | 淹没
+庄 | zhuāng | 庄稼
+稼 | jià | 庄稼
+屋 | wū | 房屋
+带 | dài | 带领
+灾 | zāi | 灾难
+种 | zhǒng | 种子
+管 | guǎn | 管理`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 3",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 3",
+      text: `植 | zhí | 植树
+如 | rú | 如果
+脚 | jiǎo | 脚步
+旅 | lǚ | 旅行
+准 | zhǔn | 准备
+备 | bèi | 准备
+送 | sòng | 送别
+纷 | fēn | 纷飞
+挂 | guà | 挂念
+挺 | tǐng | 挺立
+钻 | zuān | 钻研
+底 | dǐ | 底下
+炸 | zhà | 炸弹
+离 | lí | 离开
+粗 | cū | 粗心
+得 | dé | 得到`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 4",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 4",
+      text: `虹 | hóng | 彩虹
+浇 | jiāo | 浇水
+壶 | hú | 水壶
+提 | tí | 提水
+洒 | sǎ | 洒水
+挑 | tiāo | 挑水
+镜 | jìng | 镜子
+拿 | ná | 拿着
+系 | jì | 系鞋带
+荡 | dàng | 荡秋千
+裙 | qún | 裙子`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 5",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 5",
+      text: `婆 | pó | 外婆
+候 | hòu | 时候
+趣 | qù | 有趣
+舅 | jiù | 舅舅
+或 | huò | 或者
+留 | liú | 留下
+份 | fèn | 月份
+喂 | wèi | 喂鸡
+逃 | táo | 逃走
+曲 | qǔ | 歌曲
+者 | zhě | 记者
+服 | fú | 衣服
+扑 | pū | 扑鼻
+鼻 | bí | 鼻子`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 6",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 6",
+      text: `珍 | zhēn | 珍惜
+撒 | sǎ | 撒种
+碧 | bì | 碧绿
+靠 | kào | 依靠
+仰 | yǎng | 仰望
+颗 | kē | 一颗
+距 | jù | 距离
+变 | biàn | 变化
+祖 | zǔ | 祖国
+勺 | sháo | 勺子
+绕 | rào | 绕路
+转 | zhuàn | 转动
+楚 | chǔ | 清楚
+汉 | hàn | 汉字
+刻 | kè | 立刻
+研 | yán | 研究`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 7",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 7",
+      text: `登 | dēng | 登山
+唐 | táng | 唐代
+依 | yī | 依旧
+尽 | jìn | 尽头
+欲 | yù | 欲望
+穷 | qióng | 无穷
+层 | céng | 云层
+瀑 | pù | 瀑布
+布 | bù | 花布
+炉 | lú | 火炉
+紫 | zǐ | 紫色
+烟 | yān | 烟火
+遥 | yáo | 遥远`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 8",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 8",
+      text: `闻 | wén | 新闻
+景 | jǐng | 风景
+区 | qū | 山区
+省 | shěng | 省会
+秀 | xiù | 秀丽
+神 | shén | 神气
+仙 | xiān | 仙女
+盘 | pán | 盘旋
+指 | zhǐ | 指点
+巨 | jù | 巨大
+伸 | shēn | 伸开
+都 | dū | 首都
+著 | zhù | 著名
+抢 | qiǎng | 抢先
+状 | zhuàng | 形状
+岩 | yán | 岩石`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 9",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 9",
+      text: `潭 | tán | 潭水
+茂 | mào | 茂密
+盛 | shèng | 茂盛
+胜 | shèng | 胜利
+央 | yāng | 中央
+岛 | dǎo | 海岛
+隐 | yǐn | 隐约
+约 | yuē | 大约
+倒 | dào | 倒映
+映 | yìng | 倒映
+整 | zhěng | 整洁
+童 | tóng | 童话
+吸 | xī | 吸引
+引 | yǐn | 吸引
+客 | kè | 客人`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 10",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 10",
+      text: `葡 | pú | 葡萄
+萄 | táo | 葡萄
+沟 | gōu | 山沟
+坡 | pō | 山坡
+密 | mì | 茂密
+枝 | zhī | 枝叶
+淡 | dàn | 淡水
+好 | hào | 好客
+族 | zú | 民族
+够 | gòu | 能够
+收 | shōu | 收下
+市 | shì | 城市
+干 | gān | 干净
+钉 | dīng | 钉子
+分 | fèn | 水分
+颜 | yán | 颜色
+味 | wèi | 香味`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 11",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 11",
+      text: `观 | guān | 观看
+沿 | yán | 井沿
+渴 | kě | 口渴
+话 | huà | 说话
+弄 | nòng | 弄错
+错 | cuò | 对错
+际 | jì | 天际
+抬 | tái | 抬头
+信 | xìn | 写信`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 12",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 12",
+      text: `号 | háo | 哀号
+当 | dāng | 当作
+鹊 | què | 喜鹊
+寻 | xún | 寻找
+枯 | kū | 枯草
+却 | què | 退却
+劝 | quàn | 劝告
+刮 | guā | 刮风
+死 | sǐ | 生死
+将 | jiāng | 将来
+且 | qiě | 而且
+狂 | kuáng | 狂风
+冷 | lěng | 寒冷
+重 | chóng | 重复
+复 | fù | 重复
+哀 | āi | 哀号
+唤 | huàn | 呼唤`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 13",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 13",
+      text: `葫 | hú | 葫芦
+芦 | lú | 葫芦
+谢 | xiè | 谢谢
+以 | yǐ | 以后
+盯 | dīng | 盯住
+赛 | sài | 比赛
+怪 | guài | 奇怪
+慢 | màn | 慢慢`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 14",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 14",
+      text: `楼 | lóu | 高楼
+艰 | jiān | 艰苦
+斗 | dòu | 战斗
+代 | dài | 年代
+临 | lín | 来临
+腊 | là | 腊月
+军 | jūn | 军人
+薄 | báo | 薄片
+章 | zhāng | 文章
+握 | wò | 握手
+凝 | níng | 凝视
+觉 | jué | 觉得
+油 | yóu | 油灯
+辉 | huī | 光辉
+革 | gé | 革命
+命 | mìng | 生命
+利 | lì | 顺利`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 15",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 15",
+      text: `朱 | zhū | 朱红
+德 | dé | 品德
+扁 | biǎn | 扁担
+担 | dàn | 扁担
+同 | tóng | 同学
+志 | zhì | 志气
+伍 | wǔ | 队伍
+敌 | dí | 敌人
+根 | gēn | 树根
+据 | jù | 根据
+抽 | chōu | 抽出
+陡 | dǒu | 陡坡
+鞋 | xié | 鞋子
+疼 | téng | 心疼
+敬 | jìng | 敬爱`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 16",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 16",
+      text: `泼 | pō | 泼水
+民 | mín | 人民
+度 | dù | 年度
+特 | tè | 特别
+周 | zhōu | 周围
+恩 | ēn | 恩情
+敲 | qiāo | 敲门
+铺 | pū | 铺路
+龙 | lóng | 龙船
+串 | chuàn | 一串
+容 | róng | 笑容
+踩 | cǎi | 踩踏
+始 | shǐ | 开始
+盛 | chéng | 盛满
+碗 | wǎn | 饭碗
+祝 | zhù | 祝福
+寿 | shòu | 长寿`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 17",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 17",
+      text: `刘 | liú | 姓刘
+兰 | lán | 兰花
+派 | pài | 派出
+由 | yóu | 由于
+于 | yú | 于是
+卖 | mài | 买卖
+员 | yuán | 队员
+捕 | bǔ | 捕捉
+买 | mǎi | 买卖
+似 | shì | 似的
+踏 | tà | 踏步
+烈 | liè | 烈火
+荣 | róng | 光荣
+岁 | suì | 岁数
+题 | tí | 题目`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 18",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 18",
+      text: `绝 | jué | 绝对
+径 | jìng | 石径
+踪 | zōng | 踪迹
+灭 | miè | 消灭
+舟 | zhōu | 龙舟
+钓 | diào | 钓鱼
+似 | sì | 相似
+庐 | lú | 庐山
+笼 | lǒng | 笼罩
+盖 | gài | 盖住
+苍 | cāng | 苍白
+茫 | máng | 白茫茫`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 19",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 19",
+      text: `论 | lùn | 议论
+暗 | àn | 黑暗
+岸 | àn | 海岸
+街 | jiē | 街道
+梁 | liáng | 桥梁
+甚 | shèn | 甚至
+至 | zhì | 至少
+切 | qiè | 一切
+躲 | duǒ | 躲雨
+该 | gāi | 应该
+悠 | yōu | 悠闲
+闲 | xián | 悠闲
+散 | sàn | 散步
+失 | shī | 失去`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 20",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 20",
+      text: `堆 | duī | 堆雪人
+累 | lèi | 劳累
+添 | tiān | 添加
+柴 | chái | 火柴
+烧 | shāo | 烧火
+旺 | wàng | 兴旺
+闭 | bì | 关闭
+哎 | āi | 哎呀
+旁 | páng | 旁边
+冲 | chōng | 冲出
+哇 | wa | 好哇
+终 | zhōng | 终于
+浑 | hún | 浑身
+淋 | lín | 淋雨
+晒 | shài | 晒干`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 21",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 21",
+      text: `称 | chēng | 称赞
+赞 | zàn | 赞美
+刺 | cì | 刺猬
+猬 | wèi | 刺猬
+板 | bǎn | 木板
+凳 | dèng | 板凳
+但 | dàn | 但是
+极 | jí | 极小
+傍 | bàng | 傍晚
+苹 | píng | 苹果
+泄 | xiè | 泄气
+接 | jiē | 接住
+除 | chú | 除法
+疲 | pí | 疲劳
+劳 | láo | 劳动`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 22",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 22",
+      text: `筝 | zhēng | 风筝
+鼠 | shǔ | 松鼠
+折 | zhé | 折纸
+漂 | piāo | 漂流
+扎 | zā | 扎风筝
+乘 | chéng | 乘车
+抓 | zhuā | 抓住
+线 | xiàn | 电线
+莓 | méi | 草莓
+俩 | liǎ | 我俩
+架 | jià | 书架
+受 | shòu | 感受
+愿 | yuàn | 愿意
+朝 | cháo | 朝代
+取 | qǔ | 取出`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 识字表 阅读 23",
+    entry: {
+      id: "default_人教版小学语文_二上 识字表 阅读 23",
+      text: `撞 | zhuàng | 撞倒
+怨 | yuàn | 抱怨
+软 | ruǎn | 柔软
+鸣 | míng | 鸣叫
+慈 | cí | 慈祥
+祥 | xiáng | 慈祥
+量 | liàng | 力量
+跌 | diē | 跌倒
+摔 | shuāi | 摔倒
+擦 | cā | 擦汗
+咱 | zán | 咱们
+推 | tuī | 推开
+驶 | shǐ | 行驶
+坚 | jiān | 坚固
+硬 | yìng | 坚硬`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 识字 1",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 识字 1",
+      text: `处 | chù | 到处
+块 | kuài | 一块
+座 | zuò | 座位
+园 | yuán | 花园
+群 | qún | 人群
+队 | duì | 队伍
+领 | lǐng | 红领巾`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 识字 2",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 识字 2",
+      text: `树 | shù | 树木
+之 | zhī | 之间
+杨 | yáng | 杨树
+松 | sōng | 松树
+柏 | bǎi | 松柏
+化 | huà | 化石
+金 | jīn | 金色
+桂 | guì | 桂花`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 识字 3",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 识字 3",
+      text: `拍 | pāi | 拍手
+世 | shì | 世界
+界 | jiè | 边界
+彩 | cǎi | 云彩
+丛 | cóng | 草丛
+休 | xiū | 休息
+朋 | péng | 朋友
+友 | yǒu | 朋友
+保 | bǎo | 保护
+护 | hù | 保护`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 识字 4",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 识字 4",
+      text: `季 | jì | 四季
+肥 | féi | 肥料
+农 | nóng | 农民
+事 | shì | 事情
+谷 | gǔ | 谷子
+体 | tǐ | 身体
+虽 | suī | 虽然
+辛 | xīn | 辛苦
+苦 | kǔ | 苦水
+初 | chū | 起初`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 1",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 1",
+      text: `转 | zhuǎn | 转学
+夹 | jiā | 夹住`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 2",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 2",
+      text: `丑 | chǒu | 小丑
+诚 | chéng | 诚实`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 3",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 3",
+      text: `图 | tú | 画图
+泥 | ní | 泥人
+铁 | tiě | 铁环
+环 | huán | 环绕`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 4",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 4",
+      text: `号 | hào | 号码
+丰 | fēng | 丰收`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 5",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 5",
+      text: `货 | huò | 货车
+科 | kē | 科学`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 6",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 6",
+      text: `抄 | chāo | 抄写
+炒 | chǎo | 炒菜`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 7",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 7",
+      text: `饥 | jī | 饥饿
+饿 | è | 挨饿
+宁 | níng | 安宁
+库 | kù | 车库`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 语文园地 8",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 语文园地 8",
+      text: `狼 | láng | 灰狼
+蛇 | shé | 毒蛇`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 1",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 1",
+      text: `两 | liǎng | 两个
+条 | tiáo | 面条
+哪 | nǎ | 哪里
+宽 | kuān | 宽广
+那 | nà | 那边
+短 | duǎn | 短处
+孩 | hái | 孩子
+成 | chéng | 成功`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 2",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 2",
+      text: `升 | shēng | 升起
+连 | lián | 连忙
+起 | qǐ | 起来
+海 | hǎi | 大海
+洋 | yáng | 海洋
+许 | xǔ | 许多
+作 | zuò | 作业
+办 | bàn | 办法
+法 | fǎ | 方法`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 3",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 3",
+      text: `如 | rú | 如果
+已 | yǐ | 已经
+经 | jīng | 已经
+别 | bié | 别人
+轻 | qīng | 轻声
+发 | fā | 出发
+胆 | dǎn | 胆子
+肚 | dù | 肚子
+更 | gèng | 更加
+识 | shí | 认识`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 4",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 4",
+      text: `丽 | lì | 美丽
+提 | tí | 提水
+吗 | ma | 好吗
+圆 | yuán | 圆心
+哥 | gē | 哥哥
+秋 | qiū | 秋千
+挂 | guà | 挂住
+啊 | a | 好啊`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 5",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 5",
+      text: `宝 | bǎo | 宝贝
+活 | huó | 干活
+些 | xiē | 一些
+总 | zǒng | 总是
+给 | gěi | 送给
+诉 | sù | 告诉
+曲 | qǔ | 歌曲
+名 | míng | 名字
+香 | xiāng | 香水`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 6",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 6",
+      text: `数 | shǔ | 数不清
+晚 | wǎn | 晚上
+奶 | nǎi | 奶奶
+您 | nín | 您好
+爷 | yé | 爷爷
+很 | hěn | 很多
+变 | biàn | 变化
+勺 | sháo | 勺子
+张 | zhāng | 张开
+汉 | hàn | 汉字`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 7",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 7",
+      text: `依 | yī | 依旧
+尽 | jìn | 尽头
+穷 | qióng | 无穷
+层 | céng | 云层
+照 | zhào | 照亮
+炉 | lú | 火炉
+烟 | yān | 烟火
+川 | chuān | 山川
+直 | zhí | 一直
+银 | yín | 银白`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 8",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 8",
+      text: `仙 | xiān | 仙女
+顶 | dǐng | 山顶
+巨 | jù | 巨大
+位 | wèi | 位置
+闪 | shǎn | 闪光
+狗 | gǒu | 小狗
+形 | xíng | 形状
+状 | zhuàng | 形状`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 9",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 9",
+      text: `湖 | hú | 湖水
+区 | qū | 山区
+胜 | shèng | 胜利
+岛 | dǎo | 海岛
+弯 | wān | 弯曲
+现 | xiàn | 发现
+就 | jiù | 就是
+外 | wài | 外面`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 10",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 10",
+      text: `份 | fèn | 月份
+枝 | zhī | 枝叶
+客 | kè | 客人
+城 | chéng | 城市
+市 | shì | 城市
+孔 | kǒng | 孔雀
+钉 | dīng | 钉子
+味 | wèi | 香味`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 11",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 11",
+      text: `观 | guān | 观看
+呀 | ya | 来呀
+答 | dá | 回答
+话 | huà | 说话
+抬 | tái | 抬头
+能 | néng | 能干
+信 | xìn | 写信`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 12",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 12",
+      text: `阵 | zhèn | 一阵
+做 | zuò | 做事
+冻 | dòng | 冰冻
+第 | dì | 第一
+像 | xiàng | 好像
+冷 | lěng | 寒冷
+冰 | bīng | 冰雪
+亮 | liàng | 明亮`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 13",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 13",
+      text: `种 | zhòng | 种地
+棵 | kē | 一棵
+以 | yǐ | 以后
+次 | cì | 次数
+想 | xiǎng | 想念
+邻 | lín | 邻居
+居 | jū | 邻居
+吧 | ba | 好吧
+奇 | qí | 奇怪
+怪 | guài | 奇怪`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 14",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 14",
+      text: `楼 | lóu | 高楼
+代 | dài | 年代
+穿 | chuān | 穿衣
+视 | shì | 视力
+利 | lì | 顺利
+路 | lù | 道路`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 15",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 15",
+      text: `同 | tóng | 同学
+志 | zhì | 志气
+军 | jūn | 军人
+敌 | dí | 敌人
+常 | cháng | 常常
+非 | fēi | 非常
+每 | měi | 每天
+战 | zhàn | 战士
+士 | shì | 战士
+戴 | dài | 戴上`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 16",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 16",
+      text: `难 | nán | 难忘
+忘 | wàng | 忘记
+民 | mín | 人民
+因 | yīn | 因为
+理 | lǐ | 道理
+串 | chuàn | 一串
+裤 | kù | 裤子
+令 | lìng | 口令`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 17",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 17",
+      text: `反 | fǎn | 反正
+村 | cūn | 村子
+由 | yóu | 由于
+于 | yú | 于是
+员 | yuán | 队员
+被 | bèi | 被子
+声 | shēng | 笑声
+岁 | suì | 岁数
+消 | xiāo | 消息
+息 | xī | 消息`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 18",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 18",
+      text: `绝 | jué | 绝对
+灭 | miè | 消灭
+舟 | zhōu | 龙舟
+独 | dú | 独自
+阴 | yīn | 阴天
+似 | sì | 相似
+野 | yě | 野外
+低 | dī | 低头`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 19",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 19",
+      text: `论 | lùn | 议论
+船 | chuán | 小船
+猫 | māo | 小猫
+切 | qiè | 一切
+该 | gāi | 应该
+散 | sàn | 散步
+步 | bù | 跑步
+失 | shī | 失去`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 20",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 20",
+      text: `要 | yào | 重要
+伙 | huǒ | 伙伴
+伴 | bàn | 伙伴
+歌 | gē | 唱歌
+得 | de | 跑得快
+闭 | bì | 关闭
+忙 | máng | 帮忙
+谁 | shuí | 谁的
+汽 | qì | 汽车`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 21",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 21",
+      text: `拿 | ná | 拿手
+仔 | zǐ | 仔细
+极 | jí | 极小
+送 | sòng | 送给
+椅 | yǐ | 椅子
+怎 | zěn | 怎么
+拉 | lā | 拉手
+收 | shōu | 收下
+接 | jiē | 接住`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 22",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 22",
+      text: `纸 | zhǐ | 白纸
+抓 | zhuā | 抓住
+线 | xiàn | 电线
+吵 | chǎo | 吵闹
+但 | dàn | 但是
+受 | shòu | 感受
+句 | jù | 句子
+哭 | kū | 哭泣`,
+      timestamp: 0,
+    },
+  },
+  {
+    category: "人教版小学语文",
+    label: "二上 写字表 阅读 23",
+    entry: {
+      id: "default_人教版小学语文_二上 写字表 阅读 23",
+      text: `游 | yóu | 游泳
+戏 | xì | 游戏
+爱 | ài | 爱护
+呢 | ne | 好呢
+跳 | tiào | 跳高
+咱 | zán | 咱们`,
+      timestamp: 0,
+    },
+  },
+  {
     category: "仁爱版初中",
     label: "九上 Unit 1",
     entry: {
