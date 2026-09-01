@@ -988,7 +988,7 @@ lift | n. & v. | 电梯；(云,雾等)消散,(雨)停止
 up and down | phr. | 上上下下,来来回回
 busy | adj. | 忙的,繁忙的
 team | n. | 队,组
-centre | n. 中心
+centre | n. | 中心
 popular | adj. | 大众的,流行的
 quite | adv. | 很,十分
 month | n. | 月
@@ -1619,7 +1619,7 @@ toe | n. | 脚趾`,
       id: "default_初中2182_第三册 常见",
       text: `CD player | phr. | 激光唱机
 several | adj. & pron. | 几个；若干
-shelf | n. 架子；搁板
+shelf | n. | 架子；搁板
 already | adv. | 已经
 used to | phr. | 过去常常
 on | prep. | 关于
@@ -2036,7 +2036,7 @@ British | adj. | 英国人的
 club | n. | 俱乐部，社团
 expert | n. | 专家，内行
 tent | n. | 帐篷
-freeze | v. 结冰，凝结
+freeze | v. | 结冰，凝结
 alive | adj. | 活着的
 progress | v. | 进步，提高，前进
 self-respect | n. | 自尊，自重
@@ -2065,7 +2065,7 @@ neighbourhood | n. | 四邻；街坊；邻近
 spit | v. | 吐痰；吐唾沫(过去式 spat)
 dustbin | n. | 垃圾箱
 riddle | n. | 谜语
-headmaster | n. (英)中小学校长
+headmaster | n. | (英)中小学校长
 enjoyable | adj. | 愉快的；有趣的
 scenery | n. | 风景；景色
 scuba | n. | 水肺(潜水者用的水下呼吸器)
@@ -2732,7 +2732,6 @@ bus
 bush
 business
 businessman
-businessman
 businesswoman
 busy
 but
@@ -2842,7 +2841,6 @@ certainly
 certificate
 chain
 chair
-chairman
 chairman
 chairwoman
 chalk
