@@ -7,21 +7,21 @@
 ## Architecture & Data Flow
 
 - **Entry**: `index.js` → `App.tsx` (loads fonts, hides splash, wraps in `ThemeProvider`) → custom navigation — **not** expo-router; `@react-navigation/native-stack` with 3 screens: `Home`, `Dictation`, `Settings` (param list in `src/navigation/types.ts`).
-- **No backend.** Only two outbound call sites: LLM vision OCR (OpenAI-compatible `/chat/completions`, default Zhipu GLM-4V — `src/lib/ocr.ts`, `src/lib/ocrConfig.ts`) and Youdao TTS audio downloads (`src/lib/tts.ts`, cached under `expo-file-system` `Paths.cache/tts`, fallback to `expo-speech`).
+- **No backend.** Three outbound call sites: LLM vision OCR (OpenAI-compatible `/chat/completions`, default Zhipu GLM-4V — `src/lib/ocr.ts`, `src/lib/ocrConfig.ts`), Youdao TTS audio downloads (default dictation voice; `src/lib/tts.ts`, cached under `expo-file-system` `Paths.cache/tts`, fallback to `expo-speech`), and optional OpenAI-compatible LLM TTS (BYOK — `src/lib/ttsConfig.ts`; wire shapes: standard `/audio/speech` binary and chat.completions-with-`audio` base64 like Xiaomi MiMo; clips cached in the same TTS dir with a provider/model/voice/rate hash in the filename, blob-URL memory cache on web; any failure falls back to system TTS).
 - **Vocabulary pipeline** (generated files — never hand-edit):
   - `data/<category>/<label>.txt` (7 Chinese-named textbook dirs, lines `word | pos | meaning`) → `pnpm data:gen` (`scripts/generate-library.ts`) → **`src/lib/library.ts`** (`LIBRARY_ITEMS`, "DO NOT EDIT MANUALLY"). `pnpm data:check` (`scripts/check-data.ts`) validates the format.
   - ECDICT CSV → `pnpm dict:build` (`scripts/build-ecdict-meta.py`) → **`src/lib/ecdict-meta.json`** → consumed by `src/lib/dictionary.ts` for offline EN→ZH lookup.
-- **Persistence**: AsyncStorage only (`src/lib/storage.ts`) — no sqlite, no filesystem for user data. Keys namespaced `alice_*` (new: theme, credits, sound, OCR config) and `dictation_*` (legacy: wrong words, history, favorites, speech rate). Built-in library IDs are prefixed `default_<category>_<label>`.
-- **State**: no state library (no redux/zustand). React hooks + module-scope singletons with in-memory caches (`src/lib/tts.ts`, `storage.ts`, `credits.ts`, `ocrConfig.ts`) providing sync getters after async init. Only one context: `ThemeProvider` in `src/lib/theme.tsx`.
+- **Persistence**: AsyncStorage only (`src/lib/storage.ts`) — no sqlite, no filesystem for user data. Keys namespaced `alice_*` (theme, credits, sound, OCR config, TTS source `alice_tts_source` + provider config `alice_tts_provider_config`) and `dictation_*` (legacy: wrong words, history, favorites, speech rate). Built-in library IDs are prefixed `default_<category>_<label>`.
+- **State**: no state library (no redux/zustand). React hooks + module-scope singletons with in-memory caches (`src/lib/tts.ts`, `storage.ts`, `credits.ts`, `ocrConfig.ts`, `ttsConfig.ts`) providing sync getters after async init. Only one context: `ThemeProvider` in `src/lib/theme.tsx`.
 
 ## Key Directories
 
 | Path | Purpose |
 | --- | --- |
 | `src/screens/` | `HomeScreen.tsx` (input hub, OCR, drawers), `DictationScreen.tsx` (playback engine UI, `PanResponder` gestures), `SettingsScreen.tsx` |
-| `src/components/` | Reusable UI: `Button`, `BottomSheet`, `CountdownRing`, `Toast`, drawers (`FavoritesDrawer`, `HistoryDrawer`, `LibraryDrawer`), OCR UI |
+| `src/components/` | Reusable UI: `Button`, `BottomSheet`, `CountdownRing`, `Toast`, drawers (`FavoritesDrawer`, `HistoryDrawer`, `LibraryDrawer`), OCR UI, `TtsSettingsModal` |
 | `src/hooks/` | `usePlayback.ts` (dictation phase machine: speak1 → 700ms gap → speak2 → interval), `useWrongWords`, `useOcrQuota`, `useToast` |
-| `src/lib/` | Domain logic: `dictation.ts` (pure parsing), `tts.ts`, `sound.ts`, `haptics.ts`, `ocr.ts`, `credits.ts`, `theme.tsx`, `designTokens.ts`, `config.ts`; **generated**: `library.ts`, `ecdict-meta.json` |
+| `src/lib/` | Domain logic: `dictation.ts` (pure parsing), `tts.ts`, `ttsConfig.ts`, `sound.ts`, `haptics.ts`, `ocr.ts`, `credits.ts`, `theme.tsx`, `designTokens.ts`, `config.ts`; **generated**: `library.ts`, `ecdict-meta.json` |
 | `src/navigation/` | `types.ts` (`RootStackParamList`) |
 | `website/` | Standalone Vite + React 19 + Tailwind v4 marketing site (workspace member; shares no code with `src/`) |
 | `scripts/` | Release (bash), data-pipeline (python3/tsx), `lib/version.sh` |
@@ -60,6 +60,7 @@ Version bumps **must** go through `release.sh`/`scripts/lib/version.sh` — it s
 
 ## Code Conventions & Common Patterns
 
+- **Language**: commit messages, code comments, docstrings, and all identifiers (functions, variables, types) are written in **English**. Exception: user-facing UI strings and Chinese error messages stay hardcoded Chinese, as does sample text that is actually spoken.
 - **Exports**: named exports everywhere; `export default` only in `App.tsx`. No path aliases in the app — relative imports only (`website/` maps `@/*` → `website/src/*`).
 - **Naming**: `PascalCase.tsx` for components/screens, `camelCase.ts` for lib/hooks, hooks prefixed `use*`.
 - **Styling**: `StyleSheet.create` at the bottom of each component file; colors via `useThemeColors()`, non-color tokens (radii/spacing/fonts) from `src/lib/designTokens.ts`. No NativeWind/Tailwind in the app. Icons: `@expo/vector-icons` Ionicons.
