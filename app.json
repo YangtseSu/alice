@@ -40,6 +40,8 @@
       "favicon": "./assets/icon.png"
     },
     "plugins": [
+      "expo-asset",
+      "expo-font",
       "./plugins/withGradleJvmArgs",
       [
         "expo-image-picker",
