@@ -3,6 +3,7 @@ packages:
 allowBuilds:
   dtrace-provider: true
   esbuild: true
+  protobufjs: true
   workerd: true
 minimumReleaseAgeExclude:
   - "@react-navigation/bottom-tabs@7.18.7"
@@ -55,3 +56,9 @@ minimumReleaseAgeExclude:
   - vite@8.1.5
   - expo-constants@57.0.9
   - react-native-safe-area-context@5.8.1
+  - '@expo/eas-build-job@23.1.0'
+  - '@expo/eas-json@23.1.0'
+  - '@expo/logger@23.1.0'
+  - '@expo/steps@23.1.0'
+  - '@expo/turtle-spawn@23.1.0'
+  - eas-cli@23.2.0
