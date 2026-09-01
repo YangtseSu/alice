@@ -9,7 +9,7 @@
 - **Entry**: `index.js` → `App.tsx` (loads fonts, hides splash, wraps in `ThemeProvider`) → custom navigation — **not** expo-router; `@react-navigation/native-stack` with 3 screens: `Home`, `Dictation`, `Settings` (param list in `src/navigation/types.ts`).
 - **No backend.** Only two outbound call sites: LLM vision OCR (OpenAI-compatible `/chat/completions`, default Zhipu GLM-4V — `src/lib/ocr.ts`, `src/lib/ocrConfig.ts`) and Youdao TTS audio downloads (`src/lib/tts.ts`, cached under `expo-file-system` `Paths.cache/tts`, fallback to `expo-speech`).
 - **Vocabulary pipeline** (generated files — never hand-edit):
-  - `data/<category>/<label>.txt` (7 Chinese-named textbook dirs, lines `word | pos | meaning`) → `pnpm exec tsx scripts/generate-library.ts` → **`src/lib/library.ts`** (`LIBRARY_ITEMS`, "DO NOT EDIT MANUALLY").
+  - `data/<category>/<label>.txt` (7 Chinese-named textbook dirs, lines `word | pos | meaning`) → `pnpm data:gen` (`scripts/generate-library.ts`) → **`src/lib/library.ts`** (`LIBRARY_ITEMS`, "DO NOT EDIT MANUALLY"). `pnpm data:check` (`scripts/check-data.ts`) validates the format.
   - ECDICT CSV → `pnpm dict:build` (`scripts/build-ecdict-meta.py`) → **`src/lib/ecdict-meta.json`** → consumed by `src/lib/dictionary.ts` for offline EN→ZH lookup.
 - **Persistence**: AsyncStorage only (`src/lib/storage.ts`) — no sqlite, no filesystem for user data. Keys namespaced `alice_*` (new: theme, credits, sound, OCR config) and `dictation_*` (legacy: wrong words, history, favorites, speech rate). Built-in library IDs are prefixed `default_<category>_<label>`.
 - **State**: no state library (no redux/zustand). React hooks + module-scope singletons with in-memory caches (`src/lib/tts.ts`, `storage.ts`, `credits.ts`, `ocrConfig.ts`) providing sync getters after async init. Only one context: `ThemeProvider` in `src/lib/theme.tsx`.
@@ -41,8 +41,9 @@ pnpm lint                              # tsc --noEmit — THE quality gate for t
 pnpm build                             # web export → dist + scripts/flatten-web-dist.mjs
 
 # data pipeline (outputs are git-tracked; commit after regen)
-pnpm exec tsx scripts/generate-library.ts   # data/ → src/lib/library.ts
-pnpm dict:build                              # ECDICT → src/lib/ecdict-meta.json
+pnpm data:gen                           # data/ → src/lib/library.ts (tsx)
+pnpm data:check                         # validate data/ word lists (CI gate)
+pnpm dict:build                          # ECDICT → src/lib/ecdict-meta.json
 
 # website (separate tsconfig/eslint, excluded from app typecheck)
 pnpm --filter website dev
@@ -83,12 +84,12 @@ Version bumps **must** go through `release.sh`/`scripts/lib/version.sh` — it s
 ## Runtime/Tooling Preferences
 
 - **pnpm@11.20.0** (pinned via `packageManager`), Node 22 (CI). No bun, no `engines`. Workspace: `pnpm-workspace.yaml` → `["website"]` only.
-- Scripts run in three runtimes: app/tooling in **tsx/Node** (`generate-library.ts` via `pnpm exec tsx`, `flatten-web-dist.mjs` via `node`), **python3** (stdlib only where possible: `build-ecdict-meta.py`; `extract-renai9.py` needs `pdfplumber`, `gen_qrcode.py` needs `qrcode[pil]`), **bash** (release scripts).
-- CI (`.github/workflows/ci.yml`) is **workflow_dispatch release-only** (EAS builds); its only quality gate is `pnpm lint`. Custom composite action: `.github/actions/setup-node-pnpm`.
+- Scripts run in three runtimes: app/tooling in **tsx/Node** (`generate-library.ts`/`check-data.ts` via `pnpm data:gen`/`pnpm data:check`, `flatten-web-dist.mjs` via `node`), **python3** (stdlib only where possible: `build-ecdict-meta.py`; `extract-renai9.py` needs `pdfplumber`, `gen_qrcode.py` needs `qrcode[pil]`), **bash** (release scripts).
+- CI (`.github/workflows/ci.yml`) is **workflow_dispatch release-only** (EAS builds); its quality gates are `pnpm lint` and `pnpm data:check`. Custom composite action: `.github/actions/setup-node-pnpm`.
 - Formatting: `.editorconfig` (2-space, LF, UTF-8); Prettier 3 is a devDependency with **no config file** — defaults apply. ESLint exists only in `website/`.
 
 ## Testing & QA
 
 - **No test suite exists** — no jest/vitest/pytest/e2e anywhere (website's Playwright dependency is used only for build-time prerendering, not tests).
 - Verification workflow: `pnpm lint` (typecheck) before committing app/`src` changes; `pnpm --filter website lint && pnpm --filter website check` for `website/`; Python scripts have no automated checks — exercise them manually and inspect generated output (`src/lib/library.ts`, `src/lib/ecdict-meta.json`).
-- Data-pipeline changes: regenerate the generated modules and commit them together with `data/` edits.
+- Data-pipeline changes: `pnpm data:check` must pass, regenerate the generated modules and commit them together with `data/` edits.

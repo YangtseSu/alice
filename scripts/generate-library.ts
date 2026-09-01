@@ -4,12 +4,27 @@ import * as path from "path";
 /**
  * Layout: data/<category>/<label>.txt
  * - <category> = subdirectory name (e.g. "中考1600", "人教版初中")
- * - <label>    = filename without .txt (e.g. "A", "七上 Unit 1")
+ * - <label>    = filename without .txt (e.g. "A", "七上 Unit 1"); the label is
+ *   baked into the entry id ("default_<category>_<label>") — renaming a file
+ *   orphans stored history/favorites ids, so treat labels as stable keys
  * - Files directly under data/ (no subdirectory) are assigned category "其他"
  * - Empty subdirectories are skipped
  *
+ * Line format: `word | pos | meaning` — 1 or 3 pipe-separated columns
+ * (fullwidth ｜ accepted; only word is required). Column semantics depend on
+ * entry kind, and dictation.ts consumes them as follows:
+ * - English entries: pos = part of speech ("n." "v." …), meaning = 中文释义.
+ * - Chinese single-char entries (识字表/写字表): pos = pinyin with tone marks
+ *   ("háo"; neutral tones unmarked, "ma") — toneToDigit(pos) filters 组词朗读
+ *   candidates by reading for polyphones (多音字); meaning = 组词 containing
+ *   the head char, also the source of 朗读释义 (speakableMeaning).
+ * - Chinese word entries (词语表): bare word without pipes (spoken as-is).
+ *
+ * `pnpm data:check` (scripts/check-data.ts) enforces the format; CI runs it
+ * next to `pnpm lint`.
+ *
  * To add a new built-in library, drop .txt files into data/<category>/ and
- * re-run `node --experimental-strip-types scripts/generate-library.ts`.
+ * re-run `pnpm data:gen`.
  */
 
 const DATA_DIR = path.resolve(import.meta.dirname, "../data");
