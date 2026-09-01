@@ -32,7 +32,12 @@ import { parseWords } from "../lib/dictation";
 import { enrichWordListText } from "../lib/dictionary";
 import { fonts, radii, spacing } from "../lib/designTokens";
 import { BUILTIN_MODELS, type CreditPack } from "../lib/credits";
-import { OCR_DISCLAIMER, OCR_UI_IDLE, type OcrUiState } from "../lib/ocr";
+import {
+  OCR_DISCLAIMER,
+  OCR_UI_IDLE,
+  type OcrLang,
+  type OcrUiState,
+} from "../lib/ocr";
 import {
   addWordHistory,
   clearWordHistory,
@@ -56,6 +61,10 @@ import type { RootStackParamList } from "../navigation/types";
 
 const SAMPLE_WORDS = "apple\nbanana\ncat\ndog\nelephant\nfish\ngrape";
 const WORD_INPUT_SAVE_DEBOUNCE_MS = 500;
+const OCR_LANG_OPTIONS: Array<{ value: OcrLang; label: string }> = [
+  { value: "english", label: "英文" },
+  { value: "chinese", label: "中文" },
+];
 
 function shuffleArray<T>(arr: T[]): T[] {
   const shuffled = [...arr];
@@ -100,6 +109,7 @@ export function HomeScreen() {
   const [favoritesDrawerVisible, setFavoritesDrawerVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [cameraSheetVisible, setCameraSheetVisible] = useState(false);
+  const [ocrLang, setOcrLang] = useState<OcrLang>("english");
   const [rechargeVisible, setRechargeVisible] = useState(false);
   const quota = useOcrQuota();
   const libraryGroups = useMemo<LibraryGroup[]>(() => getLibraryGroups(), []);
@@ -505,6 +515,7 @@ export function HomeScreen() {
         <View style={styles.main}>
           <OcrSection
             ref={ocrRef}
+            lang={ocrLang}
             onOcrResult={handleOcrResult}
             onOcrStateChange={setOcrUi}
             onOcrOutcome={showToast}
@@ -627,6 +638,50 @@ export function HomeScreen() {
           title="拍照识词"
         >
           <View style={styles.ocrSheetBanner}>
+            <View style={styles.langSection}>
+              <Text style={[styles.langLabel, { color: colors.muted }]}>
+                识别语言
+              </Text>
+              <View style={styles.modelChips}>
+                {OCR_LANG_OPTIONS.map((opt) => {
+                  const active = ocrLang === opt.value;
+                  return (
+                    <TouchableOpacity
+                      key={opt.value}
+                      style={[
+                        styles.modelChip,
+                        {
+                          borderColor: active
+                            ? colors.primary
+                            : colors.borderSubtle,
+                          backgroundColor: active
+                            ? colors.primarySoft
+                            : colors.surface,
+                        },
+                      ]}
+                      onPress={() => setOcrLang(opt.value)}
+                      activeOpacity={0.7}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: active }}
+                      accessibilityLabel={opt.label}
+                    >
+                      <Text
+                        style={[
+                          styles.modelChipText,
+                          {
+                            color: active
+                              ? colors.primary
+                              : colors.foreground,
+                          },
+                        ]}
+                      >
+                        {opt.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
             {quota.hasCustomConfig ? (
               <View
                 style={[
@@ -936,6 +991,14 @@ const styles = StyleSheet.create({
   ocrSheetBanner: {
     gap: spacing.sm,
     paddingBottom: spacing.sm,
+  },
+  langSection: {
+    gap: spacing.xs,
+  },
+  langLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    paddingHorizontal: spacing.xs,
   },
   modelRow: {
     flexDirection: "row",

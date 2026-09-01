@@ -21,6 +21,7 @@ import {
   OCR_PROGRESS_MESSAGES,
   OCR_OUTCOME_MESSAGES,
   OCR_UI_IDLE,
+  type OcrLang,
   type OcrProgressPhase,
   type OcrUiState,
 } from "../lib/ocr";
@@ -29,6 +30,8 @@ import { useThemeColors } from "../lib/theme";
 import { radii, spacing } from "../lib/designTokens";
 
 interface OcrSectionProps {
+  /** Recognition language: "english" (default) or "chinese". */
+  lang?: OcrLang;
   onOcrResult: (words: string[]) => void;
   /** When true, hide the inline 拍照/相册 buttons (actions live in header menu). */
   hideActions?: boolean;
@@ -50,6 +53,7 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
   function OcrSection(
     {
       onOcrResult,
+      lang = "english",
       hideActions = false,
       onOcrStateChange,
       onOcrOutcome,
@@ -103,19 +107,35 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
           const { words, rawText } = await ocrWordsFromImage(
             uri,
             reportProgress,
+            lang,
           );
 
           if (words.length === 0) {
             onOcrOutcome?.(
               rawText
-                ? OCR_OUTCOME_MESSAGES.emptyUnparsed
-                : OCR_OUTCOME_MESSAGES.empty,
+                ? lang === "chinese"
+                  ? OCR_OUTCOME_MESSAGES.emptyUnparsedZh
+                  : OCR_OUTCOME_MESSAGES.emptyUnparsed
+                : lang === "chinese"
+                  ? OCR_OUTCOME_MESSAGES.emptyZh
+                  : OCR_OUTCOME_MESSAGES.empty,
             );
             return;
           }
 
           onOcrResult(words);
-          onOcrOutcome?.(OCR_OUTCOME_MESSAGES.success(words.length));
+          if (lang === "chinese") {
+            // 单字 = 生字，多字 = 词语；toast 里分开报数。
+            const chars = words.reduce(
+              (n, w) => n + (w.length === 1 ? 1 : 0),
+              0,
+            );
+            onOcrOutcome?.(
+              OCR_OUTCOME_MESSAGES.successZh(chars, words.length - chars),
+            );
+          } else {
+            onOcrOutcome?.(OCR_OUTCOME_MESSAGES.success(words.length));
+          }
         } catch (error) {
           if (error instanceof InsufficientCreditsError) {
             onInsufficientCredits?.();
@@ -132,6 +152,7 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
       },
       [
         ocrBusy,
+        lang,
         onInsufficientCredits,
         onOcrOutcome,
         onOcrResult,

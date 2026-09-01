@@ -21,6 +21,28 @@ const OCR_JPEG_QUALITY = 0.82;
 /** Disclaimer surfaced at OCR entry points so users know results may be off. */
 export const OCR_DISCLAIMER = "AI 识图可能存在误差，请核对识别结果";
 
+/** Recognition language for the vision OCR pass. */
+export type OcrLang = "english" | "chinese";
+
+const ENGLISH_OCR_PROMPT = [
+  "这是一张包含英文单词列表的图片。",
+  "请识别图中所有英文单词或词组。",
+  "如果单词旁边标注了词性和中文释义，请一并提取，每行格式：单词 | 词性 | 中文释义",
+  "如果图中没有词性或释义信息，只输出单词本身。",
+  "像 actor / actress 这样的斜杠词组应作为一整行输出，不要拆开。",
+  "不要用逗号连接、不要编号、不要输出其他标点或解释。",
+].join("");
+
+const CHINESE_OCR_PROMPT = [
+  "这是一张语文课本或练习册的图片，里面有需要听写的汉字生字和词语。",
+  "请识别图中所有汉字生字和词语，每行输出一个：",
+  "单个生字只输出该汉字；词语输出完整词语，不要拆成单个汉字。",
+  "忽略拼音、英文单词、数字、页码、题号、笔顺示意图和装饰图案。",
+  "如果字词旁边标注了拼音或组词，只输出字词本身。",
+  "不要输出“生字”“词语”等栏目标题、序号、标点符号或任何解释。",
+  "不要把多个字词合并到一行。",
+].join("");
+
 /**
  * Thrown when a premium built-in model is selected but the credit balance is
  * insufficient. The UI catches this to open the recharge flow instead of
@@ -52,6 +74,14 @@ export const OCR_OUTCOME_MESSAGES = {
   empty: "未识别到英文单词，请换一张更清晰的图片再试",
   emptyUnparsed:
     "未能从识别结果中提取英文单词，请换一张更清晰的单词列表再试",
+  successZh: (chars: number, terms: number) => {
+    if (terms === 0) return `已识别 ${chars} 个生字`;
+    if (chars === 0) return `已识别 ${terms} 个词语`;
+    return `已识别 ${chars} 个生字、${terms} 个词语`;
+  },
+  emptyZh: "未识别到中文生字或词语，请换一张更清晰的图片再试",
+  emptyUnparsedZh:
+    "未能从识别结果中提取中文生字或词语，请换一张更清晰的生字/词语表再试",
   failed: "识别失败",
 } as const;
 
@@ -192,6 +222,7 @@ async function resolveOcrRequest(): Promise<OcrRequestConfig> {
 export async function ocrWordsFromImage(
   imageUri: string,
   onProgress?: (phase: OcrProgressPhase) => void,
+  lang: OcrLang = "english",
 ): Promise<{ words: string[]; rawText: string }> {
   onProgress?.("compressing");
   const { base64, mimeType } = await compressImageForOcr(imageUri);
@@ -223,14 +254,7 @@ export async function ocrWordsFromImage(
               },
               {
                 type: "text",
-                text: [
-                  "这是一张包含英文单词列表的图片。",
-                  "请识别图中所有英文单词或词组。",
-                  "如果单词旁边标注了词性和中文释义，请一并提取，每行格式：单词 | 词性 | 中文释义",
-                  "如果图中没有词性或释义信息，只输出单词本身。",
-                  "像 actor / actress 这样的斜杠词组应作为一整行输出，不要拆开。",
-                  "不要用逗号连接、不要编号、不要输出其他标点或解释。",
-                ].join(""),
+                text: lang === "chinese" ? CHINESE_OCR_PROMPT : ENGLISH_OCR_PROMPT,
               },
             ],
           },
@@ -261,7 +285,10 @@ export async function ocrWordsFromImage(
     choices?: Array<{ message?: { content?: string } }>;
   };
   const rawText = payload.choices?.[0]?.message?.content?.trim() ?? "";
-  const words = extractWordsFromOcrText(rawText);
+  const words =
+    lang === "chinese"
+      ? extractChineseWordsFromOcrText(rawText)
+      : extractWordsFromOcrText(rawText);
 
   return { words, rawText };
 }
@@ -340,6 +367,19 @@ function cleanToken(s: string): string {
 
 const WORD_RE = /^[a-zA-Z][a-zA-Z'/\-\s]*$/;
 
+/** Strip markdown fences, normalize newlines, and split into non-empty lines. */
+function normalizeOcrLines(rawText: string): string[] {
+  const cleaned = rawText
+    .replace(/```[\s\S]*?```/g, (block) =>
+      block.replace(/^```\w*\n?/, "").replace(/\n?```$/, ""),
+    )
+    .replace(/\r\n?/g, "\n");
+  return cleaned
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+}
+
 /**
  * Vision models often ignore "one per line" and return comma- or space-separated
  * lists. This function normalizes the output into a clean word list.
@@ -350,17 +390,8 @@ const WORD_RE = /^[a-zA-Z][a-zA-Z'/\-\s]*$/;
  * logic.
  */
 export function extractWordsFromOcrText(rawText: string): string[] {
-  const cleaned = rawText
-    .replace(/```[\s\S]*?```/g, (block) =>
-      block.replace(/^```\w*\n?/, "").replace(/\n?```$/, ""),
-    )
-    .replace(/\r\n?/g, "\n");
-
   // Split by newlines first to keep enriched entries intact
-  const lines = cleaned
-    .split(/\n/)
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0);
+  const lines = normalizeOcrLines(rawText);
 
   const seen = new Set<string>();
   const words: string[] = [];
@@ -405,6 +436,60 @@ export function extractWordsFromOcrText(rawText: string): string[] {
         seen.add(key);
         words.push(word);
       }
+    }
+  }
+
+  return words;
+}
+
+/** 连续汉字运行段：把行内的拼音/英文/数字/标点从汉字上剥离。 */
+const CJK_RUN_RE = /[\u4e00-\u9fff]+/g;
+const CJK_CHAR_RE = /[\u4e00-\u9fff]/;
+
+/** 课本页的栏目名/标题，模型偶尔会把它们当词条输出。 */
+const CJK_STOPWORDS: Record<string, true> = {
+  生字: true,
+  词语: true,
+  拼音: true,
+  识字: true,
+  生字表: true,
+  词语表: true,
+  识字表: true,
+  写字表: true,
+  我会认: true,
+  我会写: true,
+  读一读: true,
+  写一写: true,
+  认一认: true,
+  练一练: true,
+  语文园地: true,
+  日积月累: true,
+};
+
+/**
+ * Extract Chinese dictation items (生字/词语) from vision-model output.
+ *
+ * Keeps only runs of 汉字: latin (拼音/英文), digits, and punctuation are
+ * dropped. For `|`-delimited meta lines (`月 | yuè | 月亮`) only the first
+ * CJK segment is taken — later columns are annotations, not entries. Lines
+ * ignoring "one per line" split naturally into separate runs at spaces and
+ * CJK punctuation. Single-char results are 生字, longer runs are 词语.
+ */
+export function extractChineseWordsFromOcrText(rawText: string): string[] {
+  const seen = new Set<string>();
+  const words: string[] = [];
+
+  for (const line of normalizeOcrLines(rawText)) {
+    // Headword column: first pipe segment that holds a 汉字 and is not a
+    // column label (e.g. `词语 | 月亮`).
+    const head = line
+      .split(/[|｜]/)
+      .find((seg) => CJK_CHAR_RE.test(seg) && !CJK_STOPWORDS[seg.trim()]);
+    if (!head) continue;
+    for (const run of head.match(CJK_RUN_RE) ?? []) {
+      if (CJK_STOPWORDS[run] || seen.has(run)) continue;
+      seen.add(run);
+      words.push(run);
     }
   }
 
