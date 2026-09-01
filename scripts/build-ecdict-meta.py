@@ -66,7 +66,7 @@ def speakable(line: str) -> str | None:
         if pipe in text:
             text = text.split(pipe, 1)[0].strip()
     if "=" in text or "＝" in text:
-        text = re.split(r"[=＝]", text, 1)[0].strip()
+        text = re.split(r"[=＝]", text, maxsplit=1)[0].strip()
     return text.lower() if text else None
 
 
@@ -74,7 +74,7 @@ def load_data_words() -> set[str]:
     words: set[str] = set()
     if not DATA_DIR.is_dir():
         return words
-    for path in DATA_DIR.glob("*.txt"):
+    for path in DATA_DIR.rglob("*.txt"):
         for line in path.read_text(encoding="utf-8").splitlines():
             w = speakable(line)
             if not w:
@@ -231,11 +231,7 @@ def should_keep(
     oxford: int,
     frq: int,
     bnc: int,
-    data_words: set[str],
 ) -> bool:
-    key = word.lower()
-    if key in data_words:
-        return True
     if EXAM_TAG_RE.search(tag or ""):
         return True
     if oxford:
@@ -261,6 +257,8 @@ def main() -> None:
 
     # word(lower) → {pos, meaning, exchange}
     entries: dict[str, dict] = {}
+    # 词库词兜底候选:常规过滤未保留的 key → 首个条目的解析结果
+    fallback: dict[str, dict] = {}
 
     with csv_path.open(newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
@@ -270,6 +268,20 @@ def main() -> None:
             translation = (row.get("translation") or "").strip()
             if not translation:
                 continue
+            key = word.lower()
+
+            pos, meaning = parse_translation(translation)
+            if key in OVERRIDES:
+                pos, meaning = OVERRIDES[key]
+
+            # 词库词兜底:记录首个条目(无论常规过滤是否通过)
+            if key in data_words and key not in fallback:
+                fallback[key] = {
+                    "pos": pos,
+                    "meaning": meaning,
+                    "exchange": parse_exchange(row.get("exchange") or ""),
+                }
+
             if not should_keep(
                 word,
                 row.get("tag") or "",
@@ -277,14 +289,8 @@ def main() -> None:
                 to_int(row.get("oxford")),
                 to_int(row.get("frq")),
                 to_int(row.get("bnc")),
-                data_words,
             ):
                 continue
-
-            pos, meaning = parse_translation(translation)
-            key = word.lower()
-            if key in OVERRIDES:
-                pos, meaning = OVERRIDES[key]
             # Prefer first occurrence; ECDICT is mostly unique by word
             if key in entries and not is_weak(
                 entries[key].get("pos"), entries[key].get("meaning")
@@ -295,6 +301,14 @@ def main() -> None:
                 "meaning": meaning,
                 "exchange": parse_exchange(row.get("exchange") or ""),
             }
+            fallback.pop(key, None)
+
+    # 词库词兜底:常规过滤未保留的词库词,保留首个条目
+    fallback_keys: set[str] = set()
+    for key, meta in fallback.items():
+        if key not in entries:
+            entries[key] = meta
+            fallback_keys.add(key)
 
     # Resolve weak form glosses via lemma (exchange 0:)
     for key, meta in list(entries.items()):
@@ -319,8 +333,11 @@ def main() -> None:
             if form == head:
                 continue
             existing = entries.get(form)
-            if existing and not is_weak(
-                existing.get("pos"), existing.get("meaning")
+            # 词库保底条目(fallback)不阻止词根释义覆盖,避免噪声条目占位
+            if (
+                existing
+                and not is_weak(existing.get("pos"), existing.get("meaning"))
+                and form not in fallback_keys
             ):
                 continue
             entries[form] = {
@@ -328,6 +345,9 @@ def main() -> None:
                 "meaning": meta.get("meaning"),
                 "exchange": existing["exchange"] if existing else {},
             }
+            # 已被词根释义覆盖的保底条目视为常规条目,避免后续传播再次覆盖
+            # (leaves 同时是 leaf/leave 的表层形式,先到先得稳定)
+            fallback_keys.discard(form)
 
     # Compact: "pos|meaning" string (pos may be empty)
     out: dict[str, str] = {}
