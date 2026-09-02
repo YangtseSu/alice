@@ -57,10 +57,7 @@ export class InsufficientCreditsError extends Error {
 
 /** In-flight progress phases (header). Terminal copy lives in OCR_OUTCOME_MESSAGES. */
 export type OcrProgressPhase =
-  | "preparing_photo"
-  | "preparing_album"
-  | "compressing"
-  | "recognizing";
+  "preparing_photo" | "preparing_album" | "compressing" | "recognizing";
 
 export const OCR_PROGRESS_MESSAGES: Record<OcrProgressPhase, string> = {
   preparing_photo: "已拍摄，准备识别…",
@@ -72,8 +69,7 @@ export const OCR_PROGRESS_MESSAGES: Record<OcrProgressPhase, string> = {
 export const OCR_OUTCOME_MESSAGES = {
   success: (count: number) => `已识别 ${count} 个单词`,
   empty: "未识别到英文单词，请换一张更清晰的图片再试",
-  emptyUnparsed:
-    "未能从识别结果中提取英文单词，请换一张更清晰的单词列表再试",
+  emptyUnparsed: "未能从识别结果中提取英文单词，请换一张更清晰的单词列表再试",
   successZh: (chars: number, terms: number) => {
     if (terms === 0) return `已识别 ${chars} 个生字`;
     if (chars === 0) return `已识别 ${terms} 个词语`;
@@ -256,7 +252,8 @@ export async function ocrWordsFromImage(
               },
               {
                 type: "text",
-                text: lang === "chinese" ? CHINESE_OCR_PROMPT : ENGLISH_OCR_PROMPT,
+                text:
+                  lang === "chinese" ? CHINESE_OCR_PROMPT : ENGLISH_OCR_PROMPT,
               },
             ],
           },
@@ -268,12 +265,11 @@ export async function ocrWordsFromImage(
   }
 
   if (!response.ok) {
-    try {
-      const detail = await response.text();
-      throw new Error(`视觉识别失败: ${detail}`);
-    } catch {
-      throw new Error("视觉识别服务异常");
-    }
+    // Read the error body BEFORE throwing: the old shape threw inside its
+    // own try/catch, which swallowed the detailed message and always
+    // surfaced the generic fallback to the user.
+    const detail = await response.text().catch(() => "");
+    throw new Error(detail ? `视觉识别失败: ${detail}` : "视觉识别服务异常");
   }
 
   // Charge credits only after a successful API response so failed/errored
