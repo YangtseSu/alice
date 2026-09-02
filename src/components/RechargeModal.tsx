@@ -32,12 +32,18 @@ export function RechargeModal({
 }: RechargeModalProps) {
   const colors = useThemeColors();
   const [purchasing, setPurchasing] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   const handlePurchase = useCallback(
     async (pack: CreditPack) => {
       setPurchasing(pack.id);
+      setError("");
       try {
         await onPurchase(pack);
+      } catch (err) {
+        // Surface the failure inline — without this catch the rejection is
+        // unhandled: the spinner resets but the user gets zero feedback.
+        setError(err instanceof Error ? err.message : "充值失败，请重试");
       } finally {
         setPurchasing(null);
       }
@@ -195,6 +201,11 @@ export function RechargeModal({
                 </TouchableOpacity>
               );
             })}
+            {error ? (
+              <Text style={[styles.note, { color: colors.danger }]}>
+                {error}
+              </Text>
+            ) : null}
 
             <Text style={[styles.note, { color: colors.subtle }]}>
               高级识别每次扣除 1 credit（可配置）。充值后立即到账，永久有效。
