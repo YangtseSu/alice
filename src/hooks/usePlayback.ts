@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { cjkWordSpeech, isCjkEntry, parseWordLine, speakableMeaning } from "../lib/dictation";
+import {
+  cjkWordSpeech,
+  isCjkEntry,
+  parseWordLine,
+  speakableMeaning,
+} from "../lib/dictation";
 import {
   isReadTranslationEnabled,
   prefetchWordAudio,
@@ -109,7 +114,16 @@ export function usePlayback({
             finish(false);
             return;
           }
-          const left = Math.max(0, deadline - Date.now());
+          // Read the live deadline each tick instead of the closure captured
+          // at waitMs start — the interval-slider effect below rewrites
+          // deadlineRef.current mid-countdown; reading the closure ignored
+          // that write, so the "live update" silently did nothing.
+          const current = deadlineRef.current;
+          if (current === null) {
+            finish(false);
+            return;
+          }
+          const left = Math.max(0, current - Date.now());
           setRemainingMs(left);
           if (left === 0) {
             finish(true);
@@ -332,8 +346,8 @@ export function usePlayback({
     playGenRef.current += 1;
     updatePlayState("playing");
 
-    startFrom(index, "speak1"); }
-  , [finishDictation, startFrom, updatePlayState]);
+    startFrom(index, "speak1");
+  }, [finishDictation, startFrom, updatePlayState]);
 
   const pauseDictation = useCallback(() => {
     playGenRef.current += 1;
