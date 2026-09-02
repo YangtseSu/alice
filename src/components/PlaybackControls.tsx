@@ -53,6 +53,7 @@ export function PlaybackControls({
             step={INTERVAL_STEP}
             value={intervalSec}
             onValueChange={onIntervalChange}
+            accessibilityLabel="听写间隔秒数"
           />
           <Text style={[styles.countValue, { color: colors.primary }]}>
             {intervalSec.toFixed(1)}s

@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
   DimensionValue,
   LayoutChangeEvent,
   PanResponder,
@@ -16,6 +18,8 @@ interface SliderProps {
   value: number;
   onValueChange: (value: number) => void;
   disabled?: boolean;
+  /** Label announced by screen readers; what the slider adjusts. */
+  accessibilityLabel?: string;
 }
 
 export function Slider({
@@ -25,6 +29,7 @@ export function Slider({
   value,
   onValueChange,
   disabled,
+  accessibilityLabel,
 }: SliderProps) {
   const colors = useThemeColors();
 
@@ -53,6 +58,27 @@ export function Slider({
   onValueChangeRef.current = onValueChange;
   const disabledRef = useRef(disabled);
   disabledRef.current = disabled;
+  const valueRef = useRef(value);
+  valueRef.current = value;
+
+  // Screen-reader support: adjustable elements expose increment/decrement
+  // actions (TalkBack/VoiceOver swipe up/down on the slider).
+  const stepBy = useCallback(
+    (delta: number) => {
+      if (disabledRef.current) return;
+      const raw = Math.round((valueRef.current + delta) / step) * step;
+      onValueChangeRef.current(Math.max(min, Math.min(max, raw)));
+    },
+    [min, max, step],
+  );
+
+  const onAccessibilityAction = useCallback(
+    (e: AccessibilityActionEvent) => {
+      if (e.nativeEvent.actionName === "increment") stepBy(step);
+      else if (e.nativeEvent.actionName === "decrement") stepBy(-step);
+    },
+    [stepBy, step],
+  );
 
   // Use pageX (absolute screen coords) instead of locationX to avoid the
   // Android bug where locationX is measured relative to whichever child view
@@ -91,6 +117,12 @@ export function Slider({
       ref={containerRef}
       style={[styles.container, disabled && styles.disabled]}
       onLayout={onLayout}
+      accessible={!disabled}
+      accessibilityRole="adjustable"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityValue={{ min, max, now: value }}
+      accessibilityActions={SLIDER_ACTIONS}
+      onAccessibilityAction={onAccessibilityAction}
       {...panResponder.panHandlers}
     >
       <View
@@ -123,6 +155,11 @@ export function Slider({
 const THUMB_SIZE = 24;
 const TRACK_HEIGHT = 6;
 
+
+const SLIDER_ACTIONS: AccessibilityActionInfo[] = [
+  { name: "increment" },
+  { name: "decrement" },
+];
 const styles = StyleSheet.create({
   container: {
     flex: 1,

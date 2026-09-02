@@ -499,6 +499,7 @@ export function SettingsScreen() {
               step={0.1}
               value={speechRate}
               onValueChange={handleSpeechRateChange}
+              accessibilityLabel="朗读语速"
             />
           </View>
         </View>
@@ -539,6 +540,7 @@ export function SettingsScreen() {
               step={INTERVAL_STEP}
               value={intervalSec}
               onValueChange={handleIntervalChange}
+              accessibilityLabel="默认听写间隔秒数"
             />
           </View>
         </View>
