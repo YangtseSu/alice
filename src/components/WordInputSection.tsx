@@ -107,7 +107,7 @@ export function WordInputSection({
               const clampable = sensesClamped(senses, 2, 20);
               return (
                 <TouchableOpacity
-                  key={`display-${line}-${idx}`}
+                  key={`display-${idx}`}
                   style={[
                     styles.displayRow,
                     isCursor && {
