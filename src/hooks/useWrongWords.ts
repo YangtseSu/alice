@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { loadWrongWords, saveWrongWords } from "../lib/storage";
 
@@ -9,17 +9,33 @@ export function useWrongWords(initialWords?: string[]) {
     () => initialWords ?? loadWrongWords(),
   );
   const [markedFlash, setMarkedFlash] = useState(false);
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const markWrong = useCallback((word: string) => {
-    setWrongWords((prev) => {
-      if (prev.includes(word)) return prev;
-      const next = [...prev, word];
+  useEffect(
+    () => () => {
+      clearTimeout(flashTimerRef.current);
+    },
+    [],
+  );
+
+  // Side effects stay out of the state updater (updaters must be pure —
+  // React may invoke them twice); persist from the handler like
+  // removeWrongWord below.
+  const markWrong = useCallback(
+    (word: string) => {
+      if (wrongWords.includes(word)) return;
+      const next = [...wrongWords, word];
+      setWrongWords(next);
       saveWrongWords(next);
-      return next;
-    });
-    setMarkedFlash(true);
-    setTimeout(() => setMarkedFlash(false), FLASH_DURATION_MS);
-  }, []);
+      clearTimeout(flashTimerRef.current);
+      setMarkedFlash(true);
+      flashTimerRef.current = setTimeout(
+        () => setMarkedFlash(false),
+        FLASH_DURATION_MS,
+      );
+    },
+    [wrongWords],
+  );
 
   const exportWrong = useCallback(async () => {
     if (wrongWords.length === 0) return "";
@@ -44,14 +60,15 @@ export function useWrongWords(initialWords?: string[]) {
   );
 
   /** Add a word back (undo for removeWrongWord) — no marked flash. */
-  const restoreWrongWord = useCallback((word: string) => {
-    setWrongWords((prev) => {
-      if (prev.includes(word)) return prev;
-      const next = [...prev, word];
+  const restoreWrongWord = useCallback(
+    (word: string) => {
+      if (wrongWords.includes(word)) return;
+      const next = [...wrongWords, word];
+      setWrongWords(next);
       saveWrongWords(next);
-      return next;
-    });
-  }, []);
+    },
+    [wrongWords],
+  );
 
   return {
     wrongWords,
