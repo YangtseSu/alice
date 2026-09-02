@@ -145,6 +145,10 @@ export function HomeScreen() {
   } | null>(null);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Latest input for the unmount flush below (that effect runs once, so a
+  // captured closure would go stale).
+  const wordInputRef = useRef(wordInput);
+  wordInputRef.current = wordInput;
 
   const { toast, showToast, hideToast } = useToast();
 
@@ -189,6 +193,7 @@ export function HomeScreen() {
     if (!ready) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
+      debounceRef.current = null;
       saveWordInput(wordInput);
       // In display mode the input is considered finalised — sync it to
       // history immediately so the user doesn't have to start dictation.
@@ -202,9 +207,25 @@ export function HomeScreen() {
       }
     }, WORD_INPUT_SAVE_DEBOUNCE_MS);
     return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
     };
   }, [wordInput, ready, isDisplayMode]);
+
+  // Flush a pending debounced save on unmount: the cleanup above only
+  // cancels the timer, so quitting right after typing would drop the
+  // last few seconds of input.
+  useEffect(
+    () => () => {
+      if (!debounceRef.current) return;
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+      saveWordInput(wordInputRef.current);
+    },
+    [],
+  );
 
   // Clamp startIndex when word count drops below current startIndex
   useEffect(() => {
