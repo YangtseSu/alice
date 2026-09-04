@@ -3,6 +3,7 @@ import {
   forwardRef,
   useCallback,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import {
@@ -60,6 +61,10 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
     const colors = useThemeColors();
     const [ocrBusy, setOcrBusy] = useState(false);
 
+    // Synchronous re-entry claim for runOcr: state updates lag a render,
+    // so two rapid taps would both see ocrBusy === false.
+    const runningRef = useRef(false);
+
     const setUiState = useCallback(
       (state: OcrUiState) => {
         setOcrBusy(state.busy);
@@ -80,58 +85,63 @@ export const OcrSection = forwardRef<OcrSectionHandle, OcrSectionProps>(
         getUri: () => Promise<string | null>,
         preparingPhase: "preparing_photo" | "preparing_album",
       ) => {
-        if (ocrBusy) return;
-
-        // Pre-flight: a premium built-in model needs credits. Skip the camera
-        // flow entirely and hand off to the recharge UI when the balance is too
-        // low, so the user doesn't waste a photo.
-        const gate = await canRunOcrNow();
-        if (!gate.ok && gate.reason === "insufficient_credits") {
-          onInsufficientCredits?.();
-          return;
-        }
-
-        setUiState({ busy: true, message: "" });
+        // Re-entry guard: claim synchronously BEFORE the first await so two
+        // rapid taps cannot both pass (and double-charge a premium model).
+        if (runningRef.current) return;
+        runningRef.current = true;
         try {
-          const uri = await getUri();
-          if (!uri) {
-            setUiState(OCR_UI_IDLE);
-            return;
-          }
-
-          reportProgress(preparingPhase);
-          const { words, rawText } = await ocrWordsFromImage(
-            uri,
-            reportProgress,
-          );
-
-          if (words.length === 0) {
-            onOcrOutcome?.(
-              rawText
-                ? OCR_OUTCOME_MESSAGES.emptyUnparsed
-                : OCR_OUTCOME_MESSAGES.empty,
-            );
-            return;
-          }
-
-          onOcrResult(words);
-          onOcrOutcome?.(OCR_OUTCOME_MESSAGES.success(words.length));
-        } catch (error) {
-          if (error instanceof InsufficientCreditsError) {
+          // Pre-flight: a premium built-in model needs credits. Skip the camera
+          // flow entirely and hand off to the recharge UI when the balance is too
+          // low, so the user doesn't waste a photo.
+          const gate = await canRunOcrNow();
+          if (!gate.ok && gate.reason === "insufficient_credits") {
             onInsufficientCredits?.();
             return;
           }
-          onOcrOutcome?.(
-            error instanceof Error
-              ? error.message
-              : OCR_OUTCOME_MESSAGES.failed,
-          );
+
+          setUiState({ busy: true, message: "" });
+          try {
+            const uri = await getUri();
+            if (!uri) {
+              setUiState(OCR_UI_IDLE);
+              return;
+            }
+
+            reportProgress(preparingPhase);
+            const { words, rawText } = await ocrWordsFromImage(
+              uri,
+              reportProgress,
+            );
+
+            if (words.length === 0) {
+              onOcrOutcome?.(
+                rawText
+                  ? OCR_OUTCOME_MESSAGES.emptyUnparsed
+                  : OCR_OUTCOME_MESSAGES.empty,
+              );
+              return;
+            }
+
+            onOcrResult(words);
+            onOcrOutcome?.(OCR_OUTCOME_MESSAGES.success(words.length));
+          } catch (error) {
+            if (error instanceof InsufficientCreditsError) {
+              onInsufficientCredits?.();
+              return;
+            }
+            onOcrOutcome?.(
+              error instanceof Error
+                ? error.message
+                : OCR_OUTCOME_MESSAGES.failed,
+            );
+          } finally {
+            setUiState(OCR_UI_IDLE);
+          }
         } finally {
-          setUiState(OCR_UI_IDLE);
+          runningRef.current = false;
         }
       },
       [
-        ocrBusy,
         onInsufficientCredits,
         onOcrOutcome,
         onOcrResult,
