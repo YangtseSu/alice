@@ -244,12 +244,11 @@ export async function ocrWordsFromImage(
   }
 
   if (!response.ok) {
-    try {
-      const detail = await response.text();
-      throw new Error(`视觉识别失败: ${detail}`);
-    } catch {
-      throw new Error("视觉识别服务异常");
-    }
+    // Read the error body BEFORE throwing: the old shape threw inside its
+    // own try/catch, which swallowed the detailed message and always
+    // surfaced the generic fallback to the user.
+    const detail = await response.text().catch(() => "");
+    throw new Error(detail ? `视觉识别失败: ${detail}` : "视觉识别服务异常");
   }
 
   // Charge credits only after a successful API response so failed/errored
