@@ -9,7 +9,7 @@ import {
 } from "../lib/tts";
 
 type PlayState = "idle" | "playing" | "paused";
-type WordPhase = "speak1" | "gap" | "speak2" | "speakMeaning" | "interval";
+type WordPhase = "speak1" | "speakMeaning" | "speak2" | "interval";
 
 const REPEAT_GAP_MS = 700;
 
@@ -149,15 +149,20 @@ export function usePlayback({
       currentIndexRef.current = s.index;
       setCurrentIndex(s.index);
 
+      // Dictation order: word → meaning → word. The meaning pass sits
+      // between the two word passes; "" means nothing to speak.
+      const meaningSpeech = isReadTranslationEnabled()
+        ? speakableMeaning(parseWordLine(word).meaning)
+        : "";
+
       // Start/continue loading without blocking playback. speakWord only uses
       // audio that is already cached and otherwise falls back to system TTS.
       void prefetchWordAudio(word);
       const nextWord = list[s.index + 1];
       if (nextWord) void prefetchWordAudio(nextWord);
-      if (isReadTranslationEnabled()) {
-        const speakable = speakableMeaning(parseWordLine(word).meaning);
-        if (speakable) void prefetchWordAudio(speakable);
-      }
+      // The meaning gloss rides the same Youdao dict voice as the word
+      // itself, so it prefetches through the same cache.
+      if (meaningSpeech) void prefetchWordAudio(meaningSpeech);
 
       const ok = await speakWord(word);
       if (isCancelled(gen)) return;
@@ -171,28 +176,17 @@ export function usePlayback({
       // repeat gap and let the scheduler advance to the next phase/word. The
       // `speak2` pass still acts as a natural second attempt for `speak1`.
       if (!ok && phase === "speak1") {
-        cur.phase = "speak2";
+        cur.phase = meaningSpeech ? "speakMeaning" : "speak2";
         runScheduler();
         return;
       }
 
       if (phase === "speak1") {
-        cur.phase = "gap";
         const gapOk = await waitMs(REPEAT_GAP_MS, signal);
         if (isCancelled(gen) || !gapOk) return;
-        cur.phase = "speak2";
+        cur.phase = meaningSpeech ? "speakMeaning" : "speak2";
         runScheduler();
         return;
-      }
-
-      // Optional: read the Chinese meaning once after the second English pass.
-      if (isReadTranslationEnabled()) {
-        const meaning = parseWordLine(word).meaning;
-        if (meaning) {
-          cur.phase = "speakMeaning";
-          runScheduler();
-          return;
-        }
       }
 
       if (!autoNextRef.current) {
@@ -219,12 +213,6 @@ export function usePlayback({
       return;
     }
 
-    if (s.phase === "gap") {
-      s.phase = "speak2";
-      runScheduler();
-      return;
-    }
-
     if (s.phase === "speakMeaning") {
       const speakable = speakableMeaning(parseWordLine(word).meaning);
       if (speakable) {
@@ -236,12 +224,11 @@ export function usePlayback({
         cur.speaking = false;
       }
 
-      if (!autoNextRef.current) {
-        schedulerRef.current = null;
-        return;
-      }
-
-      s.phase = "interval";
+      // Meaning heard; close the word with the second pass so the last
+      // thing spoken is the word itself (word → meaning → word).
+      const gapOk = await waitMs(REPEAT_GAP_MS, signal);
+      if (isCancelled(gen) || !gapOk) return;
+      s.phase = "speak2";
       runScheduler();
       return;
     }
