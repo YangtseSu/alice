@@ -113,6 +113,7 @@ export async function takePhoto(): Promise<string | null> {
   const result = await ImagePicker.launchCameraAsync({
     mediaTypes: ["images"],
     quality: 1,
+    allowsEditing: true,
   });
 
   if (result.canceled || !result.assets.length) return null;
@@ -128,6 +129,7 @@ export async function pickFromAlbum(): Promise<string | null> {
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ["images"],
     quality: 1,
+    allowsEditing: true,
   });
 
   if (result.canceled || !result.assets.length) return null;
@@ -242,12 +244,11 @@ export async function ocrWordsFromImage(
   }
 
   if (!response.ok) {
-    try {
-      const detail = await response.text();
-      throw new Error(`视觉识别失败: ${detail}`);
-    } catch {
-      throw new Error("视觉识别服务异常");
-    }
+    // Read the error body BEFORE throwing: the old shape threw inside its
+    // own try/catch, which swallowed the detailed message and always
+    // surfaced the generic fallback to the user.
+    const detail = await response.text().catch(() => "");
+    throw new Error(detail ? `视觉识别失败: ${detail}` : "视觉识别服务异常");
   }
 
   // Charge credits only after a successful API response so failed/errored
@@ -341,13 +342,78 @@ function cleanToken(s: string): string {
 const WORD_RE = /^[a-zA-Z][a-zA-Z'/\-\s]*$/;
 
 /**
+ * The leading English token run of `tokens` — the headword phrase. Empty
+ * when the row does not begin with English, so a row that opens with
+ * Chinese (or pure 音标) is not an English entry at all. A lone `/` keeps
+ * the run going only while it is flanked by word tokens, so spaced slash
+ * phrases (`actor / actress`) survive whole — the format the OCR prompt
+ * asks for — while a trailing `/` or annotation tokens still end the run.
+ */
+function leadingEnglishRun(tokens: string[]): string[] {
+  const run: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (WORD_RE.test(token)) {
+      run.push(token);
+    } else if (
+      token === "/" &&
+      run.length > 0 &&
+      i + 1 < tokens.length &&
+      WORD_RE.test(tokens[i + 1])
+    ) {
+      run.push(token);
+    } else {
+      break;
+    }
+  }
+  return run;
+}
+
+/**
+ * English tokens that start a cleaned token run — the headword phrase.
+ * Null when the run does not start with English, so a row that begins
+ * with Chinese (or pure 音标) is not an English entry at all.
+ */
+function englishPhrase(tokenRun: string): string | null {
+  const phrase = leadingEnglishRun(tokenRun.split(/\s+/).filter(Boolean)).slice(
+    0,
+    MAX_PHRASE_TOKENS,
+  );
+  return phrase.length > 0 ? phrase.join(" ") : null;
+}
+
+/**
+ * Candidate words from one cleaned comma-part. Pure-English runs keep the
+ * original behavior: the whole phrase up to MAX_PHRASE_TOKENS tokens,
+ * longer dumps flattened into single tokens. Mixed runs — the word
+ * followed by 音标/词性/中文 (the vision model echoing a textbook row
+ * instead of the `word | pos | meaning` format) — yield the leading
+ * English phrase; the trailing annotations are noise and never become
+ * entries.
+ */
+function englishCandidates(candidate: string): string[] {
+  const tokens = candidate.split(/\s+/).filter(Boolean);
+  const leading = leadingEnglishRun(tokens);
+  if (leading.length === 0) return [];
+  if (leading.length === tokens.length) {
+    if (leading.length <= MAX_PHRASE_TOKENS) return [candidate];
+    // Over-long pure dump flattened to single tokens; lone "/" separators
+    // are noise and never become entries.
+    return tokens.filter((t) => WORD_RE.test(t));
+  }
+  return leading.length <= MAX_PHRASE_TOKENS ? [leading.join(" ")] : leading;
+}
+/**
  * Vision models often ignore "one per line" and return comma- or space-separated
  * lists. This function normalizes the output into a clean word list.
  *
  * Supports enriched entries with `|`-delimited pos/meaning:
- *   `apple | n. | 苹果` — the word part is validated; the meta is preserved.
- * Plain entries (no `|`) use the original comma-splitting + token-flattening
- * logic.
+ *   `apple | n. | 苹果` — the leading English phrase of the word part is kept
+ * (a 音标 run trailing the headword is dropped); the meta is preserved. Plain
+ * entries (no `|`) are comma-split; each part yields only its leading English
+ * phrase — the whole phrase (≤ MAX_PHRASE_TOKENS tokens), individual tokens
+ * of an over-long dump, or the headword of a row that also carries
+ * 音标/词性/中文. Chinese text never becomes an entry.
  */
 export function extractWordsFromOcrText(rawText: string): string[] {
   const cleaned = rawText
@@ -369,37 +435,33 @@ export function extractWordsFromOcrText(rawText: string): string[] {
     const pipeIdx = line.indexOf("|");
 
     if (pipeIdx !== -1) {
-      // Enriched entry: clean & validate the word part, preserve the meta
-      const rawWord = line.slice(0, pipeIdx);
+      // Enriched entry: salvage the leading English phrase of the word
+      // part (a 音标 run trailing the headword is dropped), keep the meta.
+      const wordPart = englishPhrase(cleanToken(line.slice(0, pipeIdx)));
+      if (!wordPart) continue;
+
+      const key = wordPart.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+
       const metaParts = line
         .slice(pipeIdx + 1)
         .split("|")
         .map((s) => s.trim())
         .filter((s) => s.length > 0);
 
-      const wordPart = cleanToken(rawWord);
-      if (!wordPart || !WORD_RE.test(wordPart)) continue;
-
-      const key = wordPart.toLowerCase();
-      if (seen.has(key)) continue;
-      seen.add(key);
-
       // Reassemble with consistent spacing
       words.push([wordPart, ...metaParts].join(" | "));
     } else {
-      // Plain word: split by commas/semicolons (vision model may ignore
-      // one-per-line), then flatten overly long runs into individual tokens
+      // Plain line: split by commas/semicolons (the vision model may
+      // ignore one-per-line), then keep the headword of each part.
       const candidates = line
         .split(/[,，;；、]+/)
         .map((p) => cleanToken(p))
         .filter(Boolean)
-        .flatMap((candidate) => {
-          const tokens = candidate.split(/\s+/).filter(Boolean);
-          return tokens.length <= MAX_PHRASE_TOKENS ? [candidate] : tokens;
-        });
+        .flatMap(englishCandidates);
 
       for (const word of candidates) {
-        if (!WORD_RE.test(word)) continue;
         const key = word.toLowerCase();
         if (seen.has(key)) continue;
         seen.add(key);

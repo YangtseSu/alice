@@ -430,7 +430,7 @@ export function OcrSettingsModal({
                   <View
                     style={[
                       styles.testResult,
-                      { backgroundColor: colors.dangerSoft },
+                      { backgroundColor: colors.primarySoft },
                     ]}
                   >
                     <Ionicons

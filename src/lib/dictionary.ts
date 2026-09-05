@@ -6,12 +6,14 @@
  */
 
 import {
+  POS_PREFIX_RE,
   entryToLine,
   normalizePos,
   parseWordLine,
   parseWords,
   speakTextFromEntry,
 } from "./dictation";
+
 import ecdictMeta from "./ecdict-meta.json";
 
 export interface WordMeta {
@@ -22,8 +24,6 @@ export interface WordMeta {
 /** Compact map: lowercased word → `"pos|meaning"` (pos may be empty). */
 const META = ecdictMeta as Record<string, string>;
 
-const POS_PREFIX_RE =
-  /^(n\.|v\.|vt\.|vi\.|adj\.|adv\.|prep\.|conj\.|pron\.|num\.|art\.|int\.|aux\.|abbr\.|contr\.|a\.)\s*/i;
 
 /**
  * 仅做清理，保留完整释义（含多义项）。多义项以「；」分隔，由构建脚本保证。
